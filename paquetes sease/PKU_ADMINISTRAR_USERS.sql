@@ -914,7 +914,7 @@ IS
              ORDER BY 1;
 
       usp_print
-         ('<input readonly name="ag_usufun" maxlength="20" style="width:98%;background-color:#F5F5F5;"
+         ('<input readonly name="ag_usufun" maxlength="20" class="form-control"
                 value=""/>
             El usuario ya existe, use la opci&oacute;n Modificar/Desactivar Usuario.'
          );
@@ -924,7 +924,7 @@ IS
          lv_usuario := ag_codent || ag_usudni;
          usp_print
             (   '
-            <input readonly name="ag_usufun" maxlength="20" style="width:98%;background-color:#F5F5F5;" value="'
+            <input readonly name="ag_usufun" maxlength="20" class="form-control" value="'
              || lv_usuario
              || '"/>'
             );
@@ -1168,7 +1168,10 @@ IS
         function llamarAjax(vobject, vpid, vsdo, vargs)
             {   var obj = document.getElementById(vobject);
 
-                    obj.innerHTML = getPortletAjax("portlet5openAjax.asp?_portletid_="+vpid+"&scriptdo="+vsdo+vargs);
+                parametros="portletid="+vpid+"&scriptdo="+vsdo+vargs;
+                getPortletAjax(obj, parametros)
+                   // obj.innerHTML = getPortletAjax("ControllerServletAjax?portletid="+vpid+"&scriptdo="+vsdo+vargs);
+                  //  getPortletAjax(vobject, "ControllerServletAjax?portletid="+vpid+"&scriptdo="+vsdo+vargs);
             }
       </script>'
          );
@@ -1457,15 +1460,14 @@ IS
    --usp_print('Entidad: '||ag_Enti||'<br>');
       usp_print
          (   '
-    <table border="0" width=80% align=center class=tableform cellpadding=1 cellspacing=0>
-        <tr>
-            <td class=c1 align=center colspan="2"><h4>Perfiles</h4>
+         <h4>Perfiles</h4>
             <input name="ag_miembros" type="hidden"
                 value="'
           || TRIM
                  (sease.pku_administrar_users.listargruposxusuario (ag_usufun, ag_tipousu) )
-          || '" /></td>
-        </tr>
+          || '" />
+    <table class="table table-striped">
+        
          '
          );
 
@@ -1494,7 +1496,7 @@ IS
 
             usp_print (   '
             <tr>
-            <td class=c1>
+            <td style="width: 40%">
                 <input name="op'
              || r_perfil.usu_codigo
              || '" type="hidden" value="'
@@ -1519,7 +1521,7 @@ IS
                  || r_perfil.usu_nombre
                  || '
             </td>
-            <td class=c3>'
+            <td style="width: 60%">'
                  || r_perfil.usu_coment
                  || '</td>
             </td> </tr>'
@@ -1533,7 +1535,7 @@ IS
          if ag_tipousu = '1' then
             usp_print (   '
             <tr>
-            <td class=c1>
+            <td style="width: 40%">
                 <input name="op'
              || r_perfil.usu_codigo
              || '" type="hidden" value="'
@@ -1559,7 +1561,7 @@ IS
                  || r_perfil.usu_nombre
                  || '
             </td>
-            <td class=c3>'
+            <td  style="width: 60%">'
                  || r_perfil.usu_coment
                  || '</td>
             </td> </tr>'
@@ -2357,14 +2359,14 @@ IS
         <tr class="active">
             <td  style="width:30%">DNI</td>
             <td  style="width:30%">
-                <input type="text" name="ag_usudni" maxlength="8" style="width:98%" onblur="generaUsuFun(''dni'');"/></td>
+                <input type="text" name="ag_usudni" maxlength="8" onblur="generaUsuFun(''dni'');"/></td>
             <td  style="width:40%">Ingrese el DNI.</td>
         </tr>
         <tr  class="active">
             <td class=c1>Funcionario - Usuario</td>
             <td class=c2>
                 <div name="divGeneraUsuario" id="divGeneraUsuario" onchange="verifica();">
-                    <input readonly name="ag_usufun" maxlength="20" style="width:98%;background-color:#F5F5F5;"/></div>
+                    <input readonly name="ag_usufun" maxlength="20" class="form-control"/></div>
                 <div name="divListadoUsuarios" id="divListadoUsuarios">&nbsp;</div>
              </td>
             <td class=c3>
@@ -2406,13 +2408,19 @@ IS
         <tr class="active">
             <td class=c1>Fecha de recepci&oacute;n de solicitud</td>
             <td class=c2>
-                <input readonly name="ag_fecrecep" style="width:90%" class=CalSelect  onclick="calendario(this)"></td>
+                <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fecrecep" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+          </div>
+                </td>
             <td class=c3>Ingrese la fecha de recepci&oacute;n de la solicitud.</td>
         </tr>
         <tr class="active">
             <td class=c1>Fecha de creaci&oacute;n</td>
             <td class=c2>
-                <input readonly name="ag_feccre" style="width:98%;background-color:#F5F5F5;" value="'
+                <input readonly name="ag_feccre" class="form-control" value="'
           || TO_CHAR (SYSDATE, 'dd/MM/yyyy')
           || '"></td>
             <td class=c3>La fecha de creaci&oacute;n se obtiene por defecto.</td>
@@ -3291,7 +3299,7 @@ usp_print('<script type="text/javascript">
          (   '
     <table border="0" width="85%" align=center class=tableform cellpadding=1 cellspacing=0>
         <tr>
-            <td class="c1" style="text-align: center" colspan="2"><h4>Perfiles</h4>
+            <td class="c1" style="text-align: center" colspan="2"><h4>Perfilesa</h4>
               <input name="ag_miembros" type="hidden" value="'||xrow_arb.usu_miembros||'" />
             </td>
         </tr>
@@ -3545,7 +3553,7 @@ usp_print('<script type="text/javascript">
         <tr>
             <td class=c1>Funcionario - Usuario</td>
             <td class=c2>
-                <input readonly name="ag_usufun" maxlength="20" style="width:98%;background-color:#F5F5F5;"
+                <input readonly name="ag_usufun" maxlength="20" class="form-control"
                 value="'
              || r_usuario.usu_codigo
              || '"/></td>
@@ -8749,7 +8757,7 @@ function validarCampos(){
          (   '
     <table border="0" width="85%" align=center class=tableform cellpadding=1 cellspacing=0>
         <tr>
-            <td class="c1" style="text-align: center" colspan="2"><h4>Perfiles</h4>
+            <td class="c1" style="text-align: center" colspan="2"><h4>Perfilesb</h4>
               <input name="ag_miembros" type="hidden"
                 value="'||TRIM(sease.pku_administrar_users.listargruposxusuario ('ADM_ARBITROS', 3))||'" />
             </td>
