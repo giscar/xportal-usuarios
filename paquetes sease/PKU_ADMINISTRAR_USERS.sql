@@ -8622,34 +8622,29 @@ function validarCampos(){
    
      
      usp_print('<div align="center">
-   <table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="85%">
+     
+   <table width="100%">
         <tr>
-            <td align="left">
+            <td style="text-align:left">
                 <h3>Crear Usuario</h3>
             </td>
             <td></td>
-            <td>
-                   <!-- <input type="button" name="btnVerUsuarios" value="Ver Usuarios Similares" onclick="verUsuarioExiste();" /> -->
-                    &nbsp;
+            <td  style="text-align:rigth">
                     <input type="button" name="btnGuardar" value="Guardar" OnClick="validarCampos()"/>
             </td>
         </tr>    
-   
-        <tr>
-           <td align="left"><h4>Datos del Presidente Arbitral o &Aacute;rbitro &Uacute;nico.</h4></td>
-           <td></td>
-           <td></td>
-        </tr>
-   
-         <tr>
-            <td class=c1>RUC</td>
-            <!--<td class=c1><input class="care1" type="text" value="'||cRuc||'" name="cRuc" id="cRuc" size="46" onkeypress="f_validaCampoNumerico1();validaRUC();" maxlength="11" onblur="ValidaArbitro()"/> 
-            </td>--> 
-            <td class=c1><input class="care1" type="text" value="'||cRuc||'" name="cRuc" id="cRuc" size="46" onkeypress="f_validaCampoNumerico1();" maxlength="11"/> <input type = "button" value = "Validar Sunat" onclick = "validaRUC()"; ></td>
-            <td class=c2>Ingrese el n&uacute;mero del Registro &Uacute;nico de Contribuyente.<br/>Dicho N&uacute;mero ser&aacute; el c&oacute;digo de usuario en el SEACE.</td>
+   </table>
+   <div style="text-align:left">
+            <h3>Datos del Presidente Arbitral o &Aacute;rbitro &Uacute;nico.</h3>
+        </div>
+   <table  class="table table-bordered">
+         <tr class="active">
+            <td  style="width:30%" class=c1>RUC</td>
+            <td  style="width:30%" class=c1><input class="care1" type="text" value="'||cRuc||'" name="cRuc" id="cRuc" size="46" onkeypress="f_validaCampoNumerico1();" maxlength="11"/> <input type = "button" value = "Validar Sunat" onclick = "validaRUC()"; ></td>
+            <td  style="width:40%" class=c2>Ingrese el n&uacute;mero del Registro &Uacute;nico de Contribuyente.<br/>Dicho N&uacute;mero ser&aacute; el c&oacute;digo de usuario en el SEACE.</td>
         </tr>
         
-        <tr>
+        <tr class="active">
             <td class=c1>Raz&oacute;n Social</td>
             <!--<td class=c1><input class="care1" type="text" value="'||cRuc||'" name="cRuc" id="cRuc" size="46" onkeypress="" maxlength="11" /></td>-->
             <td class=c1><input class="care1" type="text" value="'||v_razSoc||'" name="v_razSoc" id="v_razSoc" size="46"  maxlength="46" readonly /></td>
@@ -8657,28 +8652,28 @@ function validarCampos(){
         </tr>
 
         
-       <tr>
+       <tr class="active">
           <td class=c1>Nombre(s)</td>
           <!--<td class=c1><input type="text" onkeypress="NoCaracteresEspeciales()"  onblur="this.value=this.value.toUpperCase()"  value="" name="cNombre" readOnly="readOnly" id="cNombre" size="46"/></td>-->
           <td class=c1><input type="text" onkeypress="NoCaracteresEspeciales()"  onblur="this.value=this.value.toUpperCase()"  value="" name="cNombre" id="cNombre" size="46"/></td>
           <td class=c2>Ingrese nombre(s) completo(s).</td>
        </tr>
        
-       <tr>
+       <tr class="active">
           <td class=c1>Apellido Paterno</td>
           <!--<td class=c1><input type="text" onkeypress="NoCaracteresEspeciales()" onblur="this.value=this.value.toUpperCase()" value="" name="cApellidoPat" readOnly="readOnly" id="cApellidoPat" size="46"/></td>-->
           <td class=c1><input type="text" onkeypress="NoCaracteresEspeciales()" onblur="this.value=this.value.toUpperCase()" value="" name="cApellidoPat" id="cApellidoPat" size="46"/></td>
           <td class=c2>Ingrese apellido paterno.</td>
        </tr>
        
-       <tr>
+       <tr class="active">
           <td class=c1 >Apellido Materno</td>
           <!--<td class=c1><input type="text" onkeypress="NoCaracteresEspeciales()" onblur="this.value=this.value.toUpperCase()" value="" name="cApellidoMat" readOnly="readOnly" id="cApellidoMat" size="46"/></td>-->
           <td class=c1><input type="text" onkeypress="NoCaracteresEspeciales()" onblur="this.value=this.value.toUpperCase()" value="" name="cApellidoMat" id="cApellidoMat" size="46"/></td>
           <td class=c2>Ingrese apellido materno.</td>
        </tr>
        
-       <tr>
+       <tr class="active">
           <td class=c1>Colegio de Abogados</td>
           <td class=c1>
           <select style="width:98%" name="cColegio" id="cColegio">
@@ -8691,61 +8686,77 @@ function validarCampos(){
           <td class=c2>Seleccione el Colegio de Abogado al que pertenece</td>
        </tr>
        
-       <tr>
+       <tr class="active">
           <td class=c1>N&uacute;mero de Colegiatura</td>
           <td class=c1><input type="text" name="cColegiatura" id="cColegiatura" size="46" onkeypress="f_validaCampoNumerico1()" maxlength="10"/></td>
           <td class=c2>Ingrese el n&uacute;mero de Colegiatura.</td>
        </tr>
        
-       <tr>
+       <tr class="active">
           <td class=c1>Correo Electr&oacute;nico</td>
           <td class=c1><input type="text" name="cCorreo" id="cCorreo" size="46"/></td>
           <td class=c2>Ingrese el correo electr&oacute;nico.</td>
        </tr> 
        
-       <tr>
+       <tr class="active">
           <td class=c1>Tel&eacute;fono</td>
           <td class=c1><input type="text" name="cTelefono" id="cTelefono" size="46" maxleng="40"/></td>
           <td class=c2>Ingrese el n&uacute;mero de Tel&eacute;fono.</td>
        </tr>
+       </table>
        
-       <tr>
-           <td align="left"><h4>Datos de la Solicitud</h4></td>
-           <td></td>
-           <td></td>
-       </tr>
+       <div style="text-align:left">
+            <h3>Datos de la Solicitud.</h3>
+        </div>
+      
+       <table class="table table-bordered">
        
-       <tr>
-           <td class=c1>Documento</td>
-           <td class=c1><input type="text" name="cDoc" id="cDoc" size="46"/></td>
-           <td class=c2>Ingrese la nomeclatura del documento de solicitud.</td>
+       <tr class="active">
+           <td  style="width:30%" class=c1>Documento</td>
+           <td  style="width:30%" class=c1><input type="text" name="cDoc" id="cDoc" size="46"/></td>
+           <td  style="width:40%" class=c2>Ingrese la nomeclatura del documento de solicitud.</td>
        </tr> 
        
-       <tr>
+       <tr class="active">
            <td class=c1>Fecha de recepci&oacute;n de documentos</td>
-           <td class=c1><input readonly name="ag_fecrecep" style="width:90%" class=CalSelect  onclick="calendario(this)"></td>
+           <td class=c1>
+           <div class="input-group datepicker" id="idDivTxtFechaIni1">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fecrecep" id="ag_fecrecep" readOnly=readOnly style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+          </div>
+           </td>
            <td class=c2>Seleccionar la fecha que se recepcion&oacute; el documento.</td>
        </tr> 
+       </table>
+       <div style="text-align:left">
+            <h3>Datos de Acceso.</h3>
+        </div>
+       <table class="table table-bordered">
        
-       <tr>
-           <td align="left"><h4>Datos de Acceso</h4></td>
-           <td></td>
-           <td></td>
-       </tr>
-       
-       <tr>
-           <td class=c1>Fecha de creaci&oacute;n</td>
-           <td class=c1><input type="text" value="'||cfecha||'" name="cFecCreacion" id="cFecCreacion" readOnly=readOnly size="46"/></td>
-           <td class=c2>Corresponde a la fecha de Creaci&oacute;n y se obtiene por defecto.</td>
+       <tr class="active">
+           <td  style="width:30%" class=c1>Fecha de creaci&oacute;n</td>
+           <td  style="width:30%" class=c1>
+           <div class="input-group " id="idDivTxtFechaIni1">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" value="'||cfecha||'" name="cFecCreacion" id="cFecCreacion" readOnly=readOnly style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+          </div>
+                </td>
+           
+           </td>
+           <td  style="width:40%" class=c2>Corresponde a la fecha de Creaci&oacute;n y se obtiene por defecto.</td>
        </tr> 
        
-       <tr>
+       <tr class="active">
            <td class=c1>Estado</td>
            <td class=c1><select style="width:98%"><option>Activo</option></select></td>
            <td class=c2>Seleccione el Estado.</td>
        </tr>
        
-        <tr>
+        <tr class="active">
            <td class=c1>Funcionario-Usuario</td>
            <td class=c1><select style="width:98%"><option>Funcionario-Usuario &Aacute;rbitros</option></select></td>
            <td class=c2>Corresponde al tipo de Funcionario-Usuario.</td>
@@ -8755,9 +8766,9 @@ function validarCampos(){
        <br/>');
        usp_print
          (   '
-    <table border="0" width="85%" align=center class=tableform cellpadding=1 cellspacing=0>
+    <table class="table table-striped table-bordered">
         <tr>
-            <td class="c1" style="text-align: center" colspan="2"><h4>Perfilesb</h4>
+            <td class="c1" style="text-align: center" colspan="2"><h4>Perfiles</h4>
               <input name="ag_miembros" type="hidden"
                 value="'||TRIM(sease.pku_administrar_users.listargruposxusuario ('ADM_ARBITROS', 3))||'" />
             </td>
