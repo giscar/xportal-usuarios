@@ -2704,7 +2704,7 @@ IS
       usp_print
          ('
     <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
-        <tr>
+        <tr class="active">
             <th class="th1">Usuario</b></th>
             <th class="th1">Nombre</b></th>
             <th class="th1">Entidad</b></th>
