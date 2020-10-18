@@ -1880,7 +1880,8 @@ IS
          );
       usp_print
          ('
-        <tr>
+         <table class="table table-bordered"
+        <tr class="active">
             <td class=c1>Departamento
             </td>
             <td class=c2>'
@@ -1892,8 +1893,7 @@ IS
             <td class=c3>Seleccione el departamento
             </td>
         </tr>
-        </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Provincia
             </td>
             <td class=c2>
@@ -1903,7 +1903,7 @@ IS
             <td class=c3>Seleccione la provincia
             </td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Distrito
             </td>
             <td class=c2>
@@ -1912,7 +1912,8 @@ IS
             </td>
             <td class=c3>Seleccione el distrito
             </td>
-        </tr>'
+        </tr>
+        </table>'
          );
    END f_lista_ubigeo;
 
@@ -5036,32 +5037,31 @@ usp_print('<script type="text/javascript">
 
 
       usp_print (   '
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
-        <tr>
-            <td colspan ="2">
-              <h3>'
-          || portlet__titulo
-          || '</h3>
+    <table  style="width:100%">
+        <tr >
+            <td style="width:50%">
+              <h3>Reportes de Usuario</h3>
             </td>
-            <td align="right" valign=top width="50%">
-                <!--input type="button" name="c" value="Volver" OnClick="regresar()"/-->
+            <td style="width:50%; text-align:right">
                 <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
             </td>
-        </tr> ');
+        </tr>
+        </table');
 
       IF (ag_tiporeporte = '1')
       THEN
          usp_print
             ('
-        <tr>
-            <td colspan="3" align=center>
-                <h4>
-                Usuarios Activos/ Inactivos seg&uacute;n rango de fecha
+            
+<div class="center-block">
+    <h4>Usuarios Activos/ Inactivos seg&uacute;n rango de fecha</h4>
+</div>
+
+                
                 </br></br>
-                </h4>
-            </td>
-        </tr>
-        <tr>
+ 
+        <table class="table table-bordered">
+        <tr class="active">
             <td class=c1>Estado</td>
             <td class=c2>
                 <select name="ag_estado" style="width:98%">
@@ -5071,20 +5071,28 @@ usp_print('<script type="text/javascript">
                 </select></td>
             <td class=c3>Seleccione el estado.</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Fecha Inicial
             </td>
             <td class=c2>
-                <input readonly name="ag_fecini" style="width:90%" class=CalSelect  onclick="calendario(this)"></td>
+            <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fecini" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
             </td>
             <td class=c3>Seleccione la fecha de inicio
             </td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Fecha Fin
             </td>
             <td class=c2>
-                <input readonly name="ag_fecfin" style="width:90%" class=CalSelect  onclick="calendario(this)"></td>
+            <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fecfin" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
             </td>
             <td class=c3>Seleccione la fecha de fin
             </td>
@@ -5093,32 +5101,25 @@ usp_print('<script type="text/javascript">
       THEN
          usp_print
             ('
-         <tr>
-            <td colspan="3" align=center>
+         <div class="center-block">
                 <h4>
                 Usuarios Registrados por Ubicaci&oacute;n Geogr&aacute;fica
                 </br></br>
                 </h4>
-            </td>
-        </tr>
-        <tr>
-            <td class=c1 colspan="3">Ubicaci&oacute;n Geogr&aacute;fica
-            </td>
-        </tr>   ');
+            </div>  ');
          pku_administrar_users.f_lista_ubigeo ('mod_usuarioReportes');
       ELSIF (ag_tiporeporte = '3')
       THEN
          usp_print
             ('
-        <tr>
+        <div class="center-block">
             <td colspan="3" align=center>
                 <h4>
                 Usuarios Registrados seg&uacute;n perfiles
                 </br></br>
-                </h4>
-            </td>
-        </tr>
-        <tr>
+            </div>
+        <table class="table table-bordered" >
+        <tr class="active">
             <td class=c1>Entidad</td>
             <td class=c2>
                 <input name="ag_descent" type="text" style="width:300px"
@@ -5126,7 +5127,7 @@ usp_print('<script type="text/javascript">
                 <input name="ag_codent" type="hidden" value=""/></td>
             <td class=c3>Seleccione la entidad.</td>
         </tr>
-        <tr>
+        <tr  class="active>
             <td class=c1>Perfil</td>
             <td class=c2>
                 <select name="ag_perfil" style="width:98%">
@@ -5148,14 +5149,14 @@ usp_print('<script type="text/javascript">
       THEN
          usp_print
             ('
-        <tr>
+        <tr  class="active>
             <td colspan="3" align=center>
                 <h4>Usuarios por cada entidad registra en el REC
                 </br></br>
                 </h4>
             </td>
         </tr>
-        <tr>
+        <tr  class="active>
             <td class=c1>Entidad</td>
             <td class=c2>
                 <input name="ag_descent" type="text" style="width:300px"
@@ -5220,7 +5221,7 @@ usp_print('<script type="text/javascript">
 
       usp_print
          ('
-        <tr>
+        <tr class="active">
             <td class=c1>&nbsp;
             </td>
             <td class=c2 align=center>
@@ -5485,17 +5486,15 @@ usp_print('<script type="text/javascript">
       usp_print('
     <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
         <tr>
-            <td colspan="2"><h3>'
-          || portlet__titulo
-          || '</h3>
+            <td colspan="2"><h3>Reportes de Usuario</h3>
             </td>
             <td align="right">
-                <!--input type="button" name="c" value="Volver" OnClick="regresar()"-->
                 <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
             </td>
         </tr>
         <tr>
-            <td colspan="3"><h4>Par&aacute;metros:</h4>
+            <td colspan="3">
+                <h4>Par&aacute;metros:</h4>
             </td>
         </tr>
         <tr>
@@ -5520,6 +5519,7 @@ usp_print('<script type="text/javascript">
             || '</td>
         </tr>
     </table>
+    <hr/>
     <br>'
            );
       showpaginacion (lv_currentpage,
@@ -5535,7 +5535,7 @@ usp_print('<script type="text/javascript">
                      );
       usp_print
          ('
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+    <table class="table table-striped table-bordered" style="font-size:0.8em">
         <tr>
             <th class="th1">Usuario</b></th>
             <th class="th1">Nombre</b></th>
@@ -6553,13 +6553,11 @@ usp_print('<script type="text/javascript">
 
       usp_print
          (   '
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
-        <tr>
-            <td colspan="2"><h3>'
-          || portlet__titulo
-          || '</h3>
+    <table style="width:100%">
+        <tr >
+            <td colspan="2"><h3>Reportes de Usuario</h3>
             </td>
-            <td align="right">
+            <td style="text-align:right">
                 <!--input type="button" name="c" value="Volver" OnClick="regresar()"-->
                 <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
             </td>
@@ -6592,7 +6590,7 @@ usp_print('<script type="text/javascript">
          EXIT WHEN c_usuario%NOTFOUND;
          usp_print
             (   '
-      <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+      <table class="table table-bordered table-striped">
         <tr>
             <td class=c1>Nombre:</td>
             <td class=c2> '
