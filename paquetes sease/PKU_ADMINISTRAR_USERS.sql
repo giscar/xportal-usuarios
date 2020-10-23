@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE         "PKU_ADMINISTRAR_USERS" 
+CREATE OR REPLACE PACKAGE               "PKU_ADMINISTRAR_USERS" 
 /*
 || Author:           Cristina Zenteno Garcia
 || Purpose:         Funciones y procedimientos requeridos en el XPortal
@@ -244,6 +244,7 @@ IS
       session__userid   IN   VARCHAR2
     );
 
+PROCEDURE f_lista_perfiles;
   function f_get_ubigeo_ue(  v_dep_codigo_vb          varchar2,
                               v_pro_codigo_vb          varchar2,
                               v_dis_codigo_vb          varchar2 )
@@ -574,7 +575,7 @@ END;
 /
 
 
-CREATE OR REPLACE PACKAGE BODY         "PKU_ADMINISTRAR_USERS" 
+CREATE OR REPLACE PACKAGE BODY               "PKU_ADMINISTRAR_USERS" 
 IS
 /*----------------------- Private Modules ---------------------------*/
    FUNCTION generaclavealeatoria
@@ -1862,16 +1863,16 @@ IS
          ('
        <script>
         function refrescarProvincias(vpid, vsdo, vobject)
-            {   var dep = document.getElementById("ag_departamento").value;
-                 var modulo = document.getElementById("v_modulo").value;
+            {   var dep = thisform.ag_departamento.value;
+                 var modulo = thisform.v_modulo.value;
                  var args;
                  args = "&ag_departamento="+dep+"&v_modulo="+modulo;
                  llamarAjax(vobject, vpid, vsdo, args);
             }
         function refrescarDistritos(vpid, vsdo, vobject)
-            {   var dep = document.getElementById("ag_departamento").value;
-                var pro = document.getElementById("ag_provincia").value;
-                var modulo = document.getElementById("v_modulo").value;
+            {   var dep = thisform.ag_departamento.value;
+                var pro = thisform.ag_provincia.value;
+                var modulo = thisform.v_modulo.value;
                 var args;
                 args = "&ag_departamento="+dep+"&ag_provincia="+pro+"&v_modulo="+modulo;
                 llamarAjax(vobject, vpid, vsdo, args);
@@ -1882,15 +1883,15 @@ IS
          ('
          <table class="table table-bordered"
         <tr class="active">
-            <td class=c1>Departamento
+            <td class="active">Departamento
             </td>
-            <td class=c2>'
+            <td class="active">'
          );
       pku_administrar_users.f_lista_dep (v_modulo);
       usp_print
          ('
             </td>
-            <td class=c3>Seleccione el departamento
+            <td class="active">Seleccione el departamento
             </td>
         </tr>
         <tr  class="active">
@@ -2499,15 +2500,13 @@ IS
       </script> ');
 
       usp_print('
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
-        <tr>
-            <td colspan ="3">
-              <h3>Busqueda de Usuarios</h3>
+ 
+
+              <h3>Búsqueda de Usuarios</h3>
                 <input name="ag_opcion" type="hidden" value="B"/>
               </br>
-            </td>
-        </tr>
-        <tr>
+<table class="table table-bordered">
+        <tr class="active">
             <td class=c1>Entidad</td>
             <td class=c2>
                 <input name="ag_descent" type="text" style="width:300px"
@@ -2515,7 +2514,7 @@ IS
                 <input name="ag_codent" type="hidden" value=""/></td>
             <td class=c3>Seleccione la entidad.</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Nombre</td>
             <td class=c2>
                 <input type="text" name="ag_usunombre" maxlength="100" style="width:95%"/></td>
@@ -2704,7 +2703,7 @@ IS
                      );
       usp_print
          ('
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+    <table class="table table-bordered">
         <tr class="active">
             <th class="th1">Usuario</b></th>
             <th class="th1">Nombre</b></th>
@@ -3497,7 +3496,9 @@ usp_print('<script type="text/javascript">
         <tr>
             <td colspan="3"><h4>Datos de la Entidad</h4></td>
         </tr>
-        <tr>
+        </table>
+        <table class="table table-bordered">
+        <tr class="active">
             <td class=c1>Entidad</td>
             <td class=c2>
                 <input name="ag_descent" type="text" style="width:310px;background-color:#F5F5F5;"
@@ -3508,14 +3509,14 @@ usp_print('<script type="text/javascript">
                 </td>
             <td class=c3>Seleccione la entidad.</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Organo Desconcentrado o Unidad Operativa</td>
             <td class=c2>
                 <input type="text" name="ag_descuniope" maxlength="100" style="width:98%"
                 value="'|| nvl(r_usuario.eue_descripcion,'') || '"></td>
             <td class=c3>Ingresa la Unidad Operativa al que pertence el usuario, si corresponde.</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Domicilio</td>
             <td class=c2>
                 <input type="text" name="ag_descdomicilio" maxlength="100" style="width:98%"
@@ -3524,34 +3525,34 @@ usp_print('<script type="text/javascript">
         </tr>  ');
 
  usp_print( '
-        <tr>
+        <tr class="active">
             <td colspan="3"><h4>Ubicaci&oacute;n Geografica de la Unidad Ejecutora o Unidad Operativa</h4></td>
         </tr> ' );
 
-    usp_print (f_get_ubigeo_ue(r_usuario.dep_codigo,r_usuario.pro_codigo,r_usuario.dis_codigo));
+    usp_print (f_get_ubigeo_ue2(r_usuario.dep_codigo,r_usuario.pro_codigo,r_usuario.dis_codigo));
 
  usp_print( '
-        <tr>
+        <tr class="active">
             <td colspan="3"><h4>Datos del Solicitante</h4></td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Nombre</td>
             <td class=c2>
                 <input type="text" name="ag_solnombre" maxlength="60" style="width:98%"
                  value="'||nvl(r_usuario.usu_nomaprobador,'')||'"/></td>
             <td class=c3>Ingrese el nombre del solicitante de la modificaci&oacute;n</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Cargo</td>
             <td class=c2>
                 <input type="text" name="ag_solcargo" maxlength="60" style="width:98%"
                 value="'||nvl(r_usuario.usu_cargoaprobador,'')||'"/></td>
             <td class=c3>Ingrese el cargo del solicitante de la modificaci&oacute;n</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td colspan="3"><h4>Datos del Funcionario - Usuario</h4></td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Funcionario - Usuario</td>
             <td class=c2>
                 <input readonly name="ag_usufun" maxlength="20" class="form-control"
@@ -3560,7 +3561,7 @@ usp_print('<script type="text/javascript">
              || '"/></td>
             <td class=c3>Se genera al seleccionar la entidad y el DNI del usuario.</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Nombre</td>
             <td class=c2>
                 <input type="text" name="ag_usunombre" maxlength="100" style="width:98%"
@@ -3569,10 +3570,10 @@ usp_print('<script type="text/javascript">
              || '"/></td>
             <td class=c3>Ingrese el nombre.</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>DNI</td>
             <td class=c2>
-                <input style="width:98%; '
+                <input class="form-control" style=" '
             );
 
          IF r_usuario.usu_tipo IS NOT NULL
@@ -3588,7 +3589,7 @@ usp_print('<script type="text/javascript">
              || '"/></td>
             <td class=c3>DNI del usuario</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Cargo</td>
             <td class=c2>
                 <input type="text" name="ag_usucargo" maxlength="60" style="width:98%" value="'
@@ -3596,7 +3597,7 @@ usp_print('<script type="text/javascript">
              || '"/></td>
             <td class=c3>Cargo del usuario</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Correo Electr&oacute;nico</td>
             <td class=c2>
                 <input type="text" name="ag_usuemail" maxlength="60" style="width:98%" value="'
@@ -3604,7 +3605,7 @@ usp_print('<script type="text/javascript">
              || '"/></td>
             <td class=c3>Correo Electr&oacute;nico del usuario</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Tel&eacute;fono</td>
             <td class=c2>
                 <input type="text" name="ag_usufono" maxlength="50" style="width:98%" value="'
@@ -3612,7 +3613,7 @@ usp_print('<script type="text/javascript">
              || '"/></td>
             <td class=c3>N&uacute;mero telef&oacute;nico del usuario</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Estado</td>
             <td class=c2>
                 <select name="ag_estado" style="width:98%" value="'
@@ -3635,20 +3636,26 @@ usp_print('<script type="text/javascript">
                 </select></td>
             <td class=c3>&nbsp;</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Observaciones</td>
             <td class=c2>
-                <textarea name="ag_obs" rows="4" columns = "150" style="width:98%"></textarea>
+                <textarea name="ag_obs" rows="4" columns = "150" class="form-control"></textarea>
                 </td>
             <td class=c3>Ingrese la observaci&oacute;n.</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Fecha de recepci&oacute;n de solicitud</td>
             <td class=c2>
-                <input readonly  name="ag_fecrecep" style="width:90%" class=CalSelect  onclick="calendario(this)"></td>
+            <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fecrecep" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+            </div>
+               </td>
             <td class=c3>Ingrese la fecha de recepci&oacute;n de la solicitud.</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Fecha de creaci&oacute;n</td>
             <td class=c2>
                 <input type="text" name="ag_feccre"  style="width:98%;background-color:#F5F5F5;" value="'
@@ -3656,7 +3663,7 @@ usp_print('<script type="text/javascript">
              || '"/></td>
             <td class=c3>La fecha de creaci&oacute;n se obtiene por defecto.</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Fecha de modificaci&oacute;n</td>
             <td class=c2>
                 <input readonly type="text" name="ag_fecmod" style="width:98%;background-color:#F5F5F5;" value="'
@@ -3664,7 +3671,7 @@ usp_print('<script type="text/javascript">
              || '"/></td>
             <td class=c3>La fecha de modificaci&oacute;n se obtiene por defecto.</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1>Funcionario - Usuario</td>
             <td class=c2>
                 <select name="ag_tipousu" style="width:98%" onChange="refrescarPerfiles(''mod_UsuarioModificar'',''doVerPerfilesAjax'',''divPerfiles'',thisform.ag_codent.value);">
@@ -4911,6 +4918,49 @@ usp_print('<script type="text/javascript">
       </table>'
          );
    END doviewreporteGen;
+   
+   PROCEDURE f_lista_perfiles 
+ 
+   IS
+       CURSOR c_perfiles IS
+      SELECT TRIM (usu.usu_codigo) usu_codigo, usu.usu_nombre
+        FROM sease.usuario usu
+       WHERE usu.usu_activo = 1
+         AND usu.apl_codigo = 1
+         AND usu.eue_codigo IS NULL
+         AND usu.usu_tipo IS NOT NULL
+    ORDER BY TRIM (usu.usu_nombre) ASC;
+
+     r_perfil c_perfiles%ROWTYPE;
+   BEGIN
+   
+   usp_print(' <tr  class="active">
+            <td class=c1>Perfil</td>
+            <td class=c2>
+                <select name="ag_perfil" style="width:98%">
+                        <option value="">Seleccione el perfil</option>');
+
+         OPEN c_perfiles;
+         LOOP
+            FETCH c_perfiles INTO r_perfil;
+            EXIT WHEN c_perfiles%NOTFOUND;
+
+                usp_print('<option value="'||r_perfil.usu_codigo||'">'||r_perfil.usu_nombre||'</option>');
+         END LOOP;
+         CLOSE c_perfiles;
+
+         usp_print('</select></td>
+            <td class=c3>Seleccione el tipo de usuario funcionario</td>
+        </tr>');
+        
+  
+   EXCEPTION
+      WHEN OTHERS
+      THEN
+         usp_print ('Ocurrio el siguiente error: ' || SQLERRM || ' - '
+                    || SQLCODE
+                   );
+   END f_lista_perfiles;
 
          PROCEDURE doviewdetareporte (
       portlet__titulo        IN   VARCHAR2,
@@ -4930,17 +4980,7 @@ usp_print('<script type="text/javascript">
    IS
       v_orden    NUMBER (2);
       v_tipent   VARCHAR2 (50);
-
-      CURSOR c_perfiles IS
-      SELECT TRIM (usu.usu_codigo) usu_codigo, usu.usu_nombre
-        FROM sease.usuario usu
-       WHERE usu.usu_activo = 1
-         AND usu.apl_codigo = 1
-         AND usu.eue_codigo IS NULL
-         AND usu.usu_tipo IS NOT NULL
-    ORDER BY TRIM (usu.usu_nombre) ASC;
-
-    r_perfil c_perfiles%ROWTYPE;
+    
    BEGIN
       pku_administrar_users.dojavascriptajax;
       pku_administrar_users.dojavascriptcomun;
@@ -5080,6 +5120,7 @@ usp_print('<script type="text/javascript">
                      <span class="glyphicon glyphicon-calendar"></span>
                 </div>
                <input type="text" name="ag_fecini" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+            </div>
             </td>
             <td class=c3>Seleccione la fecha de inicio
             </td>
@@ -5096,7 +5137,8 @@ usp_print('<script type="text/javascript">
             </td>
             <td class=c3>Seleccione la fecha de fin
             </td>
-        </tr> ');
+        </tr>
+        </table>');
       ELSIF (ag_tiporeporte = '2')
       THEN
          usp_print
@@ -5104,20 +5146,18 @@ usp_print('<script type="text/javascript">
          <div class="center-block">
                 <h4>
                 Usuarios Registrados por Ubicaci&oacute;n Geogr&aacute;fica
-                </br></br>
                 </h4>
-            </div>  ');
+        </div> 
+        </br></br>');
          pku_administrar_users.f_lista_ubigeo ('mod_usuarioReportes');
       ELSIF (ag_tiporeporte = '3')
       THEN
          usp_print
             ('
         <div class="center-block">
-            <td colspan="3" align=center>
-                <h4>
-                Usuarios Registrados seg&uacute;n perfiles
-                </br></br>
-            </div>
+          <h4> Usuarios Registrados seg&uacute;n perfiles</h4>
+         </div>
+         </br></br>
         <table class="table table-bordered" >
         <tr class="active">
             <td class=c1>Entidad</td>
@@ -5127,36 +5167,21 @@ usp_print('<script type="text/javascript">
                 <input name="ag_codent" type="hidden" value=""/></td>
             <td class=c3>Seleccione la entidad.</td>
         </tr>
-        <tr  class="active>
-            <td class=c1>Perfil</td>
-            <td class=c2>
-                <select name="ag_perfil" style="width:98%">
-                        <option value="">Seleccione el perfil</option>');
-
-         OPEN c_perfiles;
-         LOOP
-            FETCH c_perfiles INTO r_perfil;
-            EXIT WHEN c_perfiles%NOTFOUND;
-
-                usp_print('<option value="'||r_perfil.usu_codigo||'">'||r_perfil.usu_nombre||'</option>');
-         END LOOP;
-         CLOSE c_perfiles;
-
-         usp_print('</select></td>
-            <td class=c3>Seleccione el tipo de usuario funcionario</td>
-        </tr>' );
+       ' );
+       pku_administrar_users.f_lista_perfiles;
+       usp_print('</table>');
       ELSIF (ag_tiporeporte = '4')
       THEN
          usp_print
             ('
-        <tr  class="active>
-            <td colspan="3" align=center>
-                <h4>Usuarios por cada entidad registra en el REC
-                </br></br>
+               <div class="center-block">
+                <h4>
+                Usuarios por cada entidad registra en el REC
                 </h4>
-            </td>
-        </tr>
-        <tr  class="active>
+        </div> 
+        </br></br>
+          <table class="table table-bordered" >
+        <tr  class="active">
             <td class=c1>Entidad</td>
             <td class=c2>
                 <input name="ag_descent" type="text" style="width:300px"
@@ -5164,7 +5189,7 @@ usp_print('<script type="text/javascript">
                 <input name="ag_codent" type="hidden" value=""/></td>
             <td class=c3>Seleccione la entidad.</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Estado</td>
             <td class=c2>
                 <select name="ag_estado" style="width:95%">
@@ -5174,19 +5199,21 @@ usp_print('<script type="text/javascript">
                 </select></td>
             <td class=c3>Seleccione el estado.</td>
         </tr>
+        </table>
         ');
       ELSIF (ag_tiporeporte = '5')
       THEN
          usp_print
             ('
-        <tr>
-            <td colspan="3" align=center>
-                <h4>Usuarios seg&uacute;n tipo de entidades
-                </br></br>
+             <div class="center-block">
+                <h4>
+                Usuarios seg&uacute;n tipo de entidades
                 </h4>
-            </td>
-        </tr>
-        <tr>
+        </div> 
+        </br></br>
+          <table class="table table-bordered" >
+        
+        <tr class="active">
             <td class=c1>Tipo de Entidad</td>
             <td class=c2>
                 <div name="divTipoEntidad" id="divTipoEntidad" >'
@@ -5203,7 +5230,7 @@ usp_print('<script type="text/javascript">
                </td>
             <td class=c3>Seleccione el tipo de entidad.</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Subtipo de Entidad</td>
             <td class=c2>
                 <div name="divSubtipoEntidad" id="divSubtipoEntidad">'
@@ -5215,21 +5242,19 @@ usp_print('<script type="text/javascript">
             ('
             </td>
             <td class=c3>Seleccione el subtipo de entidad.</td>
-        </tr>'
+        </tr>
+        </table>'
             );
       END IF;
 
       usp_print
-         ('
+         ('<table style="width:100%">
         <tr class="active">
-            <td class=c1>&nbsp;
-            </td>
-            <td class=c2 align=center>
-                <input type="button" name="btnBuscar" style="width:20%"
+            <td colspan="3" style="text-align:right">
+                <input type="button" name="btnBuscar" 
                         value="Buscar" OnClick="validaParametros();"/>
                 <input name="v_modulo" type="hidden" value="mod_usuarioReportes"/>
-            </td>
-            <td class=c3>&nbsp;
+                    
             </td>
         </tr>
     </table>'
@@ -5240,11 +5265,11 @@ usp_print('<script type="text/javascript">
          usp_print
             ('
     <script>
-        document.getElementById(''ag_departamento'').value = "15";
+        thisform.ag_departamento.value = "15";
         refrescarProvincias(''mod_usuarioReportes'',''dolistarprovincias'',''divProvincias'');
-        document.getElementById(''ag_provincia'').value = "01";
+       thisform.ag_provincia.value = "01";
         refrescarDistritos(''mod_usuarioReportes'',''dolistardistritos'',''divDistritos'');
-        document.getElementById(''ag_distrito'').value = "01";
+        thisform.ag_distrito.value = "01";
     </script>'
             );
       END IF;
@@ -5738,15 +5763,12 @@ usp_print('<script type="text/javascript">
       </script>');
 
       usp_print ('
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+    <table border="0" width=95% align=center class=tableform cellpadding=3 cellspacing=0>
         <tr>
-            <td colspan="2"><h3>'
-          || portlet__titulo
-          || '</h3>
+            <td colspan="2"><h3>Reportes de Usuario</h3>
             </td>
             <td align="right">
-                <!--input type="button" name="c" value="Volver" OnClick="regresar()"/-->
-                <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
+               <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
             </td>
         </tr>
         <tr>
@@ -5765,6 +5787,7 @@ usp_print('<script type="text/javascript">
           || '</td>
         </tr>
     </table>
+      <hr/>
     <br> '
          );
       showpaginacion (lv_currentpage,
@@ -5781,7 +5804,7 @@ usp_print('<script type="text/javascript">
       usp_print
          ('
     <br>
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+    <table class="table table-striped table-bordered" style="font-size:0.8em">
         <tr>
             <th class="th1">Usuario</b></th>
             <th class="th1">Nombre</b></th>
@@ -5954,13 +5977,10 @@ usp_print('<script type="text/javascript">
       usp_print ('
     <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
         <tr>
-            <td colspan="2"><h3>'
-          || portlet__titulo
-          || '</h3>
+            <td colspan="2"><h3>Reportes de Usuario</h3>
             </td>
             <td align="right">
-                <!--input type="button" name="c" value="Volver" OnClick="regresar()"-->
-                <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
+               <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
             </td>
         </tr>
         <tr>
@@ -5982,7 +6002,7 @@ usp_print('<script type="text/javascript">
       usp_print
          ('
     <br>
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+    <table class="table table-striped table-bordered" style="font-size:0.8em">
         <tr>
             <th class="th1">Usuario</b></th>
             <th class="th1">Nombre</b></th>
@@ -6157,13 +6177,10 @@ usp_print('<script type="text/javascript">
       usp_print ( '
     <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
         <tr>
-            <td colspan="2"><h3>'
-          || portlet__titulo
-          || '</h3>
+            <td colspan="2"><h3>Reportes de Usuario</h3>
             </td>
             <td align="right">
-                <!--input type="button" name="c" value="Volver" OnClick="regresar()"/-->
-                <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
+               <input type="button" name="c" value="Volver" OnClick="volver_listado()"/>
             </td>
         </tr>
         <tr>
@@ -6203,7 +6220,7 @@ usp_print('<script type="text/javascript">
       usp_print
          ('
     <br>
-    <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+     <table class="table table-striped table-bordered" style="font-size:0.8em">
         <tr>
             <th class="th1">Usuario</b></th>
             <th class="th1">Nombre</b></th>
@@ -6388,7 +6405,7 @@ usp_print('<script type="text/javascript">
         usp_print('
         <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
             <tr>
-                <td colspan="2"><h3>'||portlet__titulo||'</h3></td>
+                <td colspan="2"><h3>Reportes de Usuario</h3></td>
                 <td align="right"><input type="button" name="c" value="Volver" OnClick="regresar()"/></td>
             </tr>
             <tr>
@@ -6406,7 +6423,7 @@ usp_print('<script type="text/javascript">
                 50);
         usp_print('
         <br>
-        <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+         <table class="table table-striped table-bordered" style="font-size:0.8em">
             <tr>
                 <th class="th1">Entidad</b></th>
                 <th class="th1">Usuarios Activos</b></th>
@@ -7666,8 +7683,8 @@ end if;
                 <td><h3>Historial del Usuario:&nbsp;'||ag_usufun||'</h3></td>
             </tr>
         </table><br>
-        <!--table border="0" align=center cellpadding=3 cellspacing=0-->
-        <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+
+        <table class="table table-bordered table-striped">
             <tr>
                 <th class="th1">Motivo</th>
                 <th class="th1">Usuario</th>
