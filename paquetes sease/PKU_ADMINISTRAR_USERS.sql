@@ -7158,7 +7158,8 @@ for xrowArb in cFormArb loop
                
             </td>
         </tr>    
-   
+   </table>
+   <table class="table table-bordered">
         <tr>     
            <td align="left" colspan="2"><p style="color:#2C821E; font-size:large"><b>Datos del Conciliador / Presidente Arbitral o &Aacute;rbitro &Uacute;nico</b></p></td>
         </tr>
@@ -7270,18 +7271,16 @@ for xrowArb in cFormArb loop
         usp_print('<INPUT name="tipo_ubi" type="hidden"/> ');
 
          usp_print
-            (   '<table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
+            (   '<table class="table table-bordered">
         <tr>
             <td colspan ="3">
-              <h3>'
-             || portlet__titulo
-             || '</h3>
+              <h3>Actualización de datos</h3>
               <input name="ag_usufun" type="hidden" value="'
              || session__userid
              || '" />
             </td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Nombre</td>
             <td class=c2>
                 <input type="text" name="ag_usunombre" maxlength="100" style="width:98%" value="'
@@ -7289,7 +7288,7 @@ for xrowArb in cFormArb loop
              || '" readonly="true"></td>
             <td class=c3>Nombre completo del usuario</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Cargo</td>
             <td class=c2>
                 <input type="text" name="ag_usucargo" maxlength="60" style="width:98%" value="'
@@ -7297,21 +7296,21 @@ for xrowArb in cFormArb loop
              || '"/></td>
             <td class=c3>Cargo del usuario</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>DNI</td>
             <td class=c2> ');
                 if  (r_dato.usu_dni = '') OR (r_dato.usu_dni is null)  then
                     usp_print ('<input name="ag_usudni" maxlength="8"
-                        style="width:98%;" value="'||r_dato.usu_dni||'" >' );
+                        class="form-control" value="'||r_dato.usu_dni||'" >' );
                 else
                     usp_print ('<input name="ag_usudni" maxlength="8" readonly="true"
-                        style="width:98%;background-color:#F5F5F5;" value="'||r_dato.usu_dni||'" >'  );
+                        class="form-control" value="'||r_dato.usu_dni||'" >'  );
                 end if;
 
             usp_print(' </td>
             <td class=c3>DNI - Este dato fue ingresado al crear su usuario y no puede ser modificado</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Correo electr&oacute;nico</td>
             <td class=c2>
                 <input type="text" name="ag_usuemail" maxlength="60" style="width:98%" value="'
@@ -7319,7 +7318,7 @@ for xrowArb in cFormArb loop
              || '"/></td>
             <td class=c3>Correo electr&oacute;nico</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Tel&eacute;fono</td>
             <td class=c2>
                 <input type="text" name="ag_usufono" maxlength="50" style="width:98%" value="'
@@ -7335,40 +7334,40 @@ for xrowArb in cFormArb loop
              || '"/></td>
             <td class=c3>Domicilio</td>
         </tr-->
-        <tr><td colspan=3><hr></td></tr>
-        <tr>
+
+        <tr class="active">
             <td class=c1>Organo Desconcentrado o Unidad Operativa</td>
             <td class=c2> ');
                 if  (trim(r_dato.eue_descripcion) = '') OR (r_dato.eue_descripcion is null) then
                     usp_print ('<input name="ag_descuniope" maxlength="100"
-                        style="width:98%;" value="'||r_dato.eue_descripcion||'" >' );
+                        class="form-control"" value="'||r_dato.eue_descripcion||'" >' );
                 else
                     usp_print ('<input name="ag_descuniope" maxlength="100" readonly="true"
-                        style="width:98%;background-color:#F5F5F5;" value="'||r_dato.eue_descripcion||'" >'  );
+                        class="form-control" value="'||r_dato.eue_descripcion||'" >'  );
                 end if;
             usp_print(' </td>
             <td class=c3>Descripcion de Organo Desconcentrado o Unidad Operativa</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1>Direcci&oacute;n Organo Desconcentrado o Unidad Operativa</td>
             <td class=c2> ');
                 if  (r_dato.eue_direccion = '') OR (r_dato.eue_direccion is null) then
                     usp_print ('<input name="ag_descdomicilio" maxlength="100"
-                        style="width:98%;" value="'||r_dato.eue_direccion||'" >' );
+                        class="form-control" value="'||r_dato.eue_direccion||'" >' );
                 else
                     usp_print ('<input name="ag_descdomicilio" maxlength="100" readonly="true"
-                        style="width:98%;background-color:#F5F5F5;" value="'||r_dato.eue_direccion||'" >'  );
+                        class="form-control" value="'||r_dato.eue_direccion||'" >'  );
                 end if;
             usp_print(' </td>
             <td class=c3>Domicilio de Organo Desconcentrado o Unidad Operativa</td>
         </tr>
-        <tr>
+        <tr  class="active">
             <td class=c1 colspan="3">Ubicaci&oacute;n Geografica de Organo Desconcentrado o Unidad Operariva</td>
         </tr> ' );
 
          --JMD 08/07/2010
          if (r_dato.dis_codigo = '') OR (r_dato.dis_codigo is null) then
-           usp_print (f_get_ubigeo_ue(r_dato.dep_codigo,r_dato.pro_codigo,r_dato.dis_codigo));
+           usp_print (f_get_ubigeo_ue2(r_dato.dep_codigo,r_dato.pro_codigo,r_dato.dis_codigo));
          else
            usp_print (f_read_ubigeo_ue(r_dato.dep_codigo,r_dato.pro_codigo,r_dato.dis_codigo));
          end if;
@@ -7376,7 +7375,7 @@ for xrowArb in cFormArb loop
         --pku_administrar_users.f_lista_ubigeo ('mod_UsuarioGeneral2');
 
          usp_print('
-        <tr>
+        <tr  class="active">
             <td align="center" valign=top colspan="3">
                 <input type="button" name="g" value="Guardar" OnClick="validarCampos()"/>
                 <input name="v_modulo" type="hidden" value="mod_UsuarioGeneral2"/>
@@ -7626,13 +7625,17 @@ end if;
        i_pro_desc := item.pro_desc;
        i_dis_desc := item.dis_desc;
      end loop;
-     lv_rtn:='<tr ><TD COLSPAN="1"><TD COLSPAN="2">';
-     lv_rtn:= lv_rtn|| PKU_PROCESOS_COMUN.f_putRowForm('Ubicaci&oacute;n Geografica',
-               '<INPUT name="v_dep_codigo_vb" readonly="true" value="'||v_dep_codigo_vb||'" type="hidden"/>
+
+     lv_rtn:= '<tr class="active">
+     <td>Ubicaci&oacute;n Geografica</td>
+     <td>
+        <INPUT name="v_dep_codigo_vb" readonly="true" value="'||v_dep_codigo_vb||'" type="hidden"/>
                 <INPUT name="v_pro_codigo_vb" readonly="true" value="'||v_pro_codigo_vb||'" type="hidden"/>
                 <INPUT name="v_dis_codigo_vb" readonly="true" value="'||v_dis_codigo_vb||'" type="hidden"/>
-                <INPUT style="width:90%" name="lugar_ejec_vb" class=ViewSelect readonly  value="'||i_dep_desc||'/'||i_pro_desc||'/'||i_dis_desc||'"/>
-                ','Seleccione la ubicaci&oacute;n geogr&aacute;fica.');
+                <INPUT class="form-control" name="lugar_ejec_vb" class=ViewSelect readonly  value="'||i_dep_desc||'/'||i_pro_desc||'/'||i_dis_desc||'"/>
+                </td>
+                <td>Seleccione la ubicaci&oacute;n geogr&aacute;fica.</td>
+                </tr>';
 
      return lv_rtn||'</TD><TR>';
    end;
