@@ -244,7 +244,7 @@ IS
       session__userid   IN   VARCHAR2
     );
 
-PROCEDURE f_lista_perfiles;
+PROCEDURE f_lista_perfiles_cambiado;
   function f_get_ubigeo_ue(  v_dep_codigo_vb          varchar2,
                               v_pro_codigo_vb          varchar2,
                               v_dis_codigo_vb          varchar2 )
@@ -492,8 +492,8 @@ PROCEDURE USP_GENERA_NUEVA_CLAVE_FORM(
           ag_paswd              IN   VARCHAR2,
           ag_usufun             IN   VARCHAR2,
           ag_opcion             IN   VARCHAR2,
-          iisenv__remote_host   IN   VARCHAR2 DEFAULT NULL,
-          ag_return             IN OUT  NUMBER)
+          iisenv__remote_host   IN   VARCHAR2 DEFAULT NULL/*,
+          ag_return             IN OUT  NUMBER*/)
       /*
       ||    Author: Cristina Zenteno Garcia
       ||    Overview: Procedimiento para grabar la contrasea
@@ -955,7 +955,7 @@ IS
         lv_return := 0;
         lv_clavealeatoria := generaclavealeatoria ();
         dograbarcontrasenia(session__userid, lv_clavealeatoria, ag_usufun,
-                           'R', iisenv__remote_host, lv_return);
+                           'R', iisenv__remote_host/*, lv_return*/);
     EXCEPTION
         WHEN OTHERS
         THEN
@@ -4919,7 +4919,7 @@ usp_print('<script type="text/javascript">
          );
    END doviewreporteGen;
    
-   PROCEDURE f_lista_perfiles 
+   PROCEDURE f_lista_perfiles_cambiado 
  
    IS
        CURSOR c_perfiles IS
@@ -4960,7 +4960,7 @@ usp_print('<script type="text/javascript">
          usp_print ('Ocurrio el siguiente error: ' || SQLERRM || ' - '
                     || SQLCODE
                    );
-   END f_lista_perfiles;
+   END f_lista_perfiles_cambiado;
 
          PROCEDURE doviewdetareporte (
       portlet__titulo        IN   VARCHAR2,
@@ -5168,7 +5168,7 @@ usp_print('<script type="text/javascript">
             <td class=c3>Seleccione la entidad.</td>
         </tr>
        ' );
-       pku_administrar_users.f_lista_perfiles;
+       pku_administrar_users.f_lista_perfiles_cambiado;
        usp_print('</table>');
       ELSIF (ag_tiporeporte = '4')
       THEN
@@ -6961,27 +6961,25 @@ PROCEDURE doviewreporte7 (
                <font size=3 color=#dd0000><b>Le quedan '|| to_char(r_inactivar.diferencia)  || ' dia(s) para modificar su contrase&ntilde;a, de lo contrario su contrase&ntilde;a caducar&aacute;.</b></font>
             </td>
         </tr>
-                ');
+               </table> ');
        END LOOP;
        CLOSE c_inactivar;
-        usp_print('
-        <tr>
-            <td colspan="3" >
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
+        usp_print('<table class="table table-bordered">
+        
+        <tr class="active">
             <td class=c1 align=right>Nueva Contrase&ntilde;a:</td>
             <td class=c2>
                 <input type="password" name="ag_paswd" maxlength="30" style="width:98%"/></td>
             <td class=c3>Escriba la nueva contrase&ntilde;a</td>
         </tr>
-        <tr>
+        <tr class="active">
             <td class=c1 align=right>Confirme la Contrase&ntilde;a:</td>
             <td class=c2>
                 <input type="password" name="ag_paswd2" maxlength="30" style="width:98%"/></td>
             <td class=c3>Confirme la nueva contrase&ntilde;a</td>
         </tr>
+        </table>
+        <table>
         <tr>
             <td align="center" valign=top colspan="3">
                 <input type="button" name="g" value="Guardar" OnClick="validar()"/>
@@ -7002,8 +7000,8 @@ PROCEDURE doviewreporte7 (
         ag_paswd              IN   VARCHAR2,
         ag_usufun             IN   VARCHAR2,
         ag_opcion             IN   VARCHAR2,
-        iisenv__remote_host   IN   VARCHAR2 DEFAULT NULL,
-        ag_return             IN OUT  NUMBER)
+        iisenv__remote_host   IN   VARCHAR2 DEFAULT NULL/*,
+        ag_return             IN OUT  NUMBER*/)
     /*
     ||    Author: Cristina Zenteno Garcia
     ||    Overview: Procedimiento para grabar la contrasea
@@ -7014,6 +7012,7 @@ PROCEDURE doviewreporte7 (
     */
     IS
         lv_notificacion   VARCHAR2 (1000);
+        ag_return number;
     BEGIN
         UPDATE sease.usuario
         SET
@@ -7971,7 +7970,7 @@ end if;
             if cUsuActivo = 1 then
                 BEGIN
                     cNuevaClave := generaclavealeatoria();
-                    dograbarcontrasenia('SEACE', cNuevaClave, v_usuario, 'O', iisenv__remote_host, cReturn);
+                    dograbarcontrasenia('SEACE', cNuevaClave, v_usuario, 'O', iisenv__remote_host/*, cReturn*/);
 
                     if cReturn = 1 then
                         cMensaje1 := 'Se envi&oacute; satisfactoriamente la nueva contrase&ntilde;a, verifique su correo electr&oacute;nico';
