@@ -67,7 +67,7 @@ END; -- Package spec
 /
 
 
-CREATE OR REPLACE PACKAGE BODY         "PKU_BUSCADORES_MOD" 
+CREATE OR REPLACE PACKAGE BODY               "PKU_BUSCADORES_MOD" 
 IS
 --
 -- To modify this template, edit file PKGBODY.TXT in TEMPLATE
