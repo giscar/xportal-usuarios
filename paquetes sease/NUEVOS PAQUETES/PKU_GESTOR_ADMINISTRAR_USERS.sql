@@ -1,4 +1,5 @@
-CREATE OR REPLACE PACKAGE               "PKU_ADMINISTRAR_USERS" 
+SET SCAN OFF;
+CREATE OR REPLACE PACKAGE PKU_GESTOR_ADMINISTRAR_USERS
 /*
 || Author:           Cristina Zenteno Garcia
 || Purpose:         Funciones y procedimientos requeridos en el XPortal
@@ -575,7 +576,7 @@ END;
 /
 
 
-CREATE OR REPLACE PACKAGE BODY               "PKU_ADMINISTRAR_USERS" 
+CREATE OR REPLACE PACKAGE BODY               "PKU_GESTOR_ADMINISTRAR_USERS" 
 IS
 /*----------------------- Private Modules ---------------------------*/
    FUNCTION generaclavealeatoria
@@ -1443,7 +1444,7 @@ IS
              FROM (SELECT TRIM (usu.usu_codigo) usu_codigo, usu.usu_nombre, usu.usu_coment,
                           CASE
                              WHEN INSTR
-                                    (sease.pku_administrar_users.listargruposxusuario(ag_usufun, ag_tipousu),
+                                    (sease.PKU_GESTOR_ADMINISTRAR_USERS.listargruposxusuario(ag_usufun, ag_tipousu),
                                      TRIM (usu.usu_codigo)
                                      ) >= 1
                              THEN '1'
@@ -1465,7 +1466,7 @@ IS
             <input name="ag_miembros" type="hidden"
                 value="'
           || TRIM
-                 (sease.pku_administrar_users.listargruposxusuario (ag_usufun, ag_tipousu) )
+                 (sease.PKU_GESTOR_ADMINISTRAR_USERS.listargruposxusuario (ag_usufun, ag_tipousu) )
           || '" />
     <table class="table table-striped">
         
@@ -1887,7 +1888,7 @@ IS
             </td>
             <td class="active">'
          );
-      pku_administrar_users.f_lista_dep (v_modulo);
+      PKU_GESTOR_ADMINISTRAR_USERS.f_lista_dep (v_modulo);
       usp_print
          ('
             </td>
@@ -2140,9 +2141,9 @@ IS
 */
    IS
    BEGIN
-      pku_administrar_users.dojavascriptajax;
-      pku_administrar_users.dojavascriptcomun;
-      pku_administrar_users.dojavascriptusuarios;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptajax;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptusuarios;
 
       usp_print
          ('<script>
@@ -2480,7 +2481,7 @@ IS
 
       --usp_print('A¿o Entidad: '||session__anhoentidad||'<br>');
 
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
       usp_print ('
       <script>
             function RtnEntidad(codEnt,desc)
@@ -2641,7 +2642,7 @@ IS
 
      --usp_print('A¿o Entidad: '||session__anhoentidad||'<br>');
 
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
       usp_print
          ('
         <table border="0" width=100% align=center class=tableform cellpadding=3 cellspacing=0>
@@ -2939,8 +2940,8 @@ CURSOR c_modificar_arb
       r_perfil      c_perfiles%ROWTYPE; 
       r_usuario    c_modificar%ROWTYPE;
    BEGIN
-      pku_administrar_users.dojavascriptajax;
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptajax;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       SELECT usu_tipo
         INTO lv_tipousu
@@ -3370,7 +3371,7 @@ usp_print('<script type="text/javascript">
      
          
          else
-      pku_administrar_users.dojavascriptusuarios;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptusuarios;
       usp_print
          ('
       <script>
@@ -3806,7 +3807,7 @@ usp_print('<script type="text/javascript">
                    ag_descdomicilio         , session__userid);
 
       --  Inserta javascripts
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       -- Fin de insercion de javascripts
       OPEN c_grupos (ag_miembros);
@@ -3934,7 +3935,7 @@ usp_print('<script type="text/javascript">
                    ag_descdomicilio);
 
       --  Inserta javascripts
-      /*  pku_administrar_users.dojavascriptcomun; */
+      /*  PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun; */
       -- Fin de insercion de javascripts
 
       OPEN c_grupos (ag_miembros);
@@ -4070,7 +4071,7 @@ usp_print('<script type="text/javascript">
         FROM sease.usuario
        WHERE usu_codigo = RPAD (ag_usufun, 30);
 
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       IF NOT NULLIF (ag_descuniope, r_usuario.eue_descripcion) IS NULL   -- JMD 08/07/2010
       THEN
@@ -4326,8 +4327,8 @@ usp_print('<script type="text/javascript">
 */
    IS
    BEGIN
-      pku_administrar_users.dojavascriptajax;
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptajax;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
       usp_print
          ('
       <script>
@@ -4468,7 +4469,7 @@ usp_print('<script type="text/javascript">
    )
    IS
    BEGIN
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
       usp_print
          ('
       <script>
@@ -4571,7 +4572,7 @@ usp_print('<script type="text/javascript">
       r_grupo   c_grupos%ROWTYPE;
       li_flag   INTEGER            := 1;
    BEGIN
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       SELECT SUM (CASE
                        WHEN INSTR (usu_miembros, ag_usucod) > 0
@@ -4980,8 +4981,8 @@ usp_print('<script type="text/javascript">
       v_tipent   VARCHAR2 (50);
     
    BEGIN
-      pku_administrar_users.dojavascriptajax;
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptajax;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
       usp_print
          (' <script>
             function RtnEntidad(codEnt,desc)
@@ -5147,7 +5148,7 @@ usp_print('<script type="text/javascript">
                 </h4>
         </div> 
         </br></br>');
-         pku_administrar_users.f_lista_ubigeo ('mod_usuarioReportes');
+         PKU_GESTOR_ADMINISTRAR_USERS.f_lista_ubigeo ('mod_usuarioReportes');
       ELSIF (ag_tiporeporte = '3')
       THEN
          usp_print
@@ -5166,7 +5167,7 @@ usp_print('<script type="text/javascript">
             <td class=c3>Seleccione la entidad.</td>
         </tr>
        ' );
-       pku_administrar_users.f_lista_perfiles_cambiado;
+       PKU_GESTOR_ADMINISTRAR_USERS.f_lista_perfiles_cambiado;
        usp_print('</table>');
       ELSIF (ag_tiporeporte = '4')
       THEN
@@ -5217,7 +5218,7 @@ usp_print('<script type="text/javascript">
                 <div name="divTipoEntidad" id="divTipoEntidad" >'
             );
         USP_GET_TIPO_ENTIDAD_ACTUAL(ag_tipoent);
-        -- pku_administrar_users.f_get_tipoentidad;
+        -- PKU_GESTOR_ADMINISTRAR_USERS.f_get_tipoentidad;
         usp_print ('
                     <input type="hidden" name="ag_tiporeporte" value="'||ag_tiporeporte||'"/>
                     <input type="hidden" name="ag_tipoent_des" value=""/>
@@ -5308,8 +5309,8 @@ usp_print('<script type="text/javascript">
 
     r_perfil c_perfiles%ROWTYPE;
    BEGIN
-      pku_administrar_users.dojavascriptajax;
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptajax;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
       usp_print
          (' <script>
             function RtnEntidad(codEnt,desc)
@@ -5477,7 +5478,7 @@ usp_print('<script type="text/javascript">
         r_usuario        c_usuarios%ROWTYPE;
       --end if;
    BEGIN
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       IF ag_currentpage IS NULL
       THEN
@@ -5714,7 +5715,7 @@ usp_print('<script type="text/javascript">
 
       r_usuario         c_usuarios%ROWTYPE;
    BEGIN
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       IF ag_currentpage IS NULL
       THEN
@@ -5941,7 +5942,7 @@ usp_print('<script type="text/javascript">
 
       r_usuario        c_usuarios%ROWTYPE;
    BEGIN
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       IF ag_currentpage IS NULL
       THEN
@@ -6138,7 +6139,7 @@ usp_print('<script type="text/javascript">
 
       r_usuario        c_usuarios%ROWTYPE;
    BEGIN
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       IF ag_currentpage IS NULL
       THEN
@@ -6368,7 +6369,7 @@ usp_print('<script type="text/javascript">
 
         r_totalusu       c_totalusu%ROWTYPE;
     BEGIN
-        pku_administrar_users.dojavascriptcomun;
+        PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
         IF ag_currentpage IS NULL THEN
             lv_currentpage := 1;
@@ -6514,7 +6515,7 @@ usp_print('<script type="text/javascript">
       r_usuario   c_usuario%ROWTYPE;
       r_perfil    c_perfiles%ROWTYPE;
    BEGIN
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
      /*
      usp_print('valor1: '||ag_parametro1||'<br>');
      usp_print('valor2: '||ag_parametro2||'<br>');
@@ -6708,7 +6709,7 @@ PROCEDURE doviewreporte7 (
 
       r_usuario        c_usuarios%ROWTYPE;
    BEGIN
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       IF ag_currentpage IS NULL
       THEN
@@ -6914,7 +6915,7 @@ PROCEDURE doviewreporte7 (
    r_inactivar        c_inactivar%ROWTYPE;
    BEGIN
 
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
       usp_print
          ('
         <script>
@@ -7036,7 +7037,7 @@ PROCEDURE doviewreporte7 (
         generarmensajenotificacion (ag_usufun, ag_opcion, lv_notificacion, ag_paswd);
 
         /*  Inserta javascripts */
-        pku_administrar_users.dojavascriptcomun;
+        PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
         /* Fin de insercion de javascripts*/
         IF ag_opcion = 'C' THEN
@@ -7201,8 +7202,8 @@ for xrowArb in cFormArb loop
    end loop;
    
    else
-      pku_administrar_users.dojavascriptajax;
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptajax;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
       IF c_datos%ISOPEN
       THEN
@@ -7370,7 +7371,7 @@ for xrowArb in cFormArb loop
            usp_print (f_read_ubigeo_ue(r_dato.dep_codigo,r_dato.pro_codigo,r_dato.dis_codigo));
          end if;
 
-        --pku_administrar_users.f_lista_ubigeo ('mod_UsuarioGeneral2');
+        --PKU_GESTOR_ADMINISTRAR_USERS.f_lista_ubigeo ('mod_UsuarioGeneral2');
 
          usp_print('
         <tr  class="active">
@@ -7496,7 +7497,7 @@ end if;
                           
        end if;
       /*  Inserta javascripts */
-      pku_administrar_users.dojavascriptcomun;
+      PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
       /* Fin de insercion de javascripts*/
       usp_print ('<script>inicio();</script>');
    EXCEPTION
@@ -7667,7 +7668,7 @@ end if;
         r_item   c_item%ROWTYPE;
         lv_num    number:=0;
     BEGIN
-        pku_administrar_users.dojavascriptcomun;
+        PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
         IF c_item%ISOPEN THEN
             CLOSE c_item;
@@ -8159,7 +8160,7 @@ end if;
         generarmensajenotificacion (ag_usufun, ag_opcion, lv_notificacion, ag_paswd);
 
         /*  Inserta javascripts */
-        pku_administrar_users.dojavascriptcomun;
+        PKU_GESTOR_ADMINISTRAR_USERS.dojavascriptcomun;
 
         /* Fin de insercion de javascripts*/
         IF ag_opcion = 'C' THEN
@@ -8286,7 +8287,7 @@ order by n_id_tipo_maestro;
              FROM (SELECT TRIM (usu.usu_codigo) usu_codigo, usu.usu_nombre, usu.usu_coment,
                           CASE
                              WHEN INSTR
-                                    (sease.pku_administrar_users.listargruposxusuario('', 3),
+                                    (sease.PKU_GESTOR_ADMINISTRAR_USERS.listargruposxusuario('', 3),
                                      TRIM (usu.usu_codigo)
                                      ) >= 1
                              THEN '1'
@@ -8785,7 +8786,7 @@ function validarCampos(){
         <tr>
             <td class="c1" style="text-align: center" colspan="2"><h4>Perfiles</h4>
               <input name="ag_miembros" type="hidden"
-                value="'||TRIM(sease.pku_administrar_users.listargruposxusuario ('ADM_ARBITROS', 3))||'" />
+                value="'||TRIM(sease.PKU_GESTOR_ADMINISTRAR_USERS.listargruposxusuario ('ADM_ARBITROS', 3))||'" />
             </td>
         </tr>
          '
@@ -9594,5 +9595,5 @@ PROCEDURE doNotificaArbitro (cRuc                 varchar2,
        </script>'); 
         
  END; 
-END pku_administrar_users;
+END PKU_GESTOR_ADMINISTRAR_USERS;
 /
