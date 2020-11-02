@@ -233,7 +233,7 @@ INSERT INTO [dbportal20081].[dbo].[pageidoma] (
 
 
 
---CREACION DE LOS PORTLET PARA LAS PAGINAS PADRES E HIJAS
+--CREACION DE LOS PORTLET PARA LAS PAGINAS PADRES 
 
 INSERT INTO [dbportal20081].[dbo].[portlet] (
       [portletid]
@@ -301,4 +301,329 @@ INSERT INTO [dbportal20081].[dbo].[portletevent] (
 --ACTUALIZAR PORTLETID 
 UPDATE [dbportal20081].[dbo].[portlet] SET eventid = 'doView' WHERE portletid = 'mod_UsuarioGeneral_gestor';
 	  
+	  
+	  
+--	CREACION DE LOS PORTLET DE LAS PAGINAS HIJAS
+
+INSERT INTO [dbportal20081].[dbo].[portlet] (
+      [portletid]
+      --,[eventid]
+      ,[descripcion]
+      ,[usuario]
+      ,[usacache]
+      ,[titulo]
+      ,[showtitle]
+      ,[showhelp]
+      ,[showrefresh]
+      ,[contentype]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+     -- 'doSelectPerfil',
+      'Modulo para crear usuarios',
+      'GESTOR',
+      'N',
+      'Cambio de Contraseña',
+      'S',
+      'S',
+      'S',
+      'text/html'
+  );
+  
+  
+ INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doAutoGeneraUsuarioAjax',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.doautogenerausuarioajax',
+      1,
+      'GESTOR',
+      'USUARIO_SEACE,desarrollo,'
+  );
+  
+ INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doBuscarEntidad',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_BUSCADORES_MOD.BuscaEntidad',
+      1,
+      'GESTOR',
+      'USUARIO_SEACE,desarrollo,'
+  );
+  
+  INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doFormArbitro',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.formArbitro',
+      1,
+      'GESTOR',
+      'USUARIO_SEACE,desarrollo,'
+  );
+ 
+INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'dograbarnuevousuario',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.dograbarnuevousuario',
+      1,
+      'GESTOR',
+      'ADM_PLATSEACE,desarrollo,'
+  );
+  
+ INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'dolistardistritos',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.f_lista_dis',
+      1,
+      'GESTOR',
+      'todos,'
+  ); 
+  
+  INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'dolistarprovincias',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.f_lista_prov',
+      1,
+      'GESTOR',
+      'todos,'
+  );
+
+INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doListarUsuarios',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.doviewBuscarUsuarios',
+      1,
+      'GESTOR',
+      'todos,'
+  );
+
+ INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doNotificarUsuario',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.donotificarusuario',
+      1,
+      'GESTOR',
+      'ADM_PLATSEACE,desarrollo,'
+  ); 
+  
+  INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doSaveArbitro',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.dograbarnuevoarbitro',
+      1,
+      'GESTOR',
+      'ADM_PLATSEACE,desarrollo,'
+  );
+
+  INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doSelectPerfil',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.seleccionarPerfil',
+      1,
+      'GESTOR',
+      'ADM_PLATSEACE,desarrollo,'
+  );
+
+
+ INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doVerPerfilesAjax',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.f_lista_perfiles',
+      1,
+      'GESTOR',
+      'todos,'
+  );
+
+ INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doVerUsuarioExisteAjax',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.doVerUsuarioExisteAjax',
+      1,
+      'GESTOR',
+      'todos,'
+  );
+
+  INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'doView',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.doviewCrearUsuario',
+      1,
+      'GESTOR',
+      'ADM_PLATSEACE,desarrollo,'
+  );
+
+
+  INSERT INTO [dbportal20081].[dbo].[portletevent] (
+      [portletid]
+      ,[eventid]
+      ,[connectid]
+      ,[scriptdo]
+      ,[ptype]
+      ,[usuario]
+      ,[userexec]
+  ) VALUES (
+      'mod_UsuarioCrear_gestor',
+      'validaUsuArbitro',
+      'CONSUDES_SEASE',
+      'PKU_GESTOR_ADMINISTRAR_USERS.usp_ValidarRUC',
+      1,
+      'GESTOR',
+      'todos,'
+  );  
+  
+--UPDATE
+UPDATE [dbportal20081].[dbo].[portlet] SET eventid = 'doView' WHERE portletid = 'mod_UsuarioCrear_gestor';  
+  
+  
+  
+  
+
+
+INSERT INTO [dbportal20081].[dbo].[portlet] (
+      [portletid]
+      --,[eventid]
+      ,[descripcion]
+      ,[usuario]
+      ,[usacache]
+      ,[titulo]
+      ,[showtitle]
+      ,[showhelp]
+      ,[showrefresh]
+      ,[contentype]
+  ) VALUES (
+      'mod_UsuarioReportes_gestor',
+     -- 'doSelectPerfil',
+      'Reportes de Usuario',
+      'GESTOR',
+      'N',
+      'Reportes de Usuario',
+      'S',
+      'S',
+      'S',
+      'text/html'
+  ); 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 	  
