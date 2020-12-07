@@ -3451,13 +3451,13 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         { 
             thisform.scriptdo.value="doExcelEnt";
             thisform.submit();
-            window.location.href="portlet5openxls.asp?_portletid_=mod_rec1_a002_generar_reportes&scriptdo=doExcelEnt&v_tipo=1&v_actividad="+thisform.v_actividad.value+"&v_instancia="+thisform.v_instancia.value+"&v_sector="+thisform.v_sector.value+"&v_pliego="+thisform.v_pliego.value+"&v_uni_eje="+thisform.v_uni_eje.value+"&fec_cre_ini="+thisform.fec_cre_ini.value+"&fec_cre_fin="+thisform.fec_cre_fin.value+"&v_cod_estado="+thisform.v_cod_estado.value+"&fec_des_ini="+thisform.fec_des_ini.value+"&fec_des_fin="+thisform.fec_des_fin.value+"&fec_act_ini="+thisform.fec_act_ini.value+"&fec_act_fin="+thisform.fec_act_fin.value+"&v_dep_codigo_vb="+thisform.v_dep_codigo_vb.value+"&v_pro_codigo_vb="+thisform.v_pro_codigo_vb.value+"&v_dis_codigo_vb="+thisform.v_dis_codigo_vb.value;        
+            window.location.href="ExportXLSServlet?portletid_=mod_rec1_a002_generar_reportes&scriptdo=doExcelEnt&v_tipo=1&v_actividad="+thisform.v_actividad.value+"&v_instancia="+thisform.v_instancia.value+"&v_sector="+thisform.v_sector.value+"&v_pliego="+thisform.v_pliego.value+"&v_uni_eje="+thisform.v_uni_eje.value+"&fec_cre_ini="+thisform.fec_cre_ini.value+"&fec_cre_fin="+thisform.fec_cre_fin.value+"&v_cod_estado="+thisform.v_cod_estado.value+"&fec_des_ini="+thisform.fec_des_ini.value+"&fec_des_fin="+thisform.fec_des_fin.value+"&fec_act_ini="+thisform.fec_act_ini.value+"&fec_act_fin="+thisform.fec_act_fin.value+"&v_dep_codigo_vb="+thisform.v_dep_codigo_vb.value+"&v_pro_codigo_vb="+thisform.v_pro_codigo_vb.value+"&v_dis_codigo_vb="+thisform.v_dis_codigo_vb.value;        
         }
         else
         {
             thisform.scriptdo.value="doExcel";
             thisform.submit();
-            window.location.href="portlet5openxls.asp?_portletid_=mod_rec1_a002_generar_reportes&scriptdo=doExcel&v_actividad="+thisform.v_actividad.value+"&v_instancia="+thisform.v_instancia.value+"&v_sector="+thisform.v_sector.value+"&v_pliego="+thisform.v_pliego.value+"&v_uni_eje="+thisform.v_uni_eje.value+"&fec_cre_ini="+thisform.fec_cre_ini.value+"&fec_cre_fin="+thisform.fec_cre_fin.value+"&v_cod_estado="+thisform.v_cod_estado.value+"&fec_des_ini="+thisform.fec_des_ini.value+"&fec_des_fin="+thisform.fec_des_fin.value+"&fec_act_ini="+thisform.fec_act_ini.value+"&fec_act_fin="+thisform.fec_act_fin.value+"&v_dep_codigo_vb="+thisform.v_dep_codigo_vb.value+"&v_pro_codigo_vb="+thisform.v_pro_codigo_vb.value+"&v_dis_codigo_vb="+thisform.v_dis_codigo_vb.value;
+            window.location.href="ExportXLSServlet?portletid_=mod_rec1_a002_generar_reportes&scriptdo=doExcel&v_actividad="+thisform.v_actividad.value+"&v_instancia="+thisform.v_instancia.value+"&v_sector="+thisform.v_sector.value+"&v_pliego="+thisform.v_pliego.value+"&v_uni_eje="+thisform.v_uni_eje.value+"&fec_cre_ini="+thisform.fec_cre_ini.value+"&fec_cre_fin="+thisform.fec_cre_fin.value+"&v_cod_estado="+thisform.v_cod_estado.value+"&fec_des_ini="+thisform.fec_des_ini.value+"&fec_des_fin="+thisform.fec_des_fin.value+"&fec_act_ini="+thisform.fec_act_ini.value+"&fec_act_fin="+thisform.fec_act_fin.value+"&v_dep_codigo_vb="+thisform.v_dep_codigo_vb.value+"&v_pro_codigo_vb="+thisform.v_pro_codigo_vb.value+"&v_dis_codigo_vb="+thisform.v_dis_codigo_vb.value;
         }
     }
   
@@ -5307,7 +5307,7 @@ ls_msg    := '
         cCant number;
     BEGIN
         usp_print('
-        <table class="tableform" cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
+        <table class="table">
             <tr>
                 <td colspan="2" align="left"><br><h3>PERSONAL DE LA OFICINA DE LOGISTICA</h3></td>
             </tr>
@@ -5320,7 +5320,7 @@ ls_msg    := '
         for item in c_entidad (lpad(session__eue_codigo,6,'0')) loop
             if item.total_personal is not null then
                 usp_print('
-                <td width="50%">
+                <td width="40%">
                     <input type="text" name="v_total_personal" value="'||item.total_personal||'" style="width:50px;font-size:16pt" onblur="ValidarNumero(this)"/>
                     &nbsp;
                     <input type="button" value="Actualizar" onclick="GrabarTotalPersonas()" />
@@ -5331,8 +5331,8 @@ ls_msg    := '
                 </td>');
             else
                 usp_print('
-                <td width="50%">
-                    <input type="text" name="v_total_personal" value="" style="width:50px;font-size:16pt" onblur="ValidarNumero(this)"/>
+                <td width="60%">
+                    <input type="text" name="v_total_personal" value=""  onblur="ValidarNumero(this)" style="width:50%"/>
                     &nbsp;
                     <input type="button" value="Grabar" onclick="GrabarTotalPersonas()" />
                     <input type="hidden" name="v_total_personal_comp" value="0"/>
@@ -5350,7 +5350,7 @@ ls_msg    := '
         end if;
         usp_print('
             </tr>
-            <tr><td colspan="2"><hr></td></tr>
+            
             <tr>
                 <td colspan="2" align="left"><br><h3>Relaci&oacute;n de Personal de la Oficina de Log&iacute;stica</h3></td>
             </tr>
@@ -5359,7 +5359,7 @@ ls_msg    := '
             </tr>
             <tr>
                 <td colspan="2">
-                    <table class="tableform" cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
+                    <table class="table table-bordered">
                         <tr>
                             <td colspan="7"><h4>Registro o Modificaci&oacute;n de Personal</h4></td>
                         </tr>
@@ -5413,9 +5413,7 @@ ls_msg    := '
             </tr>');
         end if;
         usp_print('
-            <tr>
-                <td colspan="2" align="center">&nbsp;</td>
-            </tr>
+            
             <tr>
                 <td colspan="2">
                     <table class="tableform" cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
@@ -5425,7 +5423,7 @@ ls_msg    := '
                         <tr>
                             <td colspan="7">
                                 Buscador de Personal&nbsp;
-                                <input type="text" name="v_nombre_buscar" value="'||v_nombre_buscar||'" style="width:250px" maxlength="200"/>&nbsp;
+                                <input type="text" name="v_nombre_buscar" value="'||v_nombre_buscar||'" style="width:50%" maxlength="200"/>&nbsp;
                                 <input type="button" value="Buscar" onclick="BuscarPersonal()" name="btnBuscar" />&nbsp;
                                 <input type="button" value="Mostrar Todos" onclick="MostrarTodos()" name="btnTodos" /><br>
                                 (La b&uacute;squeda se realizar¿ por el campo Nombre y Apellidos).
@@ -5434,6 +5432,8 @@ ls_msg    := '
                         <tr>
                             <td colspan="7" align="center">&nbsp;</td>
                         </tr>
+                        </table>
+                        <table>
                         <tr>
                             <th class="th1" width="2%">Nro.</th>
                             <th class="th1" width="15%">Nombre y Apellidos</th>
@@ -6069,7 +6069,7 @@ ls_msg    := '
             thisform.v_tipo_vista.value = 1;
             thisform.scriptdo.value = "doViewReporte";
             thisform.submit();
-            window.location.href="portlet5openxls.asp?_portletid_=mod_rec1_a005_reportes_personal&scriptdo=doViewReporte&v_tipo_vista=1&v_tipo_reporte="+tipo_reporte+"&ag_tipoent="+thisform.ag_tipoent.value+"&ag_subtipoent="+thisform.ag_subtipoent.value+"&ag_codent="+thisform.ag_codent.value;
+            window.location.href="ExportXLSServlet?portletid_=mod_rec1_a005_reportes_personal&scriptdo=doViewReporte&v_tipo_vista=1&v_tipo_reporte="+tipo_reporte+"&ag_tipoent="+thisform.ag_tipoent.value+"&ag_subtipoent="+thisform.ag_subtipoent.value+"&ag_codent="+thisform.ag_codent.value;
         }
 
         function ver_reporte(tipo_reporte)
