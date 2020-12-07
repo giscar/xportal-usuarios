@@ -1402,7 +1402,7 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
     function BuscaUbigeo(tipo)
     {
         thisform.tipo_ubi.value=tipo;
-        window.open(''portlet5open.asp?_portletid_=BuscadorUbigeo'','''',''toolbar=no,Width=600,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised'');
+        window.open("ControllerServletOpen?portletid=BuscadorUbigeo","","toolbar=no,Width=800,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised");
     }
     
     function registrar_entidad(){
@@ -3386,7 +3386,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
   function BuscaUbigeo(tipo)
     {
         thisform.tipo_ubi.value=tipo;
-        window.open(''portlet5open.asp?_portletid_=BuscadorUbigeo'','''',''toolbar=no,Width=600,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised'');
+        window.open("ControllerServletOpen?portletid=BuscadorUbigeo","","toolbar=no,Width=800,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised");
     }  
   
   function f_validaCampoNumerico1() 
@@ -3502,11 +3502,8 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
              <tr>
              </table>');         
              
-    usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="80%">
-              <tr>
-              <td width=15%></td>
-              <td colspan="3" width=85%></td>
-              </tr>
+    usp_print('<table class="table table-striped table-bordered">
+              
               <tr>
               <td class=c1>Tipo de Entidad: </td>
               <td class=c2 colspan="3"><select style="width:400px;" name="v_actividad" onchange="mostrar_array(this,thisform.v_instancia)">
@@ -3560,7 +3557,8 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
           
           <tr>
               <td class=c1>Ubigeo: </td>
-              <td class=c2 colspan="3"><input name="lugar_ejec_vb" size="45" class=ViewSelect onclick="BuscaUbigeo(2)" readonly  value="" />&nbsp;&nbsp;&nbsp;
+              <td class=c2 colspan=3><input name="lugar_ejec_vb" size="45" class="form-control" onclick="BuscaUbigeo(2)" readonly  value=""  style="width:50%"/>
+              
              </td>
        
           </tr>
@@ -3591,23 +3589,68 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
          
           <tr>
               <td class=c1>Por Fecha de Creaci&oacute;n: </td>
-              <td class=c2><input readonly  name=fec_cre_ini id=ag_fec_cre_ini  size="30" class=CalSelect onclick="calendario(this)" value=""></td>
-              <td class=c2 align="left"><input readonly  name=fec_cre_fin id=ag_fec_cre_fin  size="30" class=CalSelect onclick="calendario(this)" value=""></td>
-              <td class=c2>&nbsp;</td>
+              <td class=c2>
+                <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+                
+               <input type="text" name="ag_fec_cre_ini" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+               </div>
+              </td>
+              <td class=c2 align="left">
+              <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fec_cre_fin" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+               </div>
+              </td>
+             
           </tr>
           
           <tr>
               <td class=c1>Por Fecha de Desactivaci&oacute;n </td>
-              <td class=c2><input readonly  name=fec_des_ini id=ag_fec_des_ini  size="30" class=CalSelect onclick="calendario(this)" value=""></td>
-              <td class=c2><input readonly  name=fec_des_fin id=ag_fec_des_fin  size="30" class=CalSelect onclick="calendario(this)" value=""></td>
-              <td class=c2>&nbsp;</td>
+              <td class=c2>
+              <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fec_des_ini" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+               </div>
+              </td>
+              <td class=c2>
+              <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fec_des_fin" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+              </div>
+              </td>
+             
           </tr>
           
           <tr>
               <td class=c1>Por Fecha de Modificaci&oacute;n: </td>
-              <td class=c2><input readonly  name=fec_act_ini id=ag_fec_act_ini  size="30" class=CalSelect onclick="calendario(this)" value="" ></td>
-              <td class=c2><input readonly  name=fec_act_fin id=ag_fec_act_fin  size="30" class=CalSelect onclick="calendario(this)" value="" ></td>
-              <td class=c2>&nbsp;</td>
+              <td class=c2>
+              <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fec_act_ini" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+              </div>
+              
+              </td>
+              <td class=c2>
+              <div class="input-group datepicker" id="idDivTxtFechaIni">
+                <div class="input-group-addon  add-on">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+               <input type="text" name="ag_fec_act_fin" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
+              </div>
+     
+              </td>
+              
            
           </tr>
           <tr>
@@ -3839,7 +3882,7 @@ if c_total = 0 then
         usp_print('No hay datos para mostrar.');
     else 
   
-    usp_print('<table id="idtableItems" border="0" width=100% align=center  class=tableform CELLSPACING="0" CELLPADDING="3">    
+    usp_print('<table class="table table-bordered table-striped" style="font-size: 0.9em">    
            <tr>
              <th class=th1 align="center">Nro.</th>
              <th class=th1 align="center">C&oacute;digo</th>
@@ -4320,7 +4363,7 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
     function BuscaUbigeo(tipo)
     {
         thisform.tipo_ubi.value=tipo;
-        window.open(''portlet5open.asp?_portletid_=BuscadorUbigeo'','''',''toolbar=no,Width=600,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised'');
+        window.open("ControllerServletOpen?portletid=BuscadorUbigeo","","toolbar=no,Width=800,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised");
     }
     
     function registrar_entidad(){
