@@ -1,9 +1,12 @@
 --------------------------------------------------------
+-- Archivo creado  - viernes-noviembre-13-2020   
+--------------------------------------------------------
+--------------------------------------------------------
 --  DDL for Procedure USP_EM_MENSAJES_DOVIEW
 --------------------------------------------------------
-set define off;
+set scan off;
 
-  CREATE OR REPLACE PROCEDURE "REG_PROCESOS"."USP_EM_MENSAJES_DOVIEW" (
+  CREATE OR REPLACE PROCEDURE REG_PROCESOS.USP_GESTOR_EM_MENSAJES_DOVIEW (
     v_pagina_actual number)
 IS
 --

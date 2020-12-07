@@ -1,9 +1,12 @@
 --------------------------------------------------------
+-- Archivo creado  - domingo-noviembre-01-2020   
+--------------------------------------------------------
+--------------------------------------------------------
 --  DDL for Procedure USP_EM_MENSAJE_DETALLE_DOEDIT
 --------------------------------------------------------
-set define off;
+set scan off;
 
-  CREATE OR REPLACE PROCEDURE "REG_PROCESOS"."USP_EM_MENSAJE_DETALLE_DOEDIT" ( 
+  CREATE OR REPLACE PROCEDURE REG_PROCESOS.USP_GESTOR_EM_MEN_DETAL_DOEDIT ( 
     v_id_mensaje number)
 IS
 --
@@ -406,5 +409,3 @@ EXCEPTION
     WHEN others THEN
         usp_print('Error al mostrar la página: '||SQLERRM);
 END; -- Procedure
-
-/
