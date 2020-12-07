@@ -405,7 +405,7 @@ v_sw             number;
 
 
 BEGIN
-  
+
 IF ag_currentpage IS NULL
       THEN
          lv_currentpage := 1;
@@ -449,7 +449,7 @@ usp_print('
                  else
                     thisform.v_descripcion.readOnly = true;
                  }
-   
+
         function validate_entidad(){
                  if(thisform.v_entidad.value == "2")
                      {
@@ -463,7 +463,7 @@ usp_print('
                             break;
                            }
                       }
-                    
+
                     if(thisform.v_entidad.value == "1")
                       {
                        var x = window.event.keyCode;  
@@ -484,7 +484,7 @@ usp_print('
                     }
 
         function getReport(){   
-           
+
                  v1 = thisform.v_entidad.value;
                  v2 = thisform.v_descripcion.value;
                  if(v1 == "0")
@@ -502,7 +502,7 @@ usp_print('
                      thisform.v_razon_social.value = v2; 
                      thisform.v_num_ruc.value ="";
                   }   
-             
+
                   if(v1 == "2")
                   {
                      thisform.v_num_ruc.value = v2;
@@ -526,7 +526,7 @@ usp_print('
 ');
 usp_print('<div id=resultado>
     <fieldset>
-    
+
     <table  border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
         <tr>
             <td>
@@ -582,7 +582,7 @@ showpaginacion (lv_currentpage,
                       '&scriptdo=doView',
                       15
                      );   
-   
+
 usp_print('
 <table id="idtableItems" border="0" width=100% align=center  class=tableform CELLSPACING="0" CELLPADDING="3">    
            <tr>
@@ -595,10 +595,10 @@ usp_print('
              <th class=th1 width="5%"  align="center">Cambiar Estado</th>
              <th class=th1 width="5%"  align="center">Historial</th>
            </tr>');
-           
+
  ln_cont:= 1 +  15 * (lv_currentpage-1);
  v_sw:=1;
- 
+
       for xrow in cBusqueda(lv_currentpage, session__anhoentidad) loop
         if v_sw = 1 then
               usp_print('<tr bgcolor="#ECE9D8">');
@@ -613,11 +613,11 @@ usp_print('
            usp_print('<td>'||( case xrow.activo when 1 then 'ACTIVO' when 0 then 'INACTIVO' END)||'</td>');
            usp_print('<td align = "center"><img src="images/Eliminar.gif" alt="cambiar de Estado" style="cursor:hand"  onclick="cambiar_estado_modal('''||xrow.codconsucode||''','''||v_razon_social||''','''||v_num_ruc||''')"/></td>');
            usp_print('<td align = "center"><input type="button" value="..." onclick="mostrar_historial_modal('''||xrow.codconsucode||''');"></td>');
-           
+
          ln_cont := ln_cont + 1; 
          v_sw:=v_sw * (-1);  
       end loop;
-      
+
 end if;
 
   usp_print('</table>');
@@ -699,11 +699,11 @@ PROCEDURE USP_REC_A001_CAMBIAR_ESTADO(cod_entidad                    varchar2,
   ent_ruc          char(11);
   ent_activo       char(1);
   BEGIN
-    
+
  select distinct e.descripcion, e.n_ruc, e.activo into ent_descripcion, ent_ruc, ent_activo from sease.entidades e
                  where e.codconsucode = cod_entidad
                  and e.anhoentidad = session__anhoentidad;
-                 
+
 usp_print('<div id="contenedor_modal">');                 
 usp_print('<input type="hidden" name="v_razon_social" value="'||v_razon_social||'" />
            <input type="hidden" name="v_num_ruc"      value="'||v_num_ruc||'" />
@@ -716,7 +716,7 @@ function f_submit(){
          var v_estado           = thisform.ent_activo.value;
          var v_cod_entidad      = thisform.cod_entidad.value;
          var v_observacion      = thisform.txtObservacion.value;
-         
+
              if(thisform.txtObservacion.value == ""){
              alert("Tiene que Ingresar una Justificaci\xf3n");
              }
@@ -725,7 +725,7 @@ function f_submit(){
                      {
                      if (confirm("¿Est\xe1 seguro que desea inactivar esta Entidad? ")) {
                      thisform.scriptdo.value = "doInsertEntidad";
-                     
+
                      thisform.submit();
                      var wo = window.opener
                      wo.getReport()
@@ -733,10 +733,10 @@ function f_submit(){
                      } 
                   }
              if(v_estado=="0"){
-             
+
                   if (confirm("¿Est\xe1 seguro que desea Activar esta Entidad? ")) {
                   thisform.scriptdo.value = "doInsertEntidad";
-                  
+
                   thisform.submit();
                   var wo = window.opener
                   wo.getReport()
@@ -745,12 +745,12 @@ function f_submit(){
                 }
              }
           }
-  
+
 function NoCaracteresEspeciales(){
     //No permite el ingreso de los caracteres @ alt 64, % alt 37, & alt 38
 
     var x = window.event.keyCode;  
-        
+
       switch (x){
       //@%&!"#$()<=>?¿!/\+¿¿¿¿¿
       case 173: case 64: case 37: case 38: case 33: case 34: case 35:  case 36:  case 40: case 41: 
@@ -766,11 +766,11 @@ function NoCaracteresEspeciales(){
       }
 
     }
-    
+
 function act_contador() {
          document.all("conta_mensaje").value = document.all("txtObservacion").value.length;
          }  
-              
+
 function ValidarString(ls_obj, ls_mensage)
         {
             var strCadena = ls_obj.value;
@@ -790,17 +790,17 @@ function ValidarString(ls_obj, ls_mensage)
             }  
             return true;
         }
-        
+
   function ismaxlength(obj){ 
         var mlength=obj.getAttribute? parseInt(obj.getAttribute("maxlength")) : "";
         if (obj.getAttribute && obj.value.length>mlength)
             obj.value=obj.value.substring(0,mlength);
         }      
-                    
+
     </script>
     ');               
 
-  
+
   usp_print('<div id="cuerpo" align="center">
  <input type="hidden" name="enti"     value="'||v_razon_social||'" />
  <input type="hidden" name="descri"   value="'||v_num_ruc||'" />
@@ -841,7 +841,7 @@ usp_print('</div>');
         if (window.opener == null){
 
    document.getElementById("contenedor_modal").innerHTML="<h2>Acceso Denegado</h2>";
- 
+
    }
             window.moveTo((screen.width-750)/2,(screen.height-400)/2);
         </script>');
@@ -860,7 +860,7 @@ PROCEDURE USP_REC_A001_GEN_INSERTAR(cod_entidad             varchar2,
                                     ent_activo              varchar2,
                                     v_doc_autoriza          varchar2,
                                     v_dispositivo           varchar2)
-  
+
 IS 
 
 v_observ      varchar2(500);
@@ -872,12 +872,12 @@ update sease.entidades e set e.activo = 1,
                              e.f_desactivar = sysdate
        where e.anhoentidad =  session__anhoentidad
        and e.codconsucode = cod_entidad;
-       
+
 update reg_procesos.entidades e set e.activo = 1,
                              e.f_desactivar = sysdate
        where e.anhoentidad =  session__anhoentidad
        and e.codconsucode = cod_entidad;       
-       
+
 end if;
 
 if ent_activo = 1 then
@@ -885,12 +885,12 @@ update sease.entidades e set e.activo = 0,
                              e.f_desactivar = sysdate
        where e.anhoentidad =  session__anhoentidad
        and e.codconsucode = cod_entidad;
-       
+
 update reg_procesos.entidades e set e.activo = 0,
                              e.f_desactivar = sysdate
        where e.anhoentidad =  session__anhoentidad
        and e.codconsucode = cod_entidad;       
-       
+
 end if;
 
 if ent_activo = 2 then
@@ -904,7 +904,7 @@ end if;
 if ent_activo = 0 or ent_activo = 1 then
 v_observ := v_observacion;  
 end if;
-       
+
 insert into sease.entidad_historial(
 usu_registro,
 ip_registro,
@@ -920,7 +920,7 @@ v_observ,
 cod_entidad
 );   
 
- 
+
 usp_print('
 <script language="javascript">
 alert("Se han producido los cambios");
@@ -928,14 +928,14 @@ window.close();
 </script>');   
 
 commit; 
-  
-     
-     
+
+
+
   EXCEPTION
   WHEN OTHERS THEN  
      ROLLBACK;
      usp_print ('Ocurrio el siguiente error: ' || SQLERRM || ' - ' || SQLCODE);         
-       
+
 END;
 /*********************************************************************************************************************************************************************************************************************************************************************************/
 /*********************************************************************************************************************************************************************************************************************************************************************************/
@@ -952,23 +952,23 @@ cursor cRecord is
          where cod_entidad = cod_entidad_l 
          and anhoentidad = session__anhoentidad
           ORDER BY E.fec_registro;
- 
- 
+
+
   n_entidad varchar2(250);
   v_sw    number;
   ln_cont number;
-  
+
   begin
-   
+
 select distinct e.descripcion into n_entidad from sease.entidades e
             where e.codconsucode = lpad(cod_entidad_l,6,0)
             and e.anhoentidad = session__anhoentidad;
-    
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="95%">
              <tr><td  colspan="2" align="left"><h3>Historial de Modificaciones: '||n_entidad||'</h3></td></tr>
              <tr>
              </table></br>');
-  
+
     usp_print('<table id="idtableItems" border="0" width=95% align=center  class=tableform CELLSPACING="0" CELLPADDING="3">    
            <tr>
              <th class=th1 width="3%"   align="center">Nro.</th>
@@ -978,7 +978,7 @@ select distinct e.descripcion into n_entidad from sease.entidades e
              <th class=th1 width="10%"  align="center">IP</th>
              <th class=th1 width="30%"  align="center">Observaci&oacute;n</th>
            </tr>');
-           
+
        v_sw:=1;     
      ln_cont := 1;      
    for xrow in cRecord loop
@@ -987,17 +987,17 @@ select distinct e.descripcion into n_entidad from sease.entidades e
             else
               usp_print('<tr>');
             end if;
-          
+
            usp_print('<td>'||ln_cont||'</td>');
            usp_print('<td>'||( case xrow.estado_registro when 0 then 'ACTIVAR' when 1 then 'INACTIVAR' when 2 THEN 'MODIFICAR' when 3 then 'CREAR' END)||'</td>');
            usp_print('<td>'||xrow.usu_registro||'</td>');
            usp_print('<td>'||xrow.fec_registro||'</td>');
            usp_print('<td>'||xrow.ip_registro||'</td>');
            usp_print('<td>'||xrow.observaciones||'</td>');
-           
+
            ln_cont := ln_cont + 1; v_sw:=v_sw * (-1);  
       end loop;       
-      
+
 end;
 /*********************************************************************************************************************************************************************************************************************************************************************************/
 /*********************************************************************************************************************************************************************************************************************************************************************************/
@@ -1067,7 +1067,7 @@ PROCEDURE USP_REC_A001_FORM_CREACION(
     ||                   Se retira los botones para la creaci¿n de nuevos pliegos y segmentos porque 
     ||                   ya se implementauna opci¿n de mantenimiento - Memorando 97-2012/SDP-ECC - punto 4.1
     */ 
-                                     
+
         cursor cSector is
        select distinct (case when se.sec_activo = 0  then 'ANTERIOR - ' ELSE '' end   ) com,  se.sec_codigo, se.sec_desc from sease.sector se
        order by com,se.sec_desc; 
@@ -1077,7 +1077,7 @@ cursor cPliego (sectore varchar2) is
               inner join sease.sector se on se.sec_codigo =sp.sec_codigo
               where se.sec_codigo = sectore
               order by sp.desc_pliego;
-         
+
 cursor cPliego1 (sectored varchar2) is
        select distinct sp.pli_codigo, sp.desc_pliego from sease.pliego sp
               inner join sease.sector se on se.sec_codigo =sp.sec_codigo
@@ -1099,14 +1099,14 @@ cursor cInstancia(actividade varchar2) is
               where sa.act_ccodigo = to_char(actividade)
              /* and sa.act_sactivo = 1*/
               order by si.ins_ccodigo; 
-         
+
 cursor cInstancia1 (actividades varchar2)is
        select distinct si.ins_ccodigo, si.ins_vdesc from sease.instancia si
               inner join sease.actividad sa on sa.act_ccodigo = si.act_ccodigo
               where sa.act_ccodigo = to_char(actividades)
             /*  and sa.act_sactivo = 1*/
               order by si.ins_ccodigo;
-              
+
 cursor cAnho is
        select distinct so.anhoentidad from sease.entidades so
               where so.codconsucode = codigo_consucode
@@ -1116,18 +1116,18 @@ cursor cEntidades_doc1 is
        select ed.doc_url, ed.fec_upload, ta.icon_tipo_file from reg_procesos.entidades_doc ed
               inner join (select max(do.cod_doc) as doc_cod from reg_procesos.entidades_doc do where do.codconsucode = codigo_consucode and do.cod_indicador = 1) vw on vw.doc_cod = ed.cod_doc
               inner join reg_procesos.tipo_archivo ta on ta.cod_tipo_file = ed.cod_tipo_file;
-            
+
 cursor cEntidades_doc2 is
        select ed.doc_url, ed.fec_upload, ta.icon_tipo_file from reg_procesos.entidades_doc ed
               inner join (select max(do.cod_doc) as doc_cod from reg_procesos.entidades_doc do where do.codconsucode = codigo_consucode and do.cod_indicador = 2) vw on vw.doc_cod = ed.cod_doc
               inner join reg_procesos.tipo_archivo ta on ta.cod_tipo_file = ed.cod_tipo_file;
-                    
+
 cursor cEntidades_doc3 is
        select ed.doc_url, ed.fec_upload, ta.icon_tipo_file from reg_procesos.entidades_doc ed
               inner join (select max(do.cod_doc) as doc_cod from reg_procesos.entidades_doc do where do.codconsucode = codigo_consucode and do.cod_indicador = 3) vw 
               on vw.doc_cod = ed.cod_doc
               inner join reg_procesos.tipo_archivo ta on ta.cod_tipo_file = ed.cod_tipo_file;            
-    
+
 i_dep_desc varchar2(100);
 i_pro_desc varchar2(100);
 i_dis_desc varchar2(100); 
@@ -1207,7 +1207,7 @@ select distinct se.codconsucode, se.anhoentidad, se.n_ruc, se.dep_coddpto, se.pr
  se.tnombjefelogis, se.ttelefjefelogis, se.tcelular_jefe_logis, se.temail_jefe_logis, se.ttelef_anx_jefe_logis, se.tnombjefeinfor, se.ttelefjefeinfor,
  se.tcelular_jefe_infor, se.temail_jefe_infor, se.ttelef_anx_jefe_infor, se.codconsucode, se.dep_coddpto, se.pro_codprov, se.dis_coddist,
  du.dep_desc, pu.pro_desc, sdu.dis_desc, se.pliego, se.dispositivo_legal, se.document_modif, se.document_presu, se.observaciones_clasif
- 
+
 into cod_actual, anho, ruc, depart, provin, distri, descripcion, abreviatura, direccion, telefono, fax, telefono_anx, fax_anx, web, email, email2, nombre_soli,
      cargo_soli, siaf, sect, uject, activ, instanc, activo, nomb_titular, telef_titular, celular_titular, email_titular, telef_anx_titular,
      nom_logistica, telef_logistica, celular_logistica, email_logistica, telef_anx_logistica, nombre_infor, telef_infor, celular_infor, email_infor,
@@ -1227,7 +1227,7 @@ estado_entidad := 2;
 else
   titulo := 'REGISTRAR NUEVA ENTIDAD';
   estado_entidad := 1;
-                    
+
 ruc                 := v_num_ruc;
 descripcion         := v_razon_social;
 abreviatura         := v_sigla;                                                
@@ -1262,7 +1262,7 @@ celular_infor       := v_cel_informatica;
 email_infor         := v_correo_informatica;
 
 end if;
-   
+
 select max(e.codconsucode)+1 into cod_max from sease.entidades e
 where e.codconsucode not in ('999999')
 and e.anhoentidad = session__anhoentidad; 
@@ -1310,14 +1310,14 @@ end loop;
 usp_print('
 
 function mostrar_array(cual,donde){
-  
+
 if(cual.selectedIndex >= 0){
   donde.length=0
   cual = eval(cual.value)
   for(m=0;m<cual.length;m++){
     var nuevaOpcion = new Option(cual[m].texto);
     donde.options[m] = nuevaOpcion;
-   
+
     if(cual[m].valor != null){
       donde.options[m].value = cual[m].valor
       }
@@ -1333,20 +1333,20 @@ function listar_pliegos(sect){
   thisform.scriptdo.value = "doform";
   thisform.submit();
   }
-  
-  
- 
-  
+
+
+
+
 function getUpdate(){
   thisform.anio.value = thisform.v_anho.value;
 thisform.scriptdo.value = "doform";
- 
+
   thisform.submit();
    }  
-  
+
 
 function f_validaCampoNumerico1() { 
-  
+
            var key=window.event.keyCode;   
            if (key <48 || key > 57 ){       
             window.event.keyCode=0;     
@@ -1357,7 +1357,7 @@ function isEmail(s)
         {
         var regex = /^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@{[a-zA-Z0-9_\-\.]+0\.([a-zA-Z]{2,5}){1,25})+)*$/;
         return regex.test(s);
-        
+
         }
 
 function f_init(){
@@ -1387,7 +1387,7 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
             thisform.v_pro_codigo_vb.value=pro_codigo;
             thisform.v_dis_codigo_vb.value=dis_codigo;
             thisform.lugar_ejec_vb.value=dep_desc+"/"+pro_desc+"/"+dis_desc;
-           
+
         }
         if (thisform.tipo_ubi.value==3)
         {
@@ -1397,16 +1397,16 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
             thisform.lugar_ejec_ed.value=dep_desc+"/"+pro_desc+"/"+dis_desc;
         }
     }  
-    
-    
+
+
     function BuscaUbigeo(tipo)
     {
         thisform.tipo_ubi.value=tipo;
         window.open("ControllerServletOpen?portletid=BuscadorUbigeo","","toolbar=no,Width=800,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised");
     }
-    
+
     function registrar_entidad(){
-      
+
     if(thisform.v_num_ruc.value==""){
       alert("Tiene que Ingresar el Ruc de la Entidad");
       return false;
@@ -1416,39 +1416,39 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
        thisform.v_num_ruc.focus();
        return false;
      }
-     
+
      }
     if(thisform.v_razon_social.value==""){
     alert("Tiene que Ingresar la Raz\xf3n Social de la Entidad");
     return false;
      }
-     
+
      if(thisform.lugar_ejec_vb.value==""){
     alert("Tiene que Ingresar el Ubigeo de la Entidad");
     return false;
      } 
-     
+
      if(thisform.v_direccion.value==""){
     alert("Tiene que Ingresar la Direcci\xf3n de la Entidad");
     return false;
      }  
-     
+
      if(thisform.v_nom_sol.value == ""){
       alert("Tiene que ingresar el Nombre del Solicitante");
       return false;
       }
-      
+
       if(thisform.v_cargo_sol.value == ""){
       alert("Tiene que ingresar el Cargo del Solicitante");
       return false;
       }    
-     
+
      if(thisform.v_correo.value==""){
      alert("Tiene que ingresar el Correo Electr\xf3nico del Solicitante");
      return false;
      }else{
-     
-     
+
+
          if (!(isEmail(thisform.v_correo.value)))
             {
               alert("Ingrese un formato correcto para este Correo de la Entidad");
@@ -1458,7 +1458,7 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
               }
               }
          if(thisform.v_correo_titular.value != ""){ 
-             
+
         if (!(isEmail(thisform.v_correo_titular.value)))
             {
               alert("Ingrese un formato correcto para el Correo del Titular");
@@ -1466,10 +1466,10 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
                 thisform.v_correo_titular.select();
               return false;
               }}
-              
-              
+
+
           if(thisform.v_correo_logistica.value != ""){    
-         
+
          if (!(isEmail(thisform.v_correo_logistica.value)))
             {
               alert("Ingrese un formato correcto para el Correo del Jefe del \xd3rgano Encargado de las Contrataciones");
@@ -1477,8 +1477,8 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
                 thisform.v_correo_logistica.select();
               return false;
               }}
-              
-              
+
+
            if(thisform.v_correo_informatica.value != ""){       
           if (!(isEmail(thisform.v_correo_informatica.value)))
             {
@@ -1487,61 +1487,61 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
                 thisform.v_correo_informatica.select();
               return false;
               }   }     
-                   
+
        if(thisform.v_dispositivo.value=="" && thisform.v_cod_actual.value == "" ){
     alert("Tiene que Ingresar el dispositivo legal que autoriza la creaci\xf3n de la Entidad");
     return false;
      }       
-                  
+
      if(thisform.v_sector.value=="F"){
      alert("Tiene que Ingresar un Sector");
      return false;
      }
-     
+
      if(thisform.v_cod_actual.value != ""){
-      
+
       if(thisform.v_doc_autoriza.value == ""){
       alert("Tiene que ingresar el documento que autoriza la modificaci\xf3n");
       return false;
       }
       }
-      
+
       if(thisform.pfiletoupload1.value != ""){
-      
+
       extencion1 = thisform.pfiletoupload1.value
-      
+
       extencion1 = extencion1.substring((extencion1.length)-4,extencion1.length)
-      
+
       if (extencion1 != ".doc" && extencion1 != ".zip" && extencion1 != ".pdf")
             {
                alert("El archivo de extensi\xf3n "+extencion1+" no est\xe1 permitido.");
                thisform.pfiletoupload1.focus();    
                return false;
             }
-      
+
       }
-      
+
       if(thisform.pfiletoupload2.value != ""){
-      
+
       extencion2 = thisform.pfiletoupload2.value
-      
+
       extencion2 = extencion2.substring((extencion2.length)-4,extencion2.length)
-      
+
        if (extencion2 != ".doc" && extencion2 != ".zip" && extencion2 != ".pdf")
             {
                alert("El archivo de extensi\xf3n "+extencion2+" no est\xe1 permitido.");
                thisform.pfiletoupload2.focus();    
                return false;
             }
-      
+
       }
-      
+
       if(thisform.pfiletoupload3.value != ""){
-      
+
        extencion3 = thisform.pfiletoupload3.value
-       
+
        extencion3 = extencion3.substring((extencion3.length)-4,extencion3.length)
-            
+
             if (extencion3 != ".doc" && extencion3 != ".zip" && extencion3 != ".pdf")
             {
                alert("El archivo de extensi\xf3n "+extencion3+" no est\xe1 permitido.");
@@ -1549,26 +1549,26 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
                return false;
             }
       }
-      
-      
+
+
      if(confirm("¿Desea guardar los datos ingresados?")){
       thisform.scriptdo.value = "doInsertEntidad";
-      
+
       if(thisform.v_cod_actual.value != ""){
-         
+
          thisform.cod_entidad.value = thisform.v_cod_actual.value;
          thisform.ent_activo.value = "2";
-      
+
       }else{
          thisform.cod_entidad.value = thisform.v_cod_max.value;
          thisform.ent_activo.value = "3";
       }
-      
-      
+
+
             thisform.submit();
      }
     }
-    
+
     function reenviar_email(){
       var v_correo01 = '''||email||''';
       var v_correo02 = '''||email2||''';
@@ -1576,7 +1576,7 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
      alert("No existe ning\xfan correo registrado");
      return false;
       }
-      
+
        if(confirm("¿Desea reenviar la Notificaci\xf3n?"))
        {
        thisform.scriptdo.value = "doForward";
@@ -1593,18 +1593,18 @@ usp_print('
                 <input name=v_dis_codigo_vb readonly="true" value="'||v_dis_codigo_vb||'" type="hidden"/>
                 <input name="tipo_ubi" type="hidden"/>
 ');
- 
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td align="left"><h3>'||titulo||'</h3></td>
              <td align="right">'||case when codigo_consucode is not null then '<input type="button" name="bot_reenviar" value="Reenviar Notificaci&oacute;n" onClick="reenviar_email();" />&nbsp;&nbsp;&nbsp;' else '' end||'<input type="button" value="Volver" onclick="f_init();">&nbsp;&nbsp;<input type="button" name="bot" '||case when codigo_consucode is null then 'value="Grabar" onclick="registrar_entidad();"' else 'value="Grabar" onclick="registrar_entidad();"' end||' ></td>
              </tr>
              </table></br></br>'); 
-         
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Datos Generales de la Entidad</h3></td></tr>
              <tr>
              </table>');
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
 
  <tr '||case when codigo_consucode is null then 'style="display:none;"' else '' end||' >
@@ -1621,7 +1621,7 @@ usp_print('
              </td>
              <td class=c2>A&ntilde;o de la Entidad</td>
  </tr>');
- 
+
 if departament_desc is not null then
 
 i_dep_desc := departament_desc;
@@ -1639,12 +1639,12 @@ if distrito_desc is not null then
 i_dis_desc := distrito_desc;
 
 end if;
- 
+
 
 
 if codigo_consucode is null then
             usp_print('
-         
+
          <input type="hidden" name="v_cod_max" id="v_cod_max" readOnly value="'||cod_max||'" />
        <tr>
               <td class=c1>C&oacute;digo: </td>
@@ -1657,12 +1657,12 @@ else
            <td class=c1>C&oacute;digo:</td>  
            <td class=c2><input type="text" name="codigo_consucode" readOnly value="'||codigo_consucode||'" /></td>
            <td class=c2>C&oacute;digo de la Entidad</td>');
-           
+
   end if;         
            usp_print('
-        
+
           </tr>
- 
+
           <tr>
               <td class=c1>Estado Actual: </td>
               <td class=c2><select name="v_cod_estado" disabled>');
@@ -1675,7 +1675,7 @@ else
               <option value="1" '||case when activo = 1 then 'selected readonly' else '' end||'>ACTIVO</option>
               <option value="0" '||case when activo = 0 then 'selected readonly' else '' end||'>INACTIVO</option>');      
               end if;
-              
+
                usp_print('</select></td>
               <td class=c2>Estado Actual de la Entidad</td>
           </tr>
@@ -1685,13 +1685,13 @@ else
               <td class=c2><input name="v_num_ruc" id="v_num_ruc" type=text size="50" value="'||ruc||'" maxlength="11" onkeypress="f_validaCampoNumerico1()"></td>
               <td class=c2>Ingrese el n&uacute;mero el RUC de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>(*) Raz&oacute;n Social: </td>
               <td class=c2><input name="v_razon_social" maxlength="100" id="v_razon_social" size="50" value="'||descripcion||'"></td>
                <td class=c2>Ingrese el nombre de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1> Sigla: </td>
               <td class=c2><input name="v_sigla" id="v_sigla" maxlength="30" size="50" value="'||abreviatura||'"></td>
@@ -1702,46 +1702,46 @@ else
               <td class=c1>(*) Ubigeo: </td>
               <td class=c2><input name="lugar_ejec_vb" size="45" class=ViewSelect onclick="BuscaUbigeo(2)" readonly '||case when codigo_consucode is not null then ' value="'||i_dep_desc||'/'||i_pro_desc||'/'||i_dis_desc||'" ' else 'value="'||lugar_ejec_vb||'"' end||'  />&nbsp;&nbsp;
             &nbsp;&nbsp;
-             
+
               <td class=c2>Seleccione Departamento / Provincia / Distrito</td>
           </tr>
-          
+
           <tr>
               <td class=c1>(*) Direcci&oacute;n: </td>
               <td class=c2><input name="v_direccion" size="50" maxlength="200" value="'||direccion||'"></td>
               <td class=c2>Ingrese la direcci&oacute;n de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1> Tel&eacute;fono: </td>
               <td class=c2><input name="v_telefono" id="txtPreUni" maxlength="11" size="25" value="'||telefono||'" ></td>
               <td class=c2>Ingrese el n&uacute;mero Telef&oacute;nico de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Anexo de Tel&eacute;fono: </td>
               <td class=c2><input name="v_anex_telf" id="v_anex_telf" maxlength="5" size="25" value="'||telefono_anx||'"  /></td>
               <td class=c2>Ingrese n&uacute;mero de Anexo Telef&oacute;nico de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Fax: </td>
               <td class=c2><input name="v_fax" id="v_fax" maxlength="11" size="25" value="'||fax||'" /></td>
               <td class=c2>Ingrese el n&uacute;mero del fax de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Otro Tel&eacute;fono: </td>
               <td class=c2><input name="v_anex_fax" id="v_anex_fax" maxlength="11" size="25" value="'||fax_anx||'"  /></td>
               <td class=c2>Ingrese el n&uacute;mero del otro Tel&eacute;fono de la Entidad</td>
           </tr>
- 
+
           <tr>
               <td class=c1>P&aacute;gina Web: </td>
               <td class=c2><input name="v_pag_web" id="v_pag_web" maxlength="60" size="50" value="'||web||'"></td>
               <td class=c2>Ingrese la p&aacute;gina Web de la Entidad</td>
           </tr>
-           
+
           <tr>
               <td class=c1>(*) Nombre y Apellidos del Solicitante: </td>
               <td class=c2><input name="v_nom_sol" id="v_nom_sol" maxlength="60" size="50" value="'||nombre_soli||'"></td>
@@ -1752,25 +1752,25 @@ else
               <td class=c2><input name="v_cargo_sol" id="v_cargo_sol" maxlength="60" size="50" value="'||cargo_soli||'"></td>
               <td class=c2>Ingrese el Cargo del Solicitante</td>
           </tr>
-          
+
           <tr>
               <td class=c1>(*) Primer Correo Electr&oacute;nico del Solicitante: </td>
               <td class=c2><input name="v_correo" id="v_correo" maxlength="60" size="50" value="'||email||'" /></td>
               <td class=c2>Ingrese el correo Electr&oacute;nico del Solicitante</td>
           </tr>
-          
+
           <tr>
               <td class=c1> Segundo Correo Electr&oacute;nico del Solicitante: </td>
               <td class=c2><input name="v_correo2" id="v_correo2" maxlength="60" size="50" value="'||email2||'" /></td>
               <td class=c2>Ingrese el correo Electr&oacute;nico del Solicitante</td>
           </tr>
-          
+
           <tr>
               <td class=c1>(*) Dispositivo Legal que autoriza la creaci&oacute;n de la Entidad: </td>
               <td class=c2><input name="v_dispositivo" id="v_dispositivo" maxlength="200" size="50" value="'||dispositivo||'" '||case when codigo_consucode is not null then 'readOnly' else '' end||' /></td>
               <td class=c2>Ingrese el dispositivo legal</td>
           </tr>');
-          
+
          if codigo_consucode is not null then
           usp_print('<tr>
               <td class=c1>(*) Documento que autoriza la modificaci&oacute;n: </td>
@@ -1778,24 +1778,24 @@ else
               <td class=c2>Ingrese el Documento que autoriza la modificaci&oacute;n</td>
           </tr>');
           end if;
-          
+
           usp_print('</table></br></br>'); 
-     
+
   usp_print('<input name=iv_dep_desc readonly="true" value="" type="hidden" />
              <input name=iv_pro_desc readonly="true" value="" type="hidden" />
              <input name=iv_dis_desc readonly="true" value="" type="hidden" />');
-             
-             
-             
+
+
+
  /********************************************************Datos Presupuestales de la Entidad***************************************************************************/        
-             
+
   usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Datos Presupuestales de la Entidad</h3></td></tr>
              <tr>
              </table>');         
-             
+
   usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-        
+
           <tr>
            <td class=c1>C&oacute;digo SIAF: </td>
            <td class=c2><input name="v_cod_siaf" id="v_cod_siaf" type=text maxlength="6" size="25" value="'||siaf||'" onkeypress="f_validaCampoNumerico1()"></td>
@@ -1806,29 +1806,29 @@ else
               <td class=c2><div id="div_sector"><select name="v_sector" value="" onchange="mostrar_array(this,thisform.v_pliego)" style="width:540px;">
               <option value="F">--Seleccionar--</option>
           ');
-          
-          
+
+
           for xrow in cSector loop
            usp_print('<option  value="A'||xrow.sec_codigo||'" '||case when sect = xrow.sec_codigo then 'selected' else '' end||'>'|| xrow.com||xrow.sec_codigo||' - '||xrow.sec_desc||'</option>');
           end loop;
-            
+
          usp_print('
-             
+
               </select>
               <!--<input type="button" value="..." onclick ="SectPlieModal(1);"/></div></td>-->
               <td class=c2>Seleccione el Sector de la Entidad</td>
           </tr>');
-         
+
           usp_print('<tr>
-          
+
           <td class=c1>Pliego:</td>
           <td class=c2><select style="width:540px;" name="v_pliego" value="">
-          
+
                      <option value = "">--Seleccionar--</option>');
             for xrow in cPliego1(sect) loop
            usp_print('<option  value='||xrow.pli_codigo||' '||case when xrow.pli_codigo = plieg then 'selected' else '' end||'>'||xrow.pli_codigo||'- '||xrow.desc_pliego||'</option>');
           end loop;         
-    
+
           usp_print('</select>
               <!--<input type="button" value="..." onclick="SectPlieModal(2);"/></td>-->
               <td class=c2>Seleccione el Pliego de la Entidad</td>
@@ -1838,16 +1838,16 @@ else
               <td class=c2><input name="v_uni_ejecu" id="v_uni_ejecu" size="25" maxlength="4" value="'||uject||'" onkeypress="f_validaCampoNumerico1()"></td>
               <td class=c2>Ingrese la Unidad Ejecutora de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Documento que autoriza la modificaci&oacute;n: </td>
               <td class=c2><input name="v_documento_presup" id="v_documento_presup" maxlength="60" size="50" maxlength="100" value="'||document_pres||'"></td>
               <td class=c2>Ingrese el detalle del documento</td>
           </tr>
-          
-        
+
+
              </table></br></br>');  
-             
+
              usp_print('<input type="hidden" name="v_cod_dep" value="'||codi_depa||'" />');
              usp_print('<input type="hidden" name="v_cod_pro" value="'||codi_provi||'" />');
              usp_print('<input type="hidden" name="v_cod_dis" value="'||codi_distri||'" />');
@@ -1855,96 +1855,96 @@ else
              usp_print('<input type="hidden" name="cod_entidad" value="" />');
              usp_print('<input type="hidden" name="ent_activo" value="" />');
              usp_print('<input type="hidden" name="v_opener" id="v_opener" value="1" />');
-             
+
   /*******************************CLASIFICACION DE LA ENTIDAD**************************/
-  
+
   usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Clasificaci&oacute;n de la Entidad</h3></td></tr>
              <tr>
              </table>');         
-             
+
   usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-      
-         
+
+
           <tr>
               <td class=c1>Tipo de Entidad:</td>
               <td class=c2><select name="v_actividad" onchange="mostrar_array(this,thisform.v_instancia)" style="width:540px;">
               <option value="F">--Seleccionar--</option>');
            for xrow in cActividad loop
              usp_print('<option value='||xrow.act_ccodigo||' '||case when activ = xrow.act_ccodigo then 'selected' else '' end||'   >'|| xrow.com || xrow.act_ccodigo ||' - '||xrow.act_vdesc||'</option>');
-           
+
            end loop;   
            usp_print('   
               </select></td>
            <td class=c2>Seleccione el tipo de entidad</td>
           </tr>
-         
+
           <tr>
               <td class=c1>Sub Tipo de Entidad: </td>
               <td class=c2>');
-              
+
               USP_PRINT('<select name="v_instancia" style="width:540px;" value="">
               <option value="">--Seleccionar--</option>');
                for xrow in cInstancia1(activ) loop
                usp_print('<option '||case when xrow.ins_ccodigo = instanc then 'selected' else '' end||' value='||xrow.ins_ccodigo||' >'||xrow.ins_ccodigo||'-'||xrow.ins_vdesc||'</option>');
-           
+
                end loop;
                USP_PRINT('</select></td>
          <td class=c2>Seleccione el subtipo de entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Observaci&oacute;n: </td>
               <td class=c2><input name="v_observaciones_clasif" id="v_observaciones_clasif" size="50" maxlength="500" value="'||observaciones_clasi||'"></td>
               <td class=c2>Ingrese las Observaciones</td>
           </tr>
-          
+
              </table></br></br>');  
 /*******************************Datos del titular**************************/                     
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Datos del Titular de la Entidad</h3></td></tr>
              <tr>
              </table>');
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-          
+
           <tr>
            <td class=c1>Nombres y Apellidos: </td>
            <td class=c2><input name="v_nombre_titular" id="v_nombre_titular" maxlength="60" type=text size="50" value="'||nomb_titular||'" /></td>
            <td class=c2>Ingrese el Nombre completo del Titular</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Tel&eacute;fono: </td>
            <td class=c2><input name="v_tele_titular" id="v_tele_titular" maxlength="11" value="'||telef_titular||'" size="25"></td>
            <td class=c2>Ingrese el tel&eacute;fono del Titular</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Anexo Telef&oacute;nico: </td>
            <td class=c2><input name="v_anex_titular" id="v_anex_titular" maxlength="5" value="'||telef_anx_titular||'" size="25" value="" /></td>
            <td class=c2>N&uacute;mero del Anexo Telef&oacute;nico del Titular</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Celular Institucional: </td>
            <td class=c2><input name="v_cel_titular" id="v_cel_titular" maxlength="11" size="25" value="'||celular_titular||'" ></td>
            <td class=c2>Ingrese el N&uacute;mero del Celular del Titular</td>
           </tr>
-          
-          
+
+
           <tr>
               <td class=c1>Correo Electr&oacute;nico: </td>
               <td class=c2><input name="v_correo_titular" id="v_correo_titular" maxlength="60" size="50" value="'||email_titular||'" /></td>
               <td class=c2>Ingrese el Correo Electr&oacute;nico del Titular</td>
           </tr>');
-          
-          
+
+
           usp_print('<tr>
               <td class=c1>Documento que autoriza la designaci&oacute;n: </td>
               <td class=c2><input type="file"  name="pfiletoupload1"  value="">&nbsp;&nbsp;');
-              
+
               for xrow in  cEntidades_doc1 loop
               usp_print('<a target=_blank href="'||session__FileSingedHTTP||''||xrow.doc_url||'"><img src="'||xrow.icon_tipo_file||'" border="0" width="30" height="30"/>
               '||to_char(xrow.fec_upload,'dd/mm/yyyy hh24:mi')||'</a>');
@@ -1952,53 +1952,53 @@ else
               usp_print('</td>
               <td class=c2>Tipos de archivo permitidos: *.doc, *.pdf, *.zip</td>
           </tr>
-          
+
              </table></br></br>');  
-             
+
 /*******************************DATOS DEL JEFE DEL ORGANO ENCARGADO DE LAS CONTRATASIONES*************************************************************************************/                               
- 
+
 usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Datos del Jefe del &Oacute;rgano Encargado de las Contrataciones</h3></td></tr>
              <tr>
              </table>');
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-         
+
           <tr>
            <td class=c1>Nombres y Apellidos: </td>
            <td class=c2><input name="v_nombre_logistica" id="v_nombre_logistica" maxlength="60" value="'||nom_logistica||'" type=text size="50" value="" /></td>
            <td class=c2>Ingrese el nombre completo del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Tel&eacute;fono: </td>
            <td class=c2><input name="v_tele_logistica" id="v_tele_logistica" maxlength="11" size="25" value="'||telef_logistica||'" ></td>
            <td class=c2>Ingrese el tel&eacute;fono del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>
-          
-          
+
+
           <tr>
            <td class=c1>Anexo Telef&oacute;nico: </td>
            <td class=c2><input name="v_anex_logistica" id="v_anex_logistica" maxlength="5" size="25" value="'||telef_anx_logistica||'" /></td>
            <td class=c2>Ingrese el anexo del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Celular Institucional: </td>
            <td class=c2><input name="v_cel_logistica" id="v_cel_logistica" maxlength="11" size="25" value="'||celular_logistica||'" ></td>
            <td class=c2>Ingrese el celular del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Correo Electr&oacute;nico: </td>
            <td class=c2><input name="v_correo_logistica" id="v_correo_logistica" maxlength="60" size="50" value="'||email_logistica||'" /></td>
            <td class=c2>Ingrese el correo Electr&oacute;nico del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>');
-          
+
          usp_print('<tr>
               <td class=c1>Documento que autoriza la designaci&oacute;n: </td>
               <td class=c2><input type="file"  name="pfiletoupload2"  value="">&nbsp;&nbsp;');
-              
+
               for xrow in  cEntidades_doc2 loop
               usp_print('<a target=_blank href="'||session__FileSingedHTTP||''||xrow.doc_url||'"><img src="'||xrow.icon_tipo_file||'" border="0" width="30" height="30"/>
               '||to_char(xrow.fec_upload,'dd/mm/yyyy hh24:mi')||'</a>');
@@ -2006,7 +2006,7 @@ usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" sty
               usp_print('</td>
               <td class=c2>Tipos de archivo permitidos: *.doc, *.pdf, *.zip</td>
           </tr>
-          
+
              </table></br></br>');  
 
 /*******************************DATOS DEL JEFE DE Informatica*************************************************************************************/                               
@@ -2015,48 +2015,48 @@ usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" sty
              <tr><td  colspan="2" align="left"><h3>Datos del Jefe de Inform&aacute;tica</h3></td></tr>
              <tr>
              </table>');
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-       
+
           <tr>
            <td class=c1>Nombre y Apellidos: </td>
            <td class=c2><input name="v_nombre_informatica" id="v_nombre_informatica" maxlength="60" type=text size="50" value="'||nombre_infor||'" ></td>
            <td class=c2>Ingrese el nombre completo del Jefe de Inform&aacute;tica</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Tel&eacute;fono: </td>
            <td class=c2><input name="v_tele_informatica" id="v_tele_informatica" maxlength="11" size="25" value="'||telef_infor||'" ></td>
            <td class=c2>Ingrese el tel&eacute;fono del Jefe de Inform&aacute;tica</td>
           </tr>
-          
-          
+
+
           <tr>
            <td class=c1>Anexo Telef&oacute;nico: </td>
            <td class=c2><input name="v_anex_informatica" id="v_anex_informatica" maxlength="5" size="25" value="'||telef_anx_infor||'" /></td>
            <td class=c2>Ingrese el anexo del Jefe de Inform&aacute;tica</td>
           </tr>
-          
-          
-          
+
+
+
           <tr>
            <td class=c1>Celular Institucional: </td>
            <td class=c2><input name="v_cel_informatica" id="v_cel_informatica" maxlength="11" size="25" value="'||celular_infor||'" /></td>
            <td class=c2>Ingrese el celular del Jefe de Inform&aacute;tica</td>
           </tr>
-          
-          
+
+
           <tr>
            <td class=c1>Correo Electr&oacute;nico: </td>
            <td class=c2><input name="v_correo_informatica" id="v_correo_informatica" maxlength="60" size="50" value="'||email_infor||'" /></td>
            <td class=c2>Ingrese el correo Electr&oacute;nico del Jefe de Inform&aacute;tica</td>
           </tr>');
-          
-    
+
+
          usp_print('<tr>
               <td class=c1>Documento que autoriza la designaci&oacute;n: </td>
               <td class=c2><input type="file"  name="pfiletoupload3"  value="">&nbsp;&nbsp;');
-              
+
               for xrow in  cEntidades_doc3 loop
               usp_print('<a target=_blank href="'||session__FileSingedHTTP||''||xrow.doc_url||'"><img src="'||xrow.icon_tipo_file||'" border="0" width="30" height="30"/>
               '||to_char(xrow.fec_upload,'dd/mm/yyyy hh24:mi')||'</a>');
@@ -2064,9 +2064,9 @@ usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" sty
               usp_print('</td>
               <td class=c2>Tipos de archivo permitidos: *.doc, *.pdf, *.zip</td>
           </tr>
-          
+
              </table></br></br><p>(*) Campos Requeridos</p>');
-             
+
              usp_print('<script>
   if(thisform.v_anho.value == "'||session__anhoentidad||'"){
  thisform.bot.disabled = false;
@@ -2075,11 +2075,11 @@ usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" sty
   else{
     thisform.bot.disabled = true;
         }
-            
+
              </script>'); 
-     
+
     if codigo_consucode is not null then
-      
+
     usp_print('<script>
     if(thisform.v_anho.value == "'||session__anhoentidad||'"){
  thisform.bot_reenviar.disabled = false;
@@ -2089,7 +2089,7 @@ usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" sty
     thisform.bot_reenviar.disabled = true;
         }
     </script>');
-    
+
     end if;        
 
 
@@ -2104,18 +2104,18 @@ PROCEDURE USP_REC_A001_NEW_CLASIFICADOR (valor                 varchar2,
   IS
    cursor cSector is
 select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_desc;  
-  
+
   BEGIN
        usp_print('<div id = "contenedor_modal">');
  usp_print('<style>
  .desab{
  display :none;
  }
- 
+
  </style>');   
  usp_print('<script>
 
- 
+
  function enviarRadioB(){
           for(i=0; i <thisform.opcion.length; i++){
           if(document.thisform.opcion[i].checked){
@@ -2125,12 +2125,12 @@ select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_
          }
         }
        }
-  
+
  function NoCaracteresEspeciales(){
     //No permite el ingreso de los caracteres @ alt 64, % alt 37, & alt 38
 
     var x = window.event.keyCode;  
-        
+
       switch (x){
       //@%&!"#$()<=>?¿!/\+¿¿¿¿¿
       case 173: case 64: case 37: case 38: case 33: case 34: case 35:  case 36:  case 40: case 41: 
@@ -2146,15 +2146,15 @@ select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_
       }
 
     }
-             
+
    function act_contador() {
             document.all("conta_mensaje").value = document.all("txtObservacion").value.length;
          }  
-         
+
    function ValidarString(ls_obj, ls_mensage){
             var strCadena = ls_obj.value;
             var valido= "ABCDEFGHIJKLMNOPQRSTUVWYXZ0123456789abcdefghijklmnopqrstuvwxyz#()=*+}{[]-:,.!&/ ";
-            
+
             for (i = 0 ; i <= strCadena.length - 1; i++)
             {
                 if(!vacio(trim(strCadena.substring(i,i+1))))
@@ -2170,33 +2170,33 @@ select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_
             }  
             return true;
         }
-        
+
   function ismaxlength(obj){ 
         var mlength=obj.getAttribute? parseInt(obj.getAttribute("maxlength")) : "";
         if (obj.getAttribute && obj.value.length>mlength)
             obj.value=obj.value.substring(0,mlength);
         }
-        
-        
+
+
   function insertClasificador1(){
     if(thisform.v_desc.value==""){
           alert("Debe de ingresar la descripci\xf3n del Sector")
                                   }
     else{
     if (confirm("¿Est\xe1 seguro de ingresar un nuevo Sector?")) {
-    
+
       thisform.tipo.value = 1;
      thisform.scriptdo.value="doInsertClas";
       thisform.submit();
       var wo = window.opener
                 wo.listar_pliegos(1)
       window.close();
-     
+
      }
     }
   }                          
-   
-  
+
+
   function insertClasificador2(){
     if(thisform.v_desc.value==""){
           alert("Debe de ingresar la descripci\xf3n del Pliego");
@@ -2214,7 +2214,7 @@ select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_
       var wo = window.opener
       wo.listar_pliegos(1)
       window.close();
-      
+
      }
     }
   }                  
@@ -2224,17 +2224,17 @@ select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_
     usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td colspan="2" align="center" width=100%><h3>Nuevo Clasificador Institucional</h3></td></tr>
              </table>');
-         
+
      if valor = 1 then
-       
+
   usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td colspan="2" align="left" width=100%><h3>Nuevo Sector</h3></td></tr>
              <tr>
              <td class=c1>Descripci&oacute;n:</td>
              <td class=c2><input type="text" maxlength="100" name="v_desc"/></td>
              </tr>
-            
-             
+
+
              <tr>
     <td class=c1 align="left">Justificaci&oacute;n:</td>
     <td align="left" class=c2> 
@@ -2246,14 +2246,14 @@ select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_
              <tr>
              <td class=c2 colspan="2" align="center"><input type="button" value="Grabar" onclick="insertClasificador1();"/></td>
              </tr>
-             
+
              </table>
              ');
 
   else   
   usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td colspan="2" align="left" width=100%><h3>Nuevo Pliego</h3></td></tr>
-             
+
              <tr>
              <td class=c1>Sector</td>
              <td class=c2>
@@ -2262,7 +2262,7 @@ select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_
   for xrow in cSector loop
     usp_print('<option value="'||xrow.sec_codigo||'">'||xrow.sec_desc||'</option>');
   end loop;           
-              
+
   usp_print('</select>
              </td>
              </tr>
@@ -2285,20 +2285,20 @@ select distinct se.sec_codigo, se.sec_desc from sease.sector se order by se.sec_
              </table>
              ');                 
     end if;
-    
+
        usp_print('
         <script language="javascript">
-         
+
             window.moveTo((screen.width-750)/2,(screen.height-400)/2);
         </script>');
-        
+
      usp_print('</div>');
      usp_print('
      <script type="text/javascript">
      if (window.opener == null){
 
    document.getElementById("contenedor_modal").innerHTML="<h2>Acceso Denegado</h2>";
- 
+
    }
      </script>
      ');
@@ -2319,15 +2319,15 @@ PROCEDURE USP_REC_A001_INSERT_CLAS (v_actividad     varchar2,
  cod_sector char(2);  
  cod_pliego char(3);
   BEGIN
-    
-  
-    
+
+
+
   usp_print('<input type="text" value="'||v_actividad||'" />');
   usp_print('<input type="text" value="'||v_desc||'" />');
   usp_print('<input type="text" value="'||txtObservacion||'" />');
   usp_print('<input type="text" value="'||tipo||'" />');
   usp_print('<input type="text" value="'||v_secto||'" />');
-    
+
 select max(se.sec_codigo)+1 into cod_sector from sease.sector se
 where se.sec_codigo not in(99,89);
 
@@ -2351,9 +2351,9 @@ if tipo = 1 then
     session__USERID,
     sysdate
     );
-    
+
 else
-     
+
    insert into sease.pliego (
    sec_codigo,
    pli_codigo, 
@@ -2449,7 +2449,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         ent_activo                     varchar2,
         v_ident_entidad                number,  
         lugar_ejec_vb                  varchar2)
-  
+
     IS
     /*
     ||    Author: Mart¿n Zanelli
@@ -2545,7 +2545,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         a_i                          number;
         le_ruc                       varchar(20);
         nu                           number;   
-        
+
         c_EsAdm                      char(1);
 
         --modificacion memorando 642-2013/SDP
@@ -2560,7 +2560,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         /*select max(e.codconsucode)+1 into cod_new from sease.entidades e
         where e.codconsucode not in ('999999')
         and e.anhoentidad = session__anhoentidad; */
-     
+
         --modificacion memorando 642-2013/SDP
         --modificacion del pk de la tabla entidades del seace v2.0
       if V_NUM_RUC is not null then
@@ -2583,7 +2583,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         /*********************carga de documentos del titular**********************************/ 
         if pfiletoupload1 is not null then 
             indicador := 1;
-  
+
             BEGIN
                 select cod_tipo_file into lv_codtipofile From Reg_procesos.tipo_archivo Where ext_tipo_file=upper(substr(pfiletoupload1,length(pfiletoupload1)-2,length(pfiletoupload1)));
             EXCEPTION
@@ -2611,7 +2611,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
 
         if pfiletoupload2 is not null then 
             indicador := 2;
-  
+
             BEGIN
                 select cod_tipo_file into lv_codtipofile From Reg_procesos.tipo_archivo Where ext_tipo_file=upper(substr(pfiletoupload2,length(pfiletoupload2)-2,length(pfiletoupload2)));
             EXCEPTION
@@ -2639,7 +2639,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         /*************************************carga de archivos del jefe de informatica*************************************************************/
         if pfiletoupload3 is not null then 
             indicador := 3;
-  
+
             BEGIN
                 select cod_tipo_file into lv_codtipofile From Reg_procesos.tipo_archivo Where ext_tipo_file=upper(substr(pfiletoupload3,length(pfiletoupload3)-2,length(pfiletoupload3)));
             EXCEPTION
@@ -2647,13 +2647,13 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                     REG_PROCESOS.Pku_Ss_Mod_Contratos.f_msg_error('Error: Al intentar hallar el tipo de documento','''doNewContrato''');
                     return;
             END;
-    
+
             if v_cod_actual is not null then
                 cod_unico := v_cod_actual;
             else
                 cod_unico := cod_new;
             end if;
-    
+
             insert into reg_procesos.entidades_doc
             ( cod_tipo_doc, cod_tipo_file, doc_url, doc_nombre, fec_upload, user_upload,
               ip_from_upload, tamano_bytes, codconsucode, cod_indicador )
@@ -2664,7 +2664,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         end if; 
 
         /********************************************************************************************************************************************/
-    
+
         select count(*) as contador_veces into contador_veces from sease.entidades se
         where se.anhoentidad = session__anhoentidad
         and se.n_ruc = v_num_ruc;
@@ -2816,17 +2816,17 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                     left join sease.dist_ubigeo sdu on sdu.dep_codigo||''||sdu.pro_codigo||''||sdu.dis_codigo = se.dis_coddist
                 where se.codconsucode = v_cod_actual and se.anhoentidad =  session__anhoentidad;
             end if;
-    
+
             if v_cod_actual is not null then
                 select distinct le.n_ruc into le_ruc from sease.entidades le
                 where le.codconsucode = v_cod_actual and
                 le.anhoentidad = session__anhoentidad;
             end if;
-          
+
             i_depart := v_dep_codigo_vb;
             i_provin := v_dep_codigo_vb||''||v_pro_codigo_vb;
             i_distri := v_dep_codigo_vb||''||v_pro_codigo_vb||''||v_dis_codigo_vb;
-    
+
             if i_depart is not null then
                 i_depart := v_dep_codigo_vb;
                 i_provin := v_dep_codigo_vb||''||v_pro_codigo_vb;
@@ -2836,7 +2836,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                 i_provin := v_cod_pro;
                 i_distri := v_cod_dis;
             end if;
-    
+
             /********************************************Actualizacion de la tabla sease.entidades***********************************************/
             if contador_veces > 0 and v_num_ruc <> le_ruc then
                 usp_print('<input type="hidden" name="codigo_consucode" value="'||v_cod_actual||'">');  
@@ -2848,7 +2848,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                 </script>');
                 return;
             end if; 
-  
+
             update sease.entidades  e set 
                 n_ruc                 = v_num_ruc,
                 descripcion           = upper(v_razon_social),
@@ -2989,138 +2989,138 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                 ls_msg := ls_msg||'<p align="justify"><u>RELACI&Oacute;N DE CAMPOS MODIFICADOS:</u></p>';
                 ls_msg := ls_msg||'</td>';
                 ls_msg := ls_msg||'</tr>';
-                
+
                 if a_codi_depa||''||a_codi_provi||''||a_codi_distri <> i_depart||''||i_provin||''||i_distri or a_codi_depa||''||a_codi_provi||''||a_codi_distri is null and i_depart||''||i_provin||''||i_distri is not null or a_codi_depa||''||a_codi_provi||''||a_codi_distri is not null and i_depart||''||i_provin||''||i_distri is null then 
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Ubigeo:</b></td><td align="left">'||lugar_ejec_vb||'</td></tr>'; 
                 end if;
-      
+
                 if a_direccion <> v_direccion or a_direccion is null and v_direccion is not null or a_direccion is not null and v_direccion is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Direcci¿n de la Entidad:</b></td><td align="left">'||upper(v_direccion)||'</td></tr>';
                 end if;
-        
+
                 if a_telefono <> v_telefono or a_telefono is null and v_telefono is not null or a_telefono is not null and v_telefono is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Tel&eacute;fono de la Entidad:</b></td><td align="left">'||v_telefono||'</td></tr>';
                 end if;
-        
+
                 if a_telefono_anx <> v_anex_telf or a_telefono_anx is null and v_anex_telf is not null or a_telefono_anx is not null and v_anex_telf is null  then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Anexo Telef&oacute;nico de la Entidad:</b></td><td align="left">'||v_anex_telf||'</td></tr>';
                 end if;
-         
+
                 if a_fax <> v_fax or a_fax is null and v_fax is not null or a_fax is not null and v_fax is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Fax de la Entidad:</b></td><td align="left">'||v_fax||'</td></tr>';
                 end if;
-        
+
                 if a_fax_anx <> v_anex_fax or a_fax_anx is null and v_anex_fax is not null or a_fax_anx is not null and v_anex_fax is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Otro Tel&eacute;fono de la Entidad:</b></td><td align="left">'||v_anex_fax||'</td></tr>';
                 end if;
-        
+
                 if a_web <> v_pag_web or a_web is null and v_pag_web is not null or a_web is not null and v_pag_web is null then 
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. P&aacute;gina Web:</b></td><td align="left">'||v_pag_web||'</td></tr>';
                 end if;
-        
+
                 if a_nomb_titular <> v_nombre_titular or a_nomb_titular is null and v_nombre_titular is not null or a_nomb_titular is not null and v_nombre_titular is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Nombres y Apellidos del Titular:</b></td><td align="left">'||v_nombre_titular||'</td></tr>';
                 end if;
-          
+
                 if a_telef_titular <> v_tele_titular or a_telef_titular is null and v_tele_titular is not null or a_telef_titular is not null and v_tele_titular is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Tel&eacute;fono del Titular:</b></td><td align="left">'||v_tele_titular||'</td></tr>';
                 end if;
-        
+
                 if a_telef_anx_titular <> v_anex_titular or a_telef_anx_titular is null and v_anex_titular is not null or a_telef_anx_titular is not null and v_anex_titular is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Anexo Telefonico del Titular:</b></td><td align="left">'||v_anex_titular||'</td></tr>';
                 end if;
-          
+
                 if a_celular_titular <> v_cel_titular or a_celular_titular is null and v_cel_titular is not null or a_celular_titular is not null and v_cel_titular is null then  
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Celular Institucional del Titular:</b></td><td align="left">'||v_cel_titular||'</td></tr>';
                 end if;
-        
+
                 if a_email_titular <> v_correo_titular or a_email_titular is null and v_correo_titular is not null or a_email_titular is not null and v_correo_titular is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Correo Electr&oacute;nico del Titular:</b></td><td align="left">'||v_correo_titular||'</td></tr>';
                 end if;
-        
+
                 if a_nom_logistica <> v_nombre_logistica or a_nom_logistica is null and v_nombre_logistica is not null or a_nom_logistica is not null and v_nombre_logistica is null then
                     nu := nu+1;
                     ls_msg :=  ls_msg||''||'<tr><td align="left"><b>'||nu||'. Nombres y Apellidos del Jefe del &Oacute;rgano Encargado de las Contrataciones:</b></td><td align="left">'||v_nombre_logistica||'</td></tr>';
                 end if;
-        
+
                 if a_telef_logistica <> v_tele_logistica or a_telef_logistica is null and v_tele_logistica is not null or a_telef_logistica is not null and v_tele_logistica is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Tel&eacute;fono del Jefe del &Oacute;rgano Encargado de las Contrataciones:</b></td><td align="left">'||v_tele_logistica||'</td></tr>';
                 end if;
-        
+
                 if a_telef_anx_logistica <> v_anex_logistica or a_telef_anx_logistica is null and v_anex_logistica is not null or a_telef_anx_logistica is not null and v_anex_logistica is null then 
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Anexo Telefonico del Jefe del &Oacute;rgano Encargado de las Contrataciones:</b></td><td align="left">'||v_anex_logistica||'</td></tr>';
                 end if;
-        
+
                 if a_celular_logistica <> v_cel_logistica or a_celular_logistica is null and v_cel_logistica is not null or a_celular_logistica is not null and v_cel_logistica is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Celular Institucional del Jefe del &Oacute;rgano Encargado de las Contrataciones:</b></td><td align="left">'||v_cel_logistica||'</td></tr>';
                 end if;
-        
+
                 if a_email_logistica <> v_correo_logistica or a_email_logistica is null and v_correo_logistica is not null or a_email_logistica is not null and v_correo_logistica is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Correo Electr&oacute;nico del Jefe del &Oacute;rgano Encargado de las Contrataciones:</b></td><td align="left">'||v_correo_logistica||'</td></tr>';
                 end if;
-        
+
                 if a_nombre_infor <> v_nombre_informatica or a_nombre_infor is null and v_nombre_informatica is not null or a_nombre_infor is not null and v_nombre_informatica is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Nombres y Apellidos del Jefe de Inform&aacute;tica:</b></td><td align="left">'||v_nombre_informatica||'</td></tr>';
                 end if;
-        
+
                 if a_telef_infor <> v_tele_informatica or a_telef_infor is null and v_tele_informatica is not null or a_telef_infor is not null and v_tele_informatica is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Tel&eacute;fono del Jefe de Inform&aacute;tica:</b></td><td align="left">'||v_tele_informatica||'</td></tr>'; 
                 end if;
-        
+
                 if a_telef_anx_infor <> v_anex_informatica or a_telef_anx_infor is null and v_anex_informatica is not null or a_telef_anx_infor is not null and v_anex_informatica is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Anexo Telefonico del Jefe de Inform&aacute;tica:</b></td><td align="left">'||v_anex_informatica||'</td></tr>';
                 end if;
-        
+
                 if a_celular_infor <> v_cel_informatica or a_celular_infor is null and v_cel_informatica is not null or a_celular_infor is not null and v_cel_informatica is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Celular Institucional del Jefe de Inform&aacute;tica:</b></td><td align="left">'||v_cel_informatica||'</td></tr>';
                 end if;
-        
+
                 if a_email_infor <> v_correo_informatica or a_email_infor is null and v_correo_informatica is not null or a_email_infor is not null and v_correo_informatica is null then
                     nu := nu+1;
                     ls_msg := ls_msg||''||'<tr><td align="left"><b>'||nu||'. Correo Electr&oacute;nico del Jefe de Inform&aacute;tica:</b></td><td align="left">'||v_correo_informatica||'</td></tr>';
                 end if;
-         
+
                 ls_msg := ls_msg||''||'</table><hr  style="width:600" /><p>Esta notificaci&oacute;n ha sido enviada autom&aacute;ticamente. Por favor, no responda a este correo.</p><br /><div>';
-       
+
                 as_usumail := v_correo;
                 as_usumail_titular := v_correo_titular;
                 as_usumail_logistica := v_correo_logistica;
                 lv_asunto := 'Notificaci¿n de Actualizaci¿n';
-         
+
                 if as_usumail is not null then
                     reg_procesos.sp_send_mail_html(as_usumail, lv_asunto, ls_msg);
                 end if;
-              
+
                 /*if as_usumail_titular is not null then
                     reg_procesos.sp_send_mail_html(as_usumail_titular, lv_asunto, ls_msg);
                 end if;*/
-                
+
                 if as_usumail_logistica is not null then 
                     reg_procesos.sp_send_mail_html(as_usumail_logistica, lv_asunto, ls_msg);
                 end if;
             end if;
         end if;
- 
+
         /***********************************************Insert en tabla de Historial*************************************************************/
         usp_print('<input type="hidden" name="var_retorno" value="1" />');
 
@@ -3131,7 +3131,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                     e.f_desactivar = sysdate
                 where e.anhoentidad =  session__anhoentidad
                 and e.codconsucode = cod_entidad;
-       
+
                 update reg_procesos.entidades e set 
                     e.activo = 1,
                     e.f_desactivar = sysdate
@@ -3151,7 +3151,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                     e.f_desactivar = sysdate
                 where e.anhoentidad =  session__anhoentidad
                 and e.codconsucode = cod_entidad;
-       
+
                 update reg_procesos.entidades e set 
                     e.activo = 0,
                     e.f_desactivar = sysdate
@@ -3163,7 +3163,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                 ACTIVO = 0,
                 D_FECHA_MODIFICA = sysdate
                 where codconsucode = COD_ENTIDAD;
-       
+
             end if;
 
             if ent_activo = 2 then
@@ -3177,7 +3177,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             if ent_activo = 0 or ent_activo = 1 then
                 v_observ := txtObservacion;  
             end if;
-       
+
             --obtenemos el tipo de usuario en funci¿n al perfil asignado
             select case when a.cant > 0 then 'A' else 'E' end into c_EsAdm
             from
@@ -3188,7 +3188,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                     trim(upper(usu_codigo)) = trim(upper(session__USERID))
                     and usu_miembros like '%ADM_REC,%' --perfil administrador del REC
             ) a;
-            
+
             insert into sease.entidad_historial
             ( usu_registro, ip_registro, estado_registro, observaciones, cod_entidad, anhoentidad, tipo_usuario )
             values
@@ -3202,7 +3202,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             window.close();
             </script>');  
         end if;
-  
+
         if v_cod_max is not null then
             usp_print('
             <script>
@@ -3222,13 +3222,13 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         end if;
 
         commit; 
-     
+
     EXCEPTION
         WHEN OTHERS THEN  
             ROLLBACK;
             usp_print ('Ocurrio el siguiente error: ' || SQLERRM || ' - ' || SQLCODE);  
     END;
-    
+
 /***********************************************************************************************************************************************/
 /***********************************************************************************************************************************************/
 /***********************************************************************************************************************************************/
@@ -3266,7 +3266,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         cursor cSector is
         select distinct se.sec_codigo, se.sec_desc 
         from sease.sector se; 
-    
+
         cursor cPliego (sectore varchar2) is
         select distinct sp.pli_codigo, sp.desc_pliego 
         from 
@@ -3274,7 +3274,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             inner join sease.sector se on se.sec_codigo =sp.sec_codigo
         where se.sec_codigo = sectore
         order by sp.desc_pliego;
-      
+
         cursor cActividad is
         select distinct sa.act_ccodigo, sa.act_vdesc 
         from sease.actividad sa
@@ -3295,7 +3295,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         i                  NUMBER;
 
     begin
-  
+
         usp_print('
     <script language="javascript">
     function array_sector(texto,valor){
@@ -3345,7 +3345,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
         for(m=0;m<cual.length;m++){
             var nuevaOpcion = new Option(cual[m].texto);
             donde.options[m] = nuevaOpcion;
-   
+
     if(cual[m].valor != null){
       donde.options[m].value = cual[m].valor
       }
@@ -3355,7 +3355,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
     }
   }
 }
-  
+
   function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,lugar_ejec)
     {
         if (thisform.tipo_ubi.value==1)
@@ -3371,7 +3371,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             thisform.v_pro_codigo_vb.value=pro_codigo;
             thisform.v_dis_codigo_vb.value=dis_codigo;
             thisform.lugar_ejec_vb.value=dep_desc+"/"+pro_desc+"/"+dis_desc;
-           
+
         }
         if (thisform.tipo_ubi.value==3)
         {
@@ -3381,14 +3381,14 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             thisform.lugar_ejec_ed.value=dep_desc+"/"+pro_desc+"/"+dis_desc;
         }
     }  
-    
-    
+
+
   function BuscaUbigeo(tipo)
     {
         thisform.tipo_ubi.value=tipo;
         window.open("ControllerServletOpen?portletid=BuscadorUbigeo","","toolbar=no,Width=800,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised");
     }  
-  
+
   function f_validaCampoNumerico1() 
     { 
         var key=window.event.keyCode;   
@@ -3397,17 +3397,17 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             window.event.keyCode=0;     
            }
     }
-            
-   
+
+
   function codigos_ubigeo(depa, provi, distri)
     {
       thisform.v_cod_dep.value = depa;
       thisform.v_cod_pro.value = provi;
       thisform.v_cod_dis.value = distri; 
     }  
- 
 
-  
+
+
   function comparaFechas(fec1, fec2)
     {
            var Anio1 = (fec1).substr(6,4)
@@ -3428,7 +3428,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                     return 0;
             }
     }
-    
+
     function generar_excel()
     {
         if (comparaFechas(thisform.ag_fec_cre_ini.value, thisform.ag_fec_cre_fin.value) == 1 )
@@ -3446,21 +3446,21 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             alert("La fecha de fin debe ser mayor o igual a: "+thisform.ag_fec_act_ini.value);
             return;
         }   
-        
+
         if (thisform.v_ade.checked)
         { 
             thisform.scriptdo.value="doExcelEnt";
             thisform.submit();
-            window.location.href="ExportXLSServlet?portletid_=mod_rec1_a002_generar_reportes&scriptdo=doExcelEnt&v_tipo=1&v_actividad="+thisform.v_actividad.value+"&v_instancia="+thisform.v_instancia.value+"&v_sector="+thisform.v_sector.value+"&v_pliego="+thisform.v_pliego.value+"&v_uni_eje="+thisform.v_uni_eje.value+"&fec_cre_ini="+thisform.fec_cre_ini.value+"&fec_cre_fin="+thisform.fec_cre_fin.value+"&v_cod_estado="+thisform.v_cod_estado.value+"&fec_des_ini="+thisform.fec_des_ini.value+"&fec_des_fin="+thisform.fec_des_fin.value+"&fec_act_ini="+thisform.fec_act_ini.value+"&fec_act_fin="+thisform.fec_act_fin.value+"&v_dep_codigo_vb="+thisform.v_dep_codigo_vb.value+"&v_pro_codigo_vb="+thisform.v_pro_codigo_vb.value+"&v_dis_codigo_vb="+thisform.v_dis_codigo_vb.value;        
+            window.location.href="ExportXLSServlet?portletid=mod_rec1_a002_generar_reportes&scriptdo=doExcelEnt&v_tipo=1&v_actividad="+thisform.v_actividad.value+"&v_instancia="+thisform.v_instancia.value+"&v_sector="+thisform.v_sector.value+"&v_pliego="+thisform.v_pliego.value+"&v_uni_eje="+thisform.v_uni_eje.value+"&fec_cre_ini="+thisform.fec_cre_ini.value+"&fec_cre_fin="+thisform.fec_cre_fin.value+"&v_cod_estado="+thisform.v_cod_estado.value+"&fec_des_ini="+thisform.fec_des_ini.value+"&fec_des_fin="+thisform.fec_des_fin.value+"&fec_act_ini="+thisform.fec_act_ini.value+"&fec_act_fin="+thisform.fec_act_fin.value+"&v_dep_codigo_vb="+thisform.v_dep_codigo_vb.value+"&v_pro_codigo_vb="+thisform.v_pro_codigo_vb.value+"&v_dis_codigo_vb="+thisform.v_dis_codigo_vb.value;        
         }
         else
         {
             thisform.scriptdo.value="doExcel";
             thisform.submit();
-            window.location.href="ExportXLSServlet?portletid_=mod_rec1_a002_generar_reportes&scriptdo=doExcel&v_actividad="+thisform.v_actividad.value+"&v_instancia="+thisform.v_instancia.value+"&v_sector="+thisform.v_sector.value+"&v_pliego="+thisform.v_pliego.value+"&v_uni_eje="+thisform.v_uni_eje.value+"&fec_cre_ini="+thisform.fec_cre_ini.value+"&fec_cre_fin="+thisform.fec_cre_fin.value+"&v_cod_estado="+thisform.v_cod_estado.value+"&fec_des_ini="+thisform.fec_des_ini.value+"&fec_des_fin="+thisform.fec_des_fin.value+"&fec_act_ini="+thisform.fec_act_ini.value+"&fec_act_fin="+thisform.fec_act_fin.value+"&v_dep_codigo_vb="+thisform.v_dep_codigo_vb.value+"&v_pro_codigo_vb="+thisform.v_pro_codigo_vb.value+"&v_dis_codigo_vb="+thisform.v_dis_codigo_vb.value;
+            window.location.href="ExportXLSServlet?portletid=mod_rec1_a002_generar_reportes&scriptdo=doExcel&v_actividad="+thisform.v_actividad.value+"&v_instancia="+thisform.v_instancia.value+"&v_sector="+thisform.v_sector.value+"&v_pliego="+thisform.v_pliego.value+"&v_uni_eje="+thisform.v_uni_eje.value+"&fec_cre_ini="+thisform.fec_cre_ini.value+"&fec_cre_fin="+thisform.fec_cre_fin.value+"&v_cod_estado="+thisform.v_cod_estado.value+"&fec_des_ini="+thisform.fec_des_ini.value+"&fec_des_fin="+thisform.fec_des_fin.value+"&fec_act_ini="+thisform.fec_act_ini.value+"&fec_act_fin="+thisform.fec_act_fin.value+"&v_dep_codigo_vb="+thisform.v_dep_codigo_vb.value+"&v_pro_codigo_vb="+thisform.v_pro_codigo_vb.value+"&v_dis_codigo_vb="+thisform.v_dis_codigo_vb.value;
         }
     }
-  
+
     function ver_reporte()
     {
         if (comparaFechas(thisform.ag_fec_cre_ini.value, thisform.ag_fec_cre_fin.value) == 1 )
@@ -3478,7 +3478,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             alert("La fecha de fin debe ser mayor o igual a: "+thisform.ag_fec_act_ini.value);
             return;
         }
-       
+
         if (thisform.v_ade.checked)
         {
             thisform.v_tipo.value = 2;
@@ -3491,58 +3491,58 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             thisform.submit();
         }
   }
-    
-  
-  
+
+
+
   </script>');  
-  
-  
+
+
  usp_print('<div id="div_reporte"><table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Criterio para Generar Reportes</h3></td></tr>
              <tr>
              </table>');         
-             
+
     usp_print('<table class="table table-striped table-bordered">
-              
+
               <tr>
               <td class=c1>Tipo de Entidad: </td>
               <td class=c2 colspan="3"><select style="width:400px;" name="v_actividad" onchange="mostrar_array(this,thisform.v_instancia)">
               <option value="">TODOS</option>');
            for xrow in cActividad loop
              usp_print('<option value='||xrow.act_ccodigo||'  >'||xrow.act_vdesc||'</option>');
-           
+
            end loop;   
            usp_print('   
               </select></td>
-         
+
           </tr>
          <tr>
               <td class=c1>Sub Tipo de Entidad: </td>
               <td class=c2 colspan="3"><div id="div_instancia"><select style="width:400px;" name="v_instancia" >
               <option value="">TODOS</option>
-              
+
               </select></div></td>
-         
+
           </tr>
-          
+
           <tr>
               <td class=c1>Sector: </td>
               <td class=c2 colspan="3"><div id="div_sector"><select name="v_sector" value="" onchange="mostrar_array(this,thisform.v_pliego)" style="width:400px;">
               <option value="">TODOS</option>
           ');
-          
-          
+
+
           for xrow in cSector loop
            usp_print('<option  value="A'||xrow.sec_codigo||'">'||xrow.sec_desc||'</option>');
           end loop;
-            
+
          usp_print('
-             
+
               </select>
               </div></td>
-         
+
           </tr>
-         
+
           <tr>
               <td class=c1>Pliego: </td>
               <td class=c2 colspan="3"><div id="div_pliego"><select name="v_pliego" style="width:400px;">
@@ -3552,41 +3552,41 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
            <tr>
               <td class=c1>Unidad Ejecutora: </td>
               <td class=c2 colspan="3"><input type="text" name="v_uni_eje" style="width= 99%;" onkeypress="f_validaCampoNumerico1()" maxlength="4" /></td>
-           
+
           </tr>
-          
+
           <tr>
               <td class=c1>Ubigeo: </td>
               <td class=c2 colspan=3><input name="lugar_ejec_vb" size="45" class="form-control" onclick="BuscaUbigeo(2)" readonly  value=""  style="width:50%"/>
-              
+
              </td>
-       
+
           </tr>
-          
+
          <tr>
               <td class=c1>Estado Actual: </td>
               <td class=c2 colspan="3"><select name="v_cod_estado">');
-           
-            
+
+
               usp_print('<option value="">TODOS</option>
                          <option value="1">ACTIVO</option>
                          <option value="0">INACTIVO</option>');      
-              
+
                usp_print('</select></td>
-         
+
           </tr>
           <tr>
             <td class="c1">Actualizaci&oacute;n Datos por la Entidad:</td>
             <td class="c2" colspan="3"><input type="checkbox" name="v_ade" value="" onclick="ActivarCampos()"/></td>
           </tr>
-          
+
           <tr>
               <td class=c1>&nbsp;</td>
               <td class=c2>Desde:</td>
               <td class=c2 align="left">Hasta:</td>
               <td class=c2>&nbsp;</td>
           </tr>
-         
+
           <tr>
               <td class=c1>Por Fecha de Creaci&oacute;n: </td>
               <td class=c2>
@@ -3594,7 +3594,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                 <div class="input-group-addon  add-on">
                      <span class="glyphicon glyphicon-calendar"></span>
                 </div>
-                
+
                <input type="text" name="ag_fec_cre_ini" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
                </div>
               </td>
@@ -3606,9 +3606,9 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                <input type="text" name="ag_fec_cre_fin" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
                </div>
               </td>
-             
+
           </tr>
-          
+
           <tr>
               <td class=c1>Por Fecha de Desactivaci&oacute;n </td>
               <td class=c2>
@@ -3627,9 +3627,9 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                <input type="text" name="ag_fec_des_fin" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
               </div>
               </td>
-             
+
           </tr>
-          
+
           <tr>
               <td class=c1>Por Fecha de Modificaci&oacute;n: </td>
               <td class=c2>
@@ -3639,7 +3639,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                 </div>
                <input type="text" name="ag_fec_act_ini" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
               </div>
-              
+
               </td>
               <td class=c2>
               <div class="input-group datepicker" id="idDivTxtFechaIni">
@@ -3648,10 +3648,10 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                 </div>
                <input type="text" name="ag_fec_act_fin" style="width:98%" data-format="dd/MM/yyyy" class="form-control"/>
               </div>
-     
+
               </td>
-              
-           
+
+
           </tr>
           <tr>
               <td class=c1 colspan="4" align="center">
@@ -3661,16 +3661,16 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
               </td>
           </tr>
           </table>
-          
+
           </div>
-          
+
           ');
              usp_print('<input type="hidden" name="v_cod_dep" value="'||codi_depa||'" />');
              usp_print('<input type="hidden" name="v_cod_pro" value="'||codi_provi||'" />');
              usp_print('<input type="hidden" name="v_cod_dis" value="'||codi_distri||'" />');
-             
+
              --modal 2 ubigeo
-             
+
              usp_print('
                 <input name=v_dep_codigo_vb readonly="true" value="'||v_dep_codigo_vb||'" type="hidden" />
                 <input name=v_pro_codigo_vb readonly="true" value="'||v_pro_codigo_vb||'" type="hidden"/>
@@ -3701,7 +3701,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
                 thisform.fec_des_fin.disabled = false;
             }
         }
-        
+
         function limpiar()
         {
             thisform.v_actividad.value = "";
@@ -3726,7 +3726,7 @@ PROCEDURE USP_REC_A001_INSERT_NEW_ENT(
             thisform.fec_act_fin.value = "";
         }
         </script>');
-             
+
   end;
 /***********************************************************************************************************************************************/
 /***********************************************************************************************************************************************/
@@ -3807,15 +3807,15 @@ order by e.codconsucode) a) b
       v_sw             number;
       cColor           varchar2(50);
 BEGIN
-  
+
 IF ag_currentpage IS NULL
       THEN
          lv_currentpage := 1;
       ELSE
          lv_currentpage := ag_currentpage;
       END IF;
-  
-  
+
+
  c_total := 0; 
 select distinct count(*) into c_total
 
@@ -3881,7 +3881,7 @@ showpaginacion (lv_currentpage,
 if c_total = 0 then
         usp_print('No hay datos para mostrar.');
     else 
-  
+
     usp_print('<table class="table table-bordered table-striped" style="font-size: 0.9em">    
            <tr>
              <th class=th1 align="center">Nro.</th>
@@ -3897,7 +3897,7 @@ if c_total = 0 then
              <th class=th1 align="center" class="th1">Tipo de Entidad</th>
              <th class=th1 align="center" class="th1">Subtipo de Entidad</th>
            </tr>');
-           
+
     v_sw:=1;     
    ln_cont:= 1 +  15 * (lv_currentpage-1);     
    for xrow in cReporte(lv_currentpage, session__anhoentidad) loop
@@ -3923,7 +3923,7 @@ if c_total = 0 then
       end loop;
    usp_print('</table>');   
       end if;   
-   
+
 END; 
 
 PROCEDURE USP_REC_A002_EXCEL ( v_actividad           varchar2,
@@ -3985,7 +3985,7 @@ order by e.codconsucode;
   ln_cont number;
   cColor           varchar2(50);
 BEGIN
-  
+
 
 usp_print('
 <style type="text/css">
@@ -3994,8 +3994,8 @@ font-size: x-small;
 }
 </style>
 ');  
- 
-  
+
+
     usp_print('<table class="letra" border="1">    
            <tr>
              <th class=th1 align="center">Nro.</th>
@@ -4011,8 +4011,8 @@ font-size: x-small;
              <th class=th1 align="center" class="th1">Tipo de Entidad</th>
              <th class=th1 align="center" class="th1">Subtipo de Entidad</th>
            </tr>');
-           
-         
+
+
      ln_cont := 1; 
      v_sw := 1;     
    for xrow in cReporte loop
@@ -4038,7 +4038,7 @@ font-size: x-small;
             v_sw:=v_sw * (-1);  
       end loop;
       usp_print('</table>');
-  
+
 END;
 
 PROCEDURE USP_REC_A003_FORM_CREACION(cod_entidad                   varchar2,
@@ -4067,7 +4067,7 @@ cursor cPliego (sectore varchar2) is
               inner join sease.sector se on se.sec_codigo =sp.sec_codigo
               where se.sec_codigo = sectore
               order by sp.desc_pliego;
-         
+
 cursor cPliego1 (sectored varchar2) is
        select distinct sp.pli_codigo, sp.desc_pliego from sease.pliego sp
               inner join sease.sector se on se.sec_codigo =sp.sec_codigo
@@ -4086,7 +4086,7 @@ cursor cInstancia(actividade varchar2) is
               inner join sease.actividad sa on sa.act_ccodigo = si.act_ccodigo
               where sa.act_ccodigo = to_char(actividade)
               order by si.ins_ccodigo; 
-         
+
 cursor cInstancia1 (actividades varchar2)is
        select distinct si.ins_ccodigo, si.ins_vdesc from sease.instancia si
               inner join sease.actividad sa on sa.act_ccodigo = si.act_ccodigo
@@ -4102,13 +4102,13 @@ cursor cEntidades_doc1 is
        select ed.doc_url, ed.fec_upload, ta.icon_tipo_file from reg_procesos.entidades_doc ed
               inner join (select max(do.cod_doc) as doc_cod from reg_procesos.entidades_doc do where do.codconsucode = session__eue_codigo and do.cod_indicador = 1) vw on vw.doc_cod = ed.cod_doc
               inner join reg_procesos.tipo_archivo ta on ta.cod_tipo_file = ed.cod_tipo_file;
-            
+
 cursor cEntidades_doc2 is
        select ed.doc_url, ed.fec_upload, ta.icon_tipo_file from reg_procesos.entidades_doc ed
               inner join (select max(do.cod_doc) as doc_cod from reg_procesos.entidades_doc do where do.codconsucode = session__eue_codigo
               and do.cod_indicador = 2) vw on vw.doc_cod = ed.cod_doc
               inner join reg_procesos.tipo_archivo ta on ta.cod_tipo_file = ed.cod_tipo_file;
-                        
+
 cursor cEntidades_doc3 is
        select ed.doc_url, ed.fec_upload, ta.icon_tipo_file from reg_procesos.entidades_doc ed
               inner join (select max(do.cod_doc) as doc_cod from reg_procesos.entidades_doc do where do.codconsucode = session__eue_codigo and do.cod_indicador = 3) vw on vw.doc_cod = ed.cod_doc
@@ -4190,7 +4190,7 @@ se.faximil, se.telefono_anx, se.faximil_anx, se.url_web, se.email, se.tnomb_soli
  se.tnombjefelogis, se.ttelefjefelogis, se.tcelular_jefe_logis, se.temail_jefe_logis, se.ttelef_anx_jefe_logis, se.tnombjefeinfor, se.ttelefjefeinfor,
  se.tcelular_jefe_infor, se.temail_jefe_infor, se.ttelef_anx_jefe_infor, se.codconsucode, se.dep_coddpto, se.pro_codprov, se.dis_coddist,
  du.dep_desc, pu.pro_desc, sdu.dis_desc, se.pliego, se.dispositivo_legal, se.document_modif, se.document_presu, se.observaciones_clasif
- 
+
 into cod_actual, anho, ruc, depart, provin, distri, descripcion, abreviatura, direccion, telefono, fax, telefono_anx, fax_anx, web, email, nombre_soli,
      cargo_soli, siaf, sect, uject, activ, instanc, activo, nomb_titular, telef_titular, celular_titular, email_titular, telef_anx_titular,
      nom_logistica, telef_logistica, celular_logistica, email_logistica, telef_anx_logistica, nombre_infor, telef_infor, celular_infor, email_infor,
@@ -4211,9 +4211,9 @@ estado_entidad := 2;
 else
   titulo := 'REGISTRAR NUEVA ENTIDAD';
   estado_entidad := 1;
- 
+
 end if;
-   
+
 select max(e.codconsucode)+1 into cod_max from sease.entidades e
 where e.codconsucode not in ('999999')
 and e.anhoentidad = session__anhoentidad; 
@@ -4260,7 +4260,7 @@ if(cual.selectedIndex != 0){
   for(m=0;m<cual.length;m++){
     var nuevaOpcion = new Option(cual[m].texto);
     donde.options[m] = nuevaOpcion;
-   
+
     if(cual[m].valor != null){
       donde.options[m].value = cual[m].valor
       }
@@ -4276,16 +4276,16 @@ function listar_pliegos(sect){
   thisform.scriptdo.value = "doform";
   thisform.submit();
   }
-   
+
 function getUpdate(){
   thisform.anio.value = thisform.v_anho.value;
 thisform.scriptdo.value = "doform";
- 
+
   thisform.submit();
    }  
 
 function f_validaCampoNumerico1() { 
-  
+
            var key=window.event.keyCode;   
            if (key <48 || key > 57 ){       
             window.event.keyCode=0;     
@@ -4348,7 +4348,7 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
             thisform.v_pro_codigo_vb.value=pro_codigo;
             thisform.v_dis_codigo_vb.value=dis_codigo;
             thisform.lugar_ejec_vb.value=dep_desc+"/"+pro_desc+"/"+dis_desc;
-           
+
         }
         if (thisform.tipo_ubi.value==3)
         {
@@ -4358,14 +4358,14 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
             thisform.lugar_ejec_ed.value=dep_desc+"/"+pro_desc+"/"+dis_desc;
         }
     }  
-    
-    
+
+
     function BuscaUbigeo(tipo)
     {
         thisform.tipo_ubi.value=tipo;
         window.open("ControllerServletOpen?portletid=BuscadorUbigeo","","toolbar=no,Width=800,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised");
     }
-    
+
     function registrar_entidad(){
     if(thisform.v_num_ruc.value==""){
       alert("Tiene que Ingresar el Ruc de la Entidad");
@@ -4376,7 +4376,7 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
        thisform.v_num_ruc.focus();
        return false;
      }
-     
+
      }
     if(thisform.v_razon_social.value==""){
     alert("Tiene que Ingresar la Raz\xf3n Social de la Entidad");
@@ -4386,8 +4386,8 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
     alert("Tiene que Ingresar el Ubigeo de la Entidad");
     return false;
      }
-              
-              
+
+
          if(thisform.v_correo_titular.value != ""){     
         if (!(isEmail(thisform.v_correo_titular.value)))
             {
@@ -4412,43 +4412,43 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
                 thisform.v_correo_informatica.select();
               return false;
               }   }        
-     
+
    if(thisform.pfiletoupload1.value != ""){
-      
+
       extencion1 = thisform.pfiletoupload1.value
-      
+
       extencion1 = extencion1.substring((extencion1.length)-3,extencion1.length)
-      
+
       if (extencion1 != "doc" && extencion1 != "zip" && extencion1 != "pdf")
             {
                alert("Este tipo de archivo no est\xe1 permitido, intente nuevamente.");
                thisform.pfiletoupload1.focus();    
                return false;
             }
-      
+
       }
-      
+
       if(thisform.pfiletoupload2.value != ""){
-      
+
       extencion2 = thisform.pfiletoupload2.value
-      
+
       extencion2 = extencion2.substring((extencion2.length)-3,extencion2.length)
-      
+
        if (extencion2 != "doc" && extencion2 != "zip" && extencion2 != "pdf")
             {
                alert("Este tipo de archivo no est\xe1 permitido, intente nuevamente.");
                thisform.pfiletoupload2.focus();    
                return false;
             }
-      
+
       }
-      
+
       if(thisform.pfiletoupload3.value != ""){
-      
+
        extencion3 = thisform.pfiletoupload3.value
-       
+
        extencion3 = extencion3.substring((extencion3.length)-3,extencion3.length)
-            
+
             if (extencion3 != "doc" && extencion3 != "zip" && extencion3 != "pdf")
             {
                alert("Este tipo de archivo no est\xe1 permitido, intente nuevamente.");
@@ -4456,22 +4456,22 @@ function RtnUbigeo(dep_codigo,pro_codigo,dis_codigo,dep_desc,pro_desc,dis_desc,l
                return false;
             }
       }
-      
-      
+
+
      if(confirm("¿Desea guardar los datos ingresados?")){
       thisform.scriptdo.value = "doInsertEntidad";
-      
+
       if(thisform.v_cod_actual.value != ""){
-         
+
          thisform.cod_entidad.value = thisform.v_cod_actual.value;
          thisform.ent_activo.value = "2";
-      
+
       }else{
          thisform.cod_entidad.value = thisform.v_cod_max.value;
          thisform.ent_activo.value = "3";
       }
-      
-      
+
+
             thisform.submit();
      }
     }
@@ -4490,21 +4490,21 @@ usp_print('
                 <input name=v_dis_codigo_vb readonly="true" value="'||v_dis_codigo_vb||'" type="hidden"/>
                 <INPUT name="tipo_ubi" type="hidden"/>
 ');
- 
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td align="left"><h3>'||titulo||'</h3></td>
              <td align="right">&nbsp;&nbsp;<input type="button" name="bot" '||case when session__eue_codigo is null then 'value="Grabar" onclick="registrar_entidad();"' else 'value="Grabar" onclick="registrar_entidad();"' end||' ></td>
              </tr>
              </table></br></br>'); 
-         
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Datos Generales de la Entidad</h3></td></tr>
              <tr>
              </table>');
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
- 
- 
+
+
  <tr class="no_mostrar">
              <td class=c1>A¿o: </td>  
              <td class=c2><select name="v_anho" onchange="getUpdate()">');
@@ -4519,7 +4519,7 @@ usp_print('
              </td>
              <td class=c2>A&ntilde;o de la Entidad</td>
  </tr>');
- 
+
 if departament_desc is not null then
 
 i_dep_desc := departament_desc;
@@ -4540,21 +4540,21 @@ end if;
 
 if session__eue_codigo is null then
             usp_print('
-         
+
          <input type="hidden" name="v_cod_max" id="v_cod_max" readOnly value="'||cod_max||'" />');
-       
+
 else
   usp_print('<input type="hidden" name="anio" value="'||session__anhoentidad||'" />');
   usp_print('<tr class="no_mostrar">
            <td class=c1>C&oacute;digo:</td>  
            <td class=c2><input type="text" name="codigo_consucode" readOnly value="'||session__eue_codigo||'" /></td>
            <td class=c2>C&oacute;digo de la Entidad</td>');
-           
+
   end if;         
            usp_print('
-        
+
           </tr>
- 
+
           <tr class="no_mostrar">
               <td class=c1>Estado Actual: </td>
               <td class=c2><select name="v_cod_estado" disabled>');
@@ -4567,7 +4567,7 @@ else
               <option value="1" '||case when activo = 1 then 'selected readonly' else '' end||'>ACTIVO</option>
               <option value="0" '||case when activo = 0 then 'selected readonly' else '' end||'>INACTIVO</option>');      
               end if;
-              
+
                usp_print('</select></td>
               <td class=c2>Estado Actual de la Entidad</td>
           </tr>
@@ -4577,13 +4577,13 @@ else
               <td class=c2><input readOnly style="background-color: #D2D2D2;" name="v_num_ruc" id="v_num_ruc" type=text size="50" value="'||ruc||'" maxlength="11" onkeypress="f_validaCampoNumerico1()"></td>
               <td class=c2>N&uacute;mero el RUC de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Raz&oacute;n Social: </td>
               <td class=c2><input readOnly name="v_razon_social" style="background-color: #D2D2D2;" id="v_razon_social" size="50" value="'||descripcion||'"></td>
                <td class=c2>Nombre de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Sigla: </td>
               <td class=c2><input readOnly name="v_sigla" style="background-color: #D2D2D2;" id="v_sigla" size="50" value="'||abreviatura||'"></td>
@@ -4594,46 +4594,46 @@ else
               <td class=c1>(*) Ubigeo: </td>
               <td class=c2><input name="lugar_ejec_vb" size="45" class=ViewSelect onclick="BuscaUbigeo(2)" readonly '||case when session__eue_codigo is not null then ' value="'||i_dep_desc||'/'||i_pro_desc||'/'||i_dis_desc||'" ' else '' end||'  />&nbsp;&nbsp;
             &nbsp;&nbsp;
-             
+
               <td class=c2>Seleccione Departamento / Provincia / Distrito</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Direcci&oacute;n: </td>
               <td class=c2><input name="v_direccion" maxlength="200" size="50" value="'||direccion||'"></td>
               <td class=c2>Ingrese la direcci&oacute;n de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Tel&eacute;fono: </td>
               <td class=c2><input name="v_telefono" id="txtPreUni" maxlength="11" size="25" value="'||telefono||'" ></td>
               <td class=c2>Ingrese el n&uacute;mero Telef&oacute;nico de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Anexo de Tel&eacute;fono: </td>
               <td class=c2><input name="v_anex_telf" id="v_anex_telf" maxlength="5" size="25" value="'||telefono_anx||'"  /></td>
               <td class=c2>Ingrese n&uacute;mero de Anexo Telef&oacute;nico de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Fax: </td>
               <td class=c2><input name="v_fax" id="v_fax" maxlength="11" size="25" value="'||fax||'" /></td>
               <td class=c2>Ingrese el n&uacute;mero del fax de la Entidad</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Otro Tel&eacute;fono: </td>
               <td class=c2><input name="v_anex_fax" id="v_anex_fax" maxlength="11" size="25" value="'||fax_anx||'"  /></td>
               <td class=c2>Ingrese el n&uacute;mero del otro Tel&eacute;fono de la Entidad</td>
           </tr>
- 
+
           <tr>
               <td class=c1>P&aacute;gina Web: </td>
               <td class=c2><input name="v_pag_web" maxlength="60" id="v_pag_web" size="50" value="'||web||'"></td>
               <td class=c2>Ingrese la p&aacute;gina Web de la Entidad</td>
           </tr>
-           
+
           <tr class="no_mostrar">
               <td class=c1>(*) Nombre y Apellidos del Solicitante: </td>
               <td class=c2><input name="v_nom_sol" id="v_nom_sol"  size="50" value="'||nombre_soli||'"></td>
@@ -4644,19 +4644,19 @@ else
               <td class=c2><input name="v_cargo_sol" id="v_cargo_sol" size="50" value="'||cargo_soli||'"></td>
               <td class=c2>Ingrese el Cargo del Solicitante</td>
           </tr>
-          
+
           <tr class="no_mostrar">
               <td class=c1>(*) Correo Electr&oacute;nico del Solicitante: </td>
               <td class=c2><input name="v_correo" id="v_correo" size="50" value="'||email||'" /></td>
               <td class=c2>Ingrese el correo Electr&oacute;nico del Solicitante</td>
           </tr>
-          
+
           <tr class="no_mostrar">
               <td class=c1>(*) Dispositivo Legal que autoriza la creaci&oacute;n de la Entidad: </td>
               <td class=c2><input name="v_dispositivo" id="v_dispositivo" size="50" value="'||dispositivo||'" '||case when codigo_consucode is not null then 'readOnly' else '' end||' /></td>
               <td class=c2>Ingrese el dispositivo legal</td>
           </tr>');
-          
+
          if session__eue_codigo is not null then
           usp_print('<tr class="no_mostrar">
               <td class=c1>(*) Documento que autoriza la modificaci&oacute;n: </td>
@@ -4664,22 +4664,22 @@ else
               <td class=c2>Ingrese el Documento que autoriza la modificaci&oacute;n</td>
           </tr>');
           end if;
-          
+
           usp_print('</table></br></br>'); 
-     
+
   usp_print('<input name=iv_dep_desc readonly="true" value="" type="hidden" />
              <input name=iv_pro_desc readonly="true" value="" type="hidden" />
              <input name=iv_dis_desc readonly="true" value="" type="hidden" />');
-                 
+
  /********************************************************Datos Presupuestales de la Entidad***************************************************************************/        
-             
+
   usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Datos Presupuestales de la Entidad</h3></td></tr>
              <tr>
              </table>');         
-             
+
   usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-        
+
           <tr>
            <td class=c1>C&oacute;digo SIAF: </td>
            <td class=c2><input name="v_cod_siaf" style="background-color: #D2D2D2;" readOnly id="v_cod_siaf" type=text maxlength="6" size="25" value="'||siaf||'" onkeypress="f_validaCampoNumerico1()"></td>
@@ -4689,26 +4689,26 @@ else
               <td class=c1>Sector: </td>
               <td class=c2><div id="div_sector"><select style="background-color: #D2D2D2;" name="v_sector" value="" onchange="mostrar_array(this,thisform.v_pliego)" style="width:460px;">
           ');
-          
-          
+
+
           for xrow in cSector loop
            usp_print('<option  value="A'||xrow.sec_codigo||'" '||case when sect = xrow.sec_codigo then 'selected' else '' end||'>'||xrow.sec_desc||'</option>');
           end loop;
-            
+
          usp_print('
-             
+
               </select>
               </div></td>
               <td class=c2>Sector de la Entidad</td>
           </tr>');
-         
+
           usp_print('<tr>
           <td class=c1>Pliego: </td>
           <td class=c2><select style="background-color: #D2D2D2;" style="width:460px;" name="v_pliego" value="">');
             for xrow in cPliego1(sect) loop
            usp_print('<option  value='||xrow.pli_codigo||' '||case when xrow.pli_codigo = plieg then 'selected' else '' end||'>'||xrow.desc_pliego||'</option>');
           end loop;         
-    
+
           usp_print('</select>
              </td>
               <td class=c2>Pliego de la Entidad</td>
@@ -4718,112 +4718,112 @@ else
               <td class=c2><input readOnly name="v_uni_ejecu" style="background-color: #D2D2D2;" id="v_uni_ejecu" size="25" maxlength="4" value="'||uject||'" onkeypress="f_validaCampoNumerico1()"></td>
               <td class=c2>Unidad Ejecutora de la Entidad</td>
           </tr>
-          
+
           <tr class="no_mostrar">
               <td class=c1>Documento: </td>
               <td class=c2><input name="v_documento_presup" id="v_documento_presup" size="50" maxlength="100" value="'||document_pres||'"></td>
               <td class=c2>Ingrese el detalle del documento</td>
           </tr>
-          
-        
+
+
              </table></br></br>');  
-             
+
              usp_print('<input type="hidden" name="v_cod_dep" value="'||codi_depa||'" />');
              usp_print('<input type="hidden" name="v_cod_pro" value="'||codi_provi||'" />');
              usp_print('<input type="hidden" name="v_cod_dis" value="'||codi_distri||'" />');
              usp_print('<input type="hidden" name="v_cod_actual" value="'||cod_actual||'" />');
              usp_print('<input type="hidden" name="cod_entidad" value="" />');
              usp_print('<input type="hidden" name="ent_activo" value="" />');
-             
+
   /*******************************CLASIFICACION DE LA ENTIDAD**************************/
-  
+
   usp_print('<table border="0" class="no_mostrar" cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Clasificaci&oacute;n de la Entidad</h3></td></tr>
              <tr>
              </table>');         
-             
+
   usp_print('<table border="0" class="no_mostrar" cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-      
-         
+
+
           <tr>
               <td class=c1>Actividad: </td>
               <td class=c2><select name="v_actividad" onchange="mostrar_array(this,thisform.v_instancia)" style="width:310px;">
               <option value="">--Seleccionar--</option>');
            for xrow in cActividad loop
              usp_print('<option value='||xrow.act_ccodigo||' '||case when activ = xrow.act_ccodigo then 'selected' else '' end||'   >'||xrow.act_vdesc||'</option>');
-           
+
            end loop;   
            usp_print('   
               </select></td>
            <td class=c2>Seleccione el tipo de Actividad</td>
           </tr>
-         
+
           <tr>
               <td class=c1>Instancia: </td>
               <td class=c2>');
-              
+
               USP_PRINT('<select name="v_instancia" style="width:310px;" value="">
               <option value="">--Seleccionar--</option>');
                for xrow in cInstancia1(activ) loop
              usp_print('<option '||case when xrow.ins_ccodigo = instanc then 'selected' else '' end||' value='||xrow.ins_ccodigo||' >'||xrow.ins_vdesc||'</option>');
-           
+
            end loop;
                USP_PRINT('</select></td>
          <td class=c2>Seleccione el tipo de Instancia</td>
           </tr>
-          
+
           <tr>
               <td class=c1>Observaci&oacute;n: </td>
               <td class=c2><input name="v_observaciones_clasif" id="v_observaciones_clasif" size="50" maxlength="500" value="'||observaciones_clasi||'"></td>
               <td class=c2>Ingrese las Observaciones</td>
           </tr>
-          
+
              </table>');  
 /*******************************Datos del titular**************************/                     
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Datos del Titular de la Entidad</h3></td></tr>
              <tr>
              </table>');
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-          
+
           <tr>
            <td class=c1>Nombres y Apellidos: </td>
            <td class=c2><input name="v_nombre_titular" id="v_nombre_titular" maxlength="60" type=text size="50" value="'||nomb_titular||'" /></td>
            <td class=c2>Ingrese el Nombre completo del Titular</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Tel&eacute;fono: </td>
            <td class=c2><input name="v_tele_titular" id="v_tele_titular" maxlength="11" value="'||telef_titular||'" size="25"></td>
            <td class=c2>Ingrese el tel&eacute;fono del Titular</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Anexo Telef&oacute;nico: </td>
            <td class=c2><input name="v_anex_titular" id="v_anex_titular" maxlength="5" value="'||telef_anx_titular||'" size="25" value="" /></td>
            <td class=c2>N&uacute;mero del Anexo Telef&oacute;nico del Titular</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Celular Institucional: </td>
            <td class=c2><input name="v_cel_titular" id="v_cel_titular" maxlength="11" size="25" value="'||celular_titular||'" ></td>
            <td class=c2>Ingrese el N&uacute;mero del Celular del Titular</td>
           </tr>
-          
-          
+
+
           <tr>
               <td class=c1>Correo Electr&oacute;nico: </td>
               <td class=c2><input name="v_correo_titular" id="v_correo_titular" maxlength="60" size="50" value="'||email_titular||'" /></td>
               <td class=c2>Ingrese el Correo Electr&oacute;nico del Titular</td>
           </tr>');
-          
-          
+
+
           usp_print('<tr>
               <td class=c1>Documento que autoriza la designaci&oacute;n: </td>
               <td class=c2><input type="file"  name="pfiletoupload1"  value="">&nbsp;&nbsp;');
-              
+
               for xrow in  cEntidades_doc1 loop
               usp_print('<a target=_blank href="'||session__FileSingedHTTP||''||xrow.doc_url||'"><img src="'||xrow.icon_tipo_file||'" border="0" width="30" height="30"/>
               '||to_char(xrow.fec_upload,'dd/mm/yyyy hh24:mi')||'</a>');
@@ -4831,53 +4831,53 @@ else
               usp_print('</td>
               <td class=c2>Tipos de archivo permitidos: *.doc, *.pdf, *.zip</td>
           </tr>
-          
+
              </table></br></br>');  
-             
+
 /*******************************DATOS DEL JEFE DEL ORGANO ENCARGADO DE LAS CONTRATASIONES*************************************************************************************/                               
- 
+
 usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
              <tr><td  colspan="2" align="left"><h3>Datos del Jefe del &Oacute;rgano Encargado de las Contrataciones</h3></td></tr>
              <tr>
              </table>');
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-         
+
           <tr>
            <td class=c1>Nombres y Apellidos: </td>
            <td class=c2><input name="v_nombre_logistica" id="v_nombre_logistica"  maxlength="60" value="'||nom_logistica||'" type=text size="50" value="" /></td>
            <td class=c2>Ingrese el nombre completo del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Tel&eacute;fono: </td>
            <td class=c2><input name="v_tele_logistica" id="v_tele_logistica" maxlength="11" size="25" value="'||telef_logistica||'" ></td>
            <td class=c2>Ingrese el tel&eacute;fono del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>
-          
-          
+
+
           <tr>
            <td class=c1>Anexo Telef&oacute;nico: </td>
            <td class=c2><input name="v_anex_logistica" id="v_anex_logistica" maxlength="5" size="25" value="'||telef_anx_logistica||'" /></td>
            <td class=c2>Ingrese el anexo del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Celular Institucional: </td>
            <td class=c2><input name="v_cel_logistica" id="v_cel_logistica" maxlength="11" size="25" value="'||celular_logistica||'" ></td>
            <td class=c2>Ingrese el celular del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Correo Electr&oacute;nico: </td>
            <td class=c2><input name="v_correo_logistica" maxlength="60" id="v_correo_logistica" size="50" value="'||email_logistica||'" /></td>
            <td class=c2>Ingrese el correo Electr&oacute;nico del Jefe del &Oacute;rgano Encargado de las Contrataciones</td>
           </tr>');
-          
+
          usp_print('<tr>
               <td class=c1>Documento que autoriza la designaci&oacute;n: </td>
               <td class=c2><input type="file"  name="pfiletoupload2"  value="">&nbsp;&nbsp;');
-              
+
               for xrow in  cEntidades_doc2 loop
               usp_print('<a target=_blank href="'||session__FileSingedHTTP||''||xrow.doc_url||'"><img src="'||xrow.icon_tipo_file||'" border="0" width="30" height="30"/>
               '||to_char(xrow.fec_upload,'dd/mm/yyyy hh24:mi')||'</a>');
@@ -4885,7 +4885,7 @@ usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" sty
               usp_print('</td>
               <td class=c2>Tipos de archivo permitidos: *.doc, *.pdf, *.zip</td>
           </tr>
-          
+
              </table></br></br>');  
 
 /*******************************DATOS DEL JEFE DE Informatica*************************************************************************************/                               
@@ -4894,48 +4894,48 @@ usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" sty
              <tr><td  colspan="2" align="left"><h3>Datos del Jefe de Inform&aacute;tica</h3></td></tr>
              <tr>
              </table>');
-             
+
  usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" align="center" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-       
+
           <tr>
            <td class=c1>Nombre y Apellidos: </td>
            <td class=c2><input name="v_nombre_informatica" maxlength="60" id="v_nombre_informatica" type=text size="50" value="'||nombre_infor||'" ></td>
            <td class=c2>Ingrese el nombre completo del Jefe de Inform&aacute;tica</td>
           </tr>
-          
+
           <tr>
            <td class=c1>Tel&eacute;fono: </td>
            <td class=c2><input name="v_tele_informatica" id="v_tele_informatica" maxlength="11" size="25" value="'||telef_infor||'" ></td>
            <td class=c2>Ingrese el tel&eacute;fono del Jefe de Inform&aacute;tica</td>
           </tr>
-          
-          
+
+
           <tr>
            <td class=c1>Anexo Telef&oacute;nico: </td>
            <td class=c2><input name="v_anex_informatica" id="v_anex_informatica" maxlength="5" size="25" value="'||telef_anx_infor||'" /></td>
            <td class=c2>Ingrese el anexo del Jefe de Inform&aacute;tica</td>
           </tr>
-          
-          
-          
+
+
+
           <tr>
            <td class=c1>Celular Institucional: </td>
            <td class=c2><input name="v_cel_informatica" id="v_cel_informatica" maxlength="11" size="25" value="'||celular_infor||'" /></td>
            <td class=c2>Ingrese el celular del Jefe de Inform&aacute;tica</td>
           </tr>
-          
-          
+
+
           <tr>
            <td class=c1>Correo Electr&oacute;nico: </td>
            <td class=c2><input name="v_correo_informatica" id="v_correo_informatica" maxlength="60" size="50" value="'||email_infor||'" /></td>
            <td class=c2>Ingrese el correo Electr&oacute;nico del Jefe de Inform&aacute;tica</td>
           </tr>');
-          
-    
+
+
          usp_print('<tr>
               <td class=c1>Documento que autoriza la designaci&oacute;n: </td>
               <td class=c2><input type="file"  name="pfiletoupload3"  value="">&nbsp;&nbsp;');
-              
+
               for xrow in  cEntidades_doc3 loop
               usp_print('<a target=_blank href="'||session__FileSingedHTTP||''||xrow.doc_url||'"><img src="'||xrow.icon_tipo_file||'" border="0" width="30" height="30"/>
               '||to_char(xrow.fec_upload,'dd/mm/yyyy hh24:mi')||'</a>');
@@ -4943,16 +4943,16 @@ usp_print('<table border="0" class=tableform cellpadding="3" cellspacing="0" sty
               usp_print('</td>
               <td class=c2>Tipos de archivo permitidos: *.doc, *.pdf, *.zip</td>
           </tr>
-          
+
              </table></br></br><p>(*) Campos Requeridos</p>');
-             
+
              usp_print('<script>
   if(thisform.v_anho.value == "'||session__anhoentidad||'"){
  thisform.bot.disabled = false;
   }
   else
     thisform.bot.disabled = true;
-             
+
              </script>');  
 
 END;
@@ -4962,7 +4962,7 @@ END;
 PROCEDURE USP_REC_A001_REENVIAR_EMAIL(codigo_consucode varchar2,
                                       session__anhoentidad varchar2)
   IS 
-  
+
    as_usumail                   varchar2(100) := '';
    as_usumail2                  varchar2(100) := '';
    msg                          varchar2(4000):= '';
@@ -4977,15 +4977,15 @@ PROCEDURE USP_REC_A001_REENVIAR_EMAIL(codigo_consucode varchar2,
    se_email                     varchar2(100);
    se_email2                    varchar2(100);
   BEGIN
-    
+
  select se.codconsucode, se.n_ruc, se.descripcion, se.tnomb_solicitante, se.tcargo_solicitante, se.f_registro, se.email, se.email2
  into  se_codconsucode, se_n_ruc, se_descripcion, se_tnomb_solicitante, se_tcargo_solicitante, se_f_registro, se_email, se_email2
  from sease.entidades se where se.codconsucode = codigo_consucode
                          and se.anhoentidad = session__anhoentidad;
-                         
-                         
-                         
-                        
+
+
+
+
 
 ls_msg    := '
       <div align="center">
@@ -5007,32 +5007,32 @@ ls_msg    := '
           de las contrataciones de su Entidad en el SEACE</p>
         <p>&nbsp;</p></td>
       </tr>
-      
+
       <tr>
       <td align="left"><b>Entidad:</b></td>
       <td align="left">'||upper(se_descripcion)||'</td>
       </tr>
-      
+
       <tr>
       <td align="left"><b>RUC:</b></td>
       <td align="left">'||se_n_ruc||'</td>
       </tr>
-      
+
       <tr>   
       <td align="left"><b>Fecha y Hora del Registro:</b></td>
       <td align="left">'||se_f_registro||'</td>
       </tr>
-      
+
       <tr>   
       <td align="left"><b>Nombres y Apellidos del solicitante del registro:</b></td>
       <td align="left">'||upper(se_tnomb_solicitante)||'</td>
       </tr>
-      
+
       <tr>   
       <td align="left"><b>Cargo del solicitante del registro:</b></td>
       <td align="left">'||upper(se_tcargo_solicitante)||'</td>
       </tr>
-      
+
       <tr>
       <td colspan="3"><p>&nbsp;</p>
         <p align="justify">Para interactuar con el SEACE deber&aacute; solicitar el Certificado SEACE (usuario y contrase&ntilde;a)
@@ -5055,7 +5055,7 @@ ls_msg    := '
       if se_email2 is not null then
       reg_procesos.sp_send_mail_html(as_usumail2, lv_asunto, ls_msg);
       end if;
-      
+
       usp_print('<input type="hidden" name="codigo_consucode" value="'||codigo_consucode||'" />');
       usp_print('<input type="hidden" name="anio" value="'||session__anhoentidad||'" />');
       usp_print('<script type="text/javascript">
@@ -5063,9 +5063,9 @@ ls_msg    := '
                   thisform.scriptdo.value = "doForm";
                   thisform.submit();
                   </script>');
-      
+
     END;
-    
+
     PROCEDURE USP_REC_A001_CONFIG_PARAM ( 
         v_cod_entidad varchar2,
         v_anio        varchar2 )
@@ -5080,7 +5080,7 @@ ls_msg    := '
         select tip_codigo from sease.tipo_proceso
         where tip_activo = 1
         and tip_codigo not in (15,16,17);
-        
+
         cursor c_objeto is
         select codobjeto from reg_procesos.objeto
         where activo = 1;
@@ -5098,7 +5098,7 @@ ls_msg    := '
                 0, 0, 
                 1, 0, 0, 1 );
         end loop;
-        
+
         for item in c_objeto loop
             insert into reg_procesos.entidad_objeto_categoria
             (   eue_codigo, eue_anho, cod_objeto, cod_categoria, estado )
@@ -5106,7 +5106,7 @@ ls_msg    := '
             (   lpad(v_cod_entidad, 6, '0'), v_anio, item.codobjeto, 0, 1 );
         end loop;
     END;
-    
+
     PROCEDURE USP_GEN_JSCRIPT
     IS
     BEGIN
@@ -5116,7 +5116,7 @@ ls_msg    := '
         {
             return ( (ls_car >="0") && (ls_car<="9") )
         }
-        
+
         //Funcion que valida si el parametro de entrada se trata de un entero positivo.
         function isEntero(ls_cadena)
         {
@@ -5128,7 +5128,7 @@ ls_msg    := '
             }
             return true;
         }
-        
+
         function ValidarNumero(obj)
         {
             if(!isEntero(obj.value))
@@ -5140,7 +5140,7 @@ ls_msg    := '
             }
             return true;
         }
-        
+
         //------------------------------quita caracteres en blanco en la cadena-------------
         function trim(psString)
         {
@@ -5177,7 +5177,7 @@ ls_msg    := '
             }
             return true;
         }
-        
+
         function isEmail(s)
         {
             for (i = 0; i < s.length; i++)
@@ -5201,13 +5201,13 @@ ls_msg    := '
                 if (c == ".") cont++
                 i++
             }
-            
+
             if ((cont == 0) || (cont > 2)) return false
             else return true
         }
         </script>');
     END;
-    
+
     PROCEDURE USP_GET_TIPO_ENTIDAD_ACTUAL(
        ag_tipoent varchar2)
     IS
@@ -5230,7 +5230,7 @@ ls_msg    := '
         end loop;
         usp_print('</select>');
     END; -- Procedure
-    
+
     PROCEDURE USP_GET_SUBTIPO_ENTIDAD_ACTUAL(
         ag_tipoent varchar2)
     IS
@@ -5254,7 +5254,7 @@ ls_msg    := '
         end loop;
         usp_print('</select>');
     END; -- Procedure
-    
+
     PROCEDURE USP_REC_E001_PERSONAL_DOVIEW (
         session__eue_codigo varchar2,
         v_mensaje1          varchar2,
@@ -5274,17 +5274,17 @@ ls_msg    := '
         where 
             a.codconsucode = c_cod_entidad
             and a.anhoentidad = to_char(sysdate,'yyyy');
-        
+
         cursor c_instruccion is
         select a.codigo, a.descripcion
         from reg_procesos.rec_nivel_instruccion a
         where a.estado = 1;
-        
+
         cursor c_unidad_labor is
         select a.codigo, a.descripcion
         from reg_procesos.rec_unidad_logistica a
         where a.estado = 1;
-        
+
         cursor c_entidad_personal (c_cod_entidad varchar2, c_nombre_buscar varchar2) is
         select 
             a.id_personal, a.nombre, a.email, b.descripcion instruccion,
@@ -5303,7 +5303,7 @@ ls_msg    := '
             a.codconsucode = c_cod_entidad and
             ( c_nombre_buscar is null or upper(a.nombre) like '%'||upper(c_nombre_buscar)||'%' )
         order by a.estado desc;
-        
+
         cCant number;
     BEGIN
         usp_print('
@@ -5350,7 +5350,7 @@ ls_msg    := '
         end if;
         usp_print('
             </tr>
-            
+
             <tr>
                 <td colspan="2" align="left"><br><h3>Relaci&oacute;n de Personal de la Oficina de Log&iacute;stica</h3></td>
             </tr>
@@ -5413,7 +5413,7 @@ ls_msg    := '
             </tr>');
         end if;
         usp_print('
-            
+
             <tr>
                 <td colspan="2">
                     <table class="tableform" cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
@@ -5422,18 +5422,34 @@ ls_msg    := '
                         </tr>
                         <tr>
                             <td colspan="7">
-                                Buscador de Personal&nbsp;
-                                <input type="text" name="v_nombre_buscar" value="'||v_nombre_buscar||'" style="width:50%" maxlength="200"/>&nbsp;
-                                <input type="button" value="Buscar" onclick="BuscarPersonal()" name="btnBuscar" />&nbsp;
-                                <input type="button" value="Mostrar Todos" onclick="MostrarTodos()" name="btnTodos" /><br>
-                                (La b&uacute;squeda se realizar¿ por el campo Nombre y Apellidos).
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <label>Buscador de Personal</label>
+                                        <input type="text" name="v_nombre_buscar" value="'||v_nombre_buscar||'" style="width:50%" maxlength="200"/>
+                                    </td>
+                                    <td>
+                                        <br/>
+                                        <input type="button" value="Buscar" onclick="BuscarPersonal()" name="btnBuscar" />
+                                    </td>
+                                    <td>
+                                        <br/>
+                                        <input type="button" value="Mostrar Todos" onclick="MostrarTodos()" name="btnTodos" /><br>
+                                    </td>
+                                    <td>
+                                        <br/>
+                                        (La b&uacute;squeda se realizar¿ por el campo Nombre y Apellidos).
+                                    </td>
+                                </tr>
+                            </table>
+
                             </td>
                         </tr>
                         <tr>
                             <td colspan="7" align="center">&nbsp;</td>
                         </tr>
                         </table>
-                        <table>
+                        <table class="table table-bordered table-striped">
                         <tr>
                             <th class="th1" width="2%">Nro.</th>
                             <th class="th1" width="15%">Nombre y Apellidos</th>
@@ -5481,7 +5497,7 @@ ls_msg    := '
                 </td>
             </tr>
         </table>');
-        
+
         USP_GEN_JSCRIPT;
         usp_print('
         <script language="javascript">
@@ -5505,15 +5521,15 @@ ls_msg    := '
             }
             return true;
         }
-       
+
         function GrabarTotalPersonas()
         { 
             if (!ValidarNumero(thisform.v_total_personal))
                 return false;
-            
+
             if (!ValidarBlanco(thisform.v_total_personal, "la Cantidad de Personas"))
                 return false;
-                
+
             if ( parseFloat(thisform.v_total_personal.value) == parseFloat(thisform.v_total_personal_comp.value) )
             {
                 alert("Debe ingresar una cantidad distinta a la actual.");
@@ -5522,12 +5538,12 @@ ls_msg    := '
             thisform.scriptdo.value = "doSaveTotal";
             thisform.submit();
         }
-        
+
         function VerHistorial()
         {
             window.open("portlet5open.asp?_portletid_=mod_rec1_a004_manten_personal&scriptdo=doViewHist","","toolbar=no,Width=400,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised");
         }
-        
+
         function GrabarPersonal()
         {
             if (thisform.v_total_personal_comp.value == "0")
@@ -5564,7 +5580,7 @@ ls_msg    := '
             }
             if (!ValidarBlanco(thisform.v_uni_operativa, "Unidad Operativa"))
                 return false;
-                
+
             if (thisform.v_id_accion.value == 1)
             {
                 if ( confirm("¿Est\xe1 usted seguro de grabar los datos?") )
@@ -5582,14 +5598,14 @@ ls_msg    := '
                 }
             }
         }
-        
+
         function RecuperarDatos(id_personal, nombre, email, instruccion, unidad_labor, unidad_operativa)
         {
             if ( confirm("¿Desea modificar los datos del personal " + nombre + "?") )
             {
                 thisform.btnGrabar.value = "Actualizar";
                 thisform.btnCancelar.disabled = false;
-                
+
                 thisform.v_id_accion.value = 2;
                 thisform.v_id_personal.value = id_personal;
                 thisform.v_nombre.value = nombre;
@@ -5599,14 +5615,14 @@ ls_msg    := '
                 thisform.v_uni_operativa.value = unidad_operativa;
             }
         }
-        
+
         function Cancelar()
         {
             if ( confirm("¿Desea cancelar esta acci\xf3n?") )
             {
                 thisform.btnGrabar.value = "Grabar";
                 thisform.btnCancelar.disabled = true;
-                
+
                 thisform.v_id_accion.value = 1;
                 thisform.v_id_personal.value = "";
                 thisform.v_nombre.value = "";
@@ -5616,39 +5632,39 @@ ls_msg    := '
                 thisform.v_uni_operativa.value = "";
             }
         }
-        
+
         function CambiarEstado(accion, id_personal, nombre)
         {
             thisform.v_id_accion.value = accion;
             thisform.v_id_personal.value = id_personal;
-            
+
             var accion_des = "";
             if (accion == 3 )
                 accion_des = "DAR DE BAJA";
             if (accion == 4 )
                 accion_des = "poner EN ACTIVIDAD";
-            
+
             if ( confirm("¿Est\xe1 usted seguro de " + accion_des + " a " + nombre + "?") )
             {
                 thisform.scriptdo.value = "doUpdatePersonal";
                 thisform.submit();
             }
         }   
-        
+
         function VerHistorialPersonal(id_personal)
         {
             window.open("portlet5open.asp?_portletid_=mod_rec1_a004_manten_personal&scriptdo=doViewHistPersonal&v_id_personal="+id_personal,"","toolbar=no,Width=900,Height=400,scrollbars=yes,modal=yes,dependent,alwaysRaised");
         }
-        
+
         function BuscarPersonal()
         {
             if (!ValidarBlanco(thisform.v_nombre_buscar, "Buscador de Personal"))
                 return false;
-            
+
             thisform.scriptdo.value = "doViewForm";
             thisform.submit();
         }
-        
+
         function MostrarTodos()
         {
             thisform.v_nombre_buscar.value = "";
@@ -5657,7 +5673,7 @@ ls_msg    := '
         }
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_E001_UPDATE_TOTAL_PERS(
         session__eue_codigo varchar2,
         session__userid     varchar2,
@@ -5679,21 +5695,21 @@ ls_msg    := '
                 total_personal = v_total_personal,
                 FECHA_REG_TOTAL_PERS = sysdate
             where codconsucode = lpad(session__eue_codigo,6,'0');
-            
+
             insert into reg_procesos.rec_log_entidad_total_personal
             ( fecha_registro, usuario_registro, ip_registro, total_personal, codconsucode )
             values
             ( sysdate, session__userid, iisenv__remote_host, v_total_personal, lpad(session__eue_codigo,6,'0') );
-            
+
             commit;
-            
+
             cMensaje := 'OK';
         EXCEPTION
             WHEN OTHERS THEN
                 rollback;
                 cMensaje := 'Ocurri&oacute; un error, no se pudo completar la operaci&oacute;n.<br>'||SQLERRM;
         END;
-        
+
         usp_print('
         <input type=''hidden'' name=''v_mensaje1'' value='''||cMensaje||'''/>
         <script language=''javascript''>
@@ -5701,7 +5717,7 @@ ls_msg    := '
         thisform.submit();
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_E001_HISTORIAL_DOVIEW(
         session__eue_codigo varchar2)
     IS
@@ -5717,7 +5733,7 @@ ls_msg    := '
         from reg_procesos.rec_log_entidad_total_personal a
         where a.codconsucode = v_entidad
         order by id_log desc;
-        
+
         cOrden number;
     BEGIN
         usp_print('
@@ -5732,7 +5748,7 @@ ls_msg    := '
                 <th class="th1">Cantidad</th>
                 <th class="th1">Usuario</th>
             <tr>');
-            
+
         cOrden := 0;
         for item in historial(lpad(session__eue_codigo, 6, '0')) loop
             cOrden := cOrden + 1;
@@ -5747,7 +5763,7 @@ ls_msg    := '
         usp_print('
         </table>');
     END;
-    
+
     PROCEDURE USP_REC_E001_SAVE_PERSONAL(
         session__eue_codigo varchar2,
         session__userid     varchar2,
@@ -5775,14 +5791,14 @@ ls_msg    := '
               v_uni_operativa, session__userid, iisenv__remote_host, 'REGISTRO' );
 
             commit;
-            
+
             cMensaje := 'OK';
         EXCEPTION
             WHEN OTHERS THEN
                 rollback;
                 cMensaje := 'Ocurri&oacute; un error, no se pudo completar la operaci&oacute;n.<br>'||SQLERRM;
         END;
-        
+
         usp_print('
         <input type=''hidden'' name=''v_mensaje2'' value='''||cMensaje||'''/>
         <script language=''javascript''>
@@ -5790,7 +5806,7 @@ ls_msg    := '
         thisform.submit();
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_E001_UPDATE_PERSONAL(
         session__eue_codigo varchar2,
         session__userid     varchar2,
@@ -5836,7 +5852,7 @@ ls_msg    := '
                 where 
                     id_personal = v_id_personal;
             end if;
-            
+
             if v_id_accion = 3 or v_id_accion = 4 then
                 update reg_procesos.rec_entidad_personal 
                 set 
@@ -5850,14 +5866,14 @@ ls_msg    := '
             end if;
 
             commit;
-            
+
             cMensaje := 'OK';
         EXCEPTION
             WHEN OTHERS THEN
                 rollback;
                 cMensaje := 'Ocurri&oacute; un error, no se pudo completar la operaci&oacute;n.<br>'||SQLERRM;
         END;
-        
+
         usp_print('
         <input type=''hidden'' name=''v_mensaje2'' value='''||cMensaje||'''/>
         <script language=''javascript''>
@@ -5865,7 +5881,7 @@ ls_msg    := '
         thisform.submit();
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_E001_HIST_PERSO_DOVIEW(
         v_id_personal number)
     IS
@@ -5905,7 +5921,7 @@ ls_msg    := '
             where x.id_personal = c_id_personal
         ) w
         order by 1 desc;
-        
+
         cOrden number;
     BEGIN
         usp_print('
@@ -5930,7 +5946,7 @@ ls_msg    := '
                 <th class="th1" style="border-color:#000000;border-bottom:1px solid;border-left:1px solid;">Unidad Operativa</th>
                 <th class="th1" style="border-color:#000000;border-bottom:1px solid;border-left:1px solid;border-right:1px solid;">Estado</th>
             <tr>');
-            
+
         cOrden := 0;
         for item in historial(v_id_personal) loop
             cOrden := cOrden + 1;
@@ -5951,7 +5967,7 @@ ls_msg    := '
         usp_print('
         </table>');
     END;
-    
+
     PROCEDURE USP_REC_A004_REPORTES_PERSONAL(
         session__eue_codigo varchar2,
         v_nivel             number,
@@ -6005,7 +6021,7 @@ ls_msg    := '
         </table>');
             --filtros del reporte
             usp_print('
-        <table class="tableform" cellpadding="3" cellspacing="0" border="0" align="center">');
+        <table class="table">');
             if v_tipo_reporte in (1,2) then
                 usp_print('
             <tr><td colspan="2">&nbsp;</td></tr>
@@ -6069,7 +6085,7 @@ ls_msg    := '
             thisform.v_tipo_vista.value = 1;
             thisform.scriptdo.value = "doViewReporte";
             thisform.submit();
-            window.location.href="ExportXLSServlet?portletid_=mod_rec1_a005_reportes_personal&scriptdo=doViewReporte&v_tipo_vista=1&v_tipo_reporte="+tipo_reporte+"&ag_tipoent="+thisform.ag_tipoent.value+"&ag_subtipoent="+thisform.ag_subtipoent.value+"&ag_codent="+thisform.ag_codent.value;
+            window.location.href="ExportXLSServlet?portletid=mod_rec1_a005_reportes_personal&scriptdo=doViewReporte&v_tipo_vista=1&v_tipo_reporte="+tipo_reporte+"&ag_tipoent="+thisform.ag_tipoent.value+"&ag_subtipoent="+thisform.ag_subtipoent.value+"&ag_codent="+thisform.ag_codent.value;
         }
 
         function ver_reporte(tipo_reporte)
@@ -6136,7 +6152,7 @@ ls_msg    := '
             end if;
         end if;
     END;
-    
+
     PROCEDURE USP_REC_A004_REPORTE_DOVIEW(
         v_tipo_vista      number,
         v_tipo_reporte    number,
@@ -6273,7 +6289,7 @@ ls_msg    := '
 
         if v_tipo_reporte = 1 and v_tipo_vista = 2 then
             usp_print('
-        <table class="tableform" cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
+        <table class="table table-bordered table-striped" >
             <tr>
                 <td colspan="6"><h3>Cantidad de Personal del OEC por Entidad</h3></td>
                 <td colspan="2" align="right"><input type="button" value="Volver" onclick="volver()"/></td>
@@ -6363,7 +6379,8 @@ ls_msg    := '
                 <td colspan="8"><h3>Relaci&oacute;n de Personal del OEC de Entidades</h3></td>
                 <td colspan="2" align="right"><input type="button" value="Volver" onclick="volver()"/></td>
             </tr>
-            <tr><td colspan="8">&nbsp;</td></tr>
+        </table>
+        <table class="table table-bordered table-striped">
             <tr>
                 <th class="th1" width=1% align="center">Nro.</th>
                 <th class="th1" width=11% align="center">Nombre</th>
@@ -6423,7 +6440,7 @@ ls_msg    := '
         </script>');
         end if;
     END;
-    
+
     PROCEDURE USP_REC_A005_MANT_SECTOR_FORM(
         session__userid varchar2,
         v_desc_busca    varchar2,
@@ -6449,7 +6466,7 @@ ls_msg    := '
             upper(a.sec_desc) like '%'||upper(c_desc_busca)||'%' or
             c_desc_busca is null 
         order by a.sec_activo desc, a.sec_desc;
-        
+
         cursor c_pliego( c_sector_cod varchar2 ) is
         select 
             a.pli_codigo codigo, a.desc_pliego descripcion, 
@@ -6458,7 +6475,7 @@ ls_msg    := '
         from sease.pliego a
         where a.sec_codigo = c_sector_cod
         order by a.pli_activo desc, a.desc_pliego;
-        
+
         cCount number;
         cColor varchar(50);
     BEGIN
@@ -6638,9 +6655,9 @@ ls_msg    := '
                 </div>
             </td></tr>
         </table>');
-        
+
         USP_GEN_JSCRIPT;
-        
+
         usp_print('
         <script>
         function act_contador(tipo) 
@@ -6650,14 +6667,14 @@ ls_msg    := '
             if (tipo == 2)
                 document.all("conta_msj_pliego").value = document.all("v_pliego_just").value.length;
         }
-        
+
         function ismaxlength(obj)
         { 
             var mlength=obj.getAttribute? parseInt(obj.getAttribute("maxlength")) : "";
             if (obj.getAttribute && obj.value.length>mlength)
                 obj.value=obj.value.substring(0,mlength);
         }
-        
+
         function ValidarString(ls_obj, ls_mensage)
         {
             var strCadena = ls_obj.value;
@@ -6677,7 +6694,7 @@ ls_msg    := '
             }  
             return true;
         }
-        
+
         function GrabarSector()
         {
             //validar campos
@@ -6689,7 +6706,7 @@ ls_msg    := '
                 return false;
             if (!ValidarString(thisform.txtObservacion, "Justificaci\xf3n"))
                 return false;
-            
+
             if (thisform.v_accion.value == 1)
             {
                 if ( confirm("¿Est\xe1 usted seguro de grabar los datos?") )
@@ -6698,7 +6715,7 @@ ls_msg    := '
                     thisform.submit();
                 }
             }
-            
+
             if (thisform.v_accion.value == 2)
             {   
                 if ( thisform.v_cod_sector.value == "")
@@ -6706,7 +6723,7 @@ ls_msg    := '
                     alert("Ocurri\xf3 un error al modificar el Sector. Vuelva a seleccionarlo y modificar los datos.");
                     return false;
                 }
-                
+
                 if ( confirm("¿Est\xe1 usted seguro de modificar los datos?") )
                 {
                     thisform.scriptdo.value = "doUpdateSector";
@@ -6714,31 +6731,31 @@ ls_msg    := '
                 }
             }
         }
-        
+
         function RecuperarDatosSector(codigo, descripcion, justificacion)
         {
             if ( confirm("¿Desea modificar los datos del Sector " + descripcion + "?") )
             {
                 thisform.btnGrabar.value = "Actualizar";
                 thisform.btnCancelar.disabled = false;
-        
+
                 thisform.v_cod_sector.value = codigo;
                 thisform.v_desc.value = descripcion;
                 thisform.txtObservacion.value = justificacion;
                 act_contador(); 
                 ismaxlength(thisform.txtObservacion);
-                
+
                 thisform.v_accion.value = 2;
             }
         }
-        
+
         function CancelarSector()
         { 
             if ( confirm("¿Desea cancelar esta acci\xf3n?") )
             {
                 thisform.btnGrabar.value = "Grabar";
                 thisform.btnCancelar.disabled = true;
-                
+
                 thisform.v_accion.value = 1;
                 thisform.v_cod_sector.value = "";
                 thisform.v_desc.value = "";
@@ -6746,7 +6763,7 @@ ls_msg    := '
                 thisform.conta_mensaje.value = "";
             }
         }
-        
+
         function CambiarEstadoSector(codigo, sector)
         {
             if ( confirm("¿Desea inactivar el sector " + sector + "?") )
@@ -6757,13 +6774,13 @@ ls_msg    := '
                 thisform.submit();
             }
         }
-        
+
         function buscar()
         {
             thisform.scriptdo.value = "doView";
             thisform.submit();
         }
-        
+
         function VerPliegos(codigo, sector)
         { 
             thisform.v_cod_sector.value = codigo;
@@ -6771,7 +6788,7 @@ ls_msg    := '
             thisform.scriptdo.value = "doView";
             thisform.submit();
         }
-        
+
         function GrabarPliego()
         {
             //validar campos
@@ -6783,7 +6800,7 @@ ls_msg    := '
                 return false;
             if (!ValidarString(thisform.v_pliego_just, "Justificaci\xf3n"))
                 return false;
-                
+
             if (thisform.v_accion_pliego.value == 1)
             {
                 if ( confirm("¿Est\xe1 usted seguro de grabar los datos?") )
@@ -6792,7 +6809,7 @@ ls_msg    := '
                     thisform.submit();
                 }
             }
-            
+
             if (thisform.v_accion_pliego.value == 2)
             {   
                 if ( thisform.v_cod_pliego.value == "")
@@ -6800,7 +6817,7 @@ ls_msg    := '
                     alert("Ocurri\xf3 un error al modificar el Pliego. Vuelva a seleccionarlo y modificar los datos.");
                     return false;
                 }
-                
+
                 if ( confirm("¿Est\xe1 usted seguro de modificar los datos?") )
                 {
                     thisform.scriptdo.value = "doUpdatePliego";
@@ -6808,31 +6825,31 @@ ls_msg    := '
                 }
             }
         }
-        
+
         function RecuperarDatosPliego(codigo, descripcion, justificacion)
         {
             if ( confirm("¿Desea modificar los datos del Pliego " + descripcion + "?") )
             {
                 thisform.btnGrabarPliego.value = "Actualizar";
                 thisform.btnCancelarPliego.disabled = false;
-        
+
                 thisform.v_cod_pliego.value = codigo;
                 thisform.v_pliego_desc.value = descripcion;
                 thisform.v_pliego_just.value = justificacion;
                 act_contador(2); 
                 ismaxlength(thisform.v_pliego_just);
-                
+
                 thisform.v_accion_pliego.value = 2;
             }
         }
-        
+
         function CancelarPliego()
         { 
             if ( confirm("¿Desea cancelar esta acci\xf3n?") )
             {
                 thisform.btnGrabarPliego.value = "Grabar";
                 thisform.btnCancelarPliego.disabled = true;
-                
+
                 thisform.v_accion_pliego.value = 1;
                 thisform.v_cod_pliego.value = "";
                 thisform.v_pliego_desc.value = "";
@@ -6840,7 +6857,7 @@ ls_msg    := '
                 thisform.conta_msj_pliego.value = "";
             }
         }
-        
+
         function CambiarEstadoPliego(codigo, sector)
         {
             if ( confirm("¿Desea inactivar el pliego " + sector + "?") )
@@ -6853,7 +6870,7 @@ ls_msg    := '
         }
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_A005_INSERT_SECTOR(
         session__userid varchar2,
         v_desc varchar2,
@@ -6878,14 +6895,14 @@ ls_msg    := '
             values
             ( cCodSector, UPPER(v_desc), UPPER(txtObservacion), 1, session__userid, sysdate );
             commit;
-        
+
             cMensaje := '1-La operaci&oacute;n se realiz&oacute; con &eacute;xito';
         exception
             when others then
                 rollback;
                 cMensaje := '0-Ocurri&oacute; el siguiente error: '||SQLERRM||' - '||SQLCODE||'.<br>No se pudo completar la operaci&oacute;n';
         end;
-        
+
         usp_print('
         <input type="hidden" name="v_mensaje1" value=""/>
         <script language="javascript">
@@ -6894,7 +6911,7 @@ ls_msg    := '
             thisform.submit(); 
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_A005_INSERT_PLIEGO(
         session__userid varchar2,
         v_cod_sector1   varchar2,
@@ -6914,19 +6931,19 @@ ls_msg    := '
         begin
             select max(sp.pli_codigo)+1 into cCodPliego 
             from sease.pliego sp;
-            
+
             insert into sease.pliego 
             ( sec_codigo, pli_codigo, pli_obs, usu_ult_modi, fec_ult_modi, desc_pliego )
             values
             ( v_cod_sector1, cCodPliego, UPPER(v_pliego_just), session__userid, sysdate, UPPER(v_pliego_desc) );
-        
+
             cMensaje := '1-La operaci&oacute;n se realiz&oacute; con &eacute;xito';
         exception
             when others then
                 rollback;
                 cMensaje := '0-Ocurri&oacute; el siguiente error: '||SQLERRM||' - '||SQLCODE||'.<br>No se pudo completar la operaci&oacute;n';
         end;
-        
+
         usp_print('
         <input type="hidden" name="v_cod_sector" value="'||v_cod_sector1||'"/>
         <input type="hidden" name="v_des_sector" value="'||substr(v_des_sector1,5,length(v_des_sector1))||'"/>
@@ -6937,7 +6954,7 @@ ls_msg    := '
             thisform.submit(); 
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_A005_UPDATE_SECTOR(
         session__userid varchar2,
         v_accion        varchar2,
@@ -6976,14 +6993,14 @@ ls_msg    := '
             end if;
 
             commit;
-        
+
             cMensaje := '1-La operaci&oacute;n se realiz&oacute; con &eacute;xito';
         exception
             when others then
                 rollback;
                 cMensaje := '0-Ocurri&oacute; el siguiente error: '||SQLERRM||' - '||SQLCODE||'.<br>No se pudo completar la operaci&oacute;n';
         end;
-        
+
         usp_print('
         <input type="hidden" name="v_mensaje1" value=""/>
         <script language="javascript">
@@ -6992,7 +7009,7 @@ ls_msg    := '
             thisform.submit(); 
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_A005_UPDATE_PLIEGO(
         session__userid varchar2,
         v_cod_sector1   varchar2,
@@ -7035,14 +7052,14 @@ ls_msg    := '
             end if;
 
             commit;
-        
+
             cMensaje := '1-La operaci&oacute;n se realiz&oacute; con &eacute;xito';
         exception
             when others then
                 rollback;
                 cMensaje := '0-Ocurri&oacute; el siguiente error: '||SQLERRM||' - '||SQLCODE||'.<br>No se pudo completar la operaci&oacute;n';
         end;
-        
+
         usp_print('
         <input type="hidden" name="v_cod_sector" value="'||v_cod_sector1||'"/>
         <input type="hidden" name="v_des_sector" value="'||substr(v_des_sector1,5,length(v_des_sector1))||'"/>
@@ -7053,7 +7070,7 @@ ls_msg    := '
             thisform.submit(); 
         </script>');
     END;
-    
+
     PROCEDURE USP_REC_A002_EXCEL_ENT( 
         v_actividad           varchar2,
         v_instancia           varchar2,
@@ -7073,7 +7090,7 @@ ls_msg    := '
     ||    Overview: Procedimiento que genera el reporte en excel de entidades que han 
     ||              realizado la actualizaci¿n de sus datos
     */
-    
+
         cursor c_reporte is
         select 
             rownum num, e.codconsucode, e.f_registro, e.descripcion, e.n_ruc, 
@@ -7121,7 +7138,7 @@ ls_msg    := '
             and (e.fec_ult_modi <= to_date(fec_act_fin, 'dd/mm/yyyy') + 1 or fec_act_fin is null)
             and (e.dis_coddist = v_dep_codigo_vb||''||v_pro_codigo_vb||''||v_dis_codigo_vb  or  v_dep_codigo_vb||''||v_pro_codigo_vb||''||v_dis_codigo_vb is null)
         order by e.codconsucode;
-    
+
         v_sw           number;
         ln_cont        number;
         cColor         varchar2(50);
@@ -7132,7 +7149,7 @@ ls_msg    := '
         font-size: x-small;
         }
         </style>');  
- 
+
         usp_print('
         <table class="letra" border="1">
             <tr>
@@ -7151,7 +7168,7 @@ ls_msg    := '
                 <th align="center" class="th1">Tipo de Entidad</th>
                 <th align="center" class="th1">Subtipo de Entidad</th>
             </tr>');
-         
+
         ln_cont := 0; 
         v_sw := 1; 
         for xrow in c_reporte loop
@@ -7180,16 +7197,16 @@ ls_msg    := '
             </tr>');
             v_sw := v_sw * (-1);  
         end loop;
-        
+
         if ln_cont = 0 then
             usp_print('
             <tr><td align="center" colspan="9"><i>No se encontraron resultados.</i></td></tr>');
         end if;
-        
+
         usp_print('
         </table>');
     END;
-    
+
     PROCEDURE USP_REC_A002_RESULT_ENT( 
         v_actividad           varchar2,
         v_instancia           varchar2,
@@ -7268,7 +7285,7 @@ ls_msg    := '
         WHERE 
             z.num BETWEEN c_total_x_pag * (TO_NUMBER (c_currentpage) - 1) + 1
             AND c_total_x_pag * TO_NUMBER (c_currentpage);
-    
+
         v_sw           number;
         ln_cont        number;
         cColor         varchar2(50);
@@ -7282,7 +7299,7 @@ ls_msg    := '
         ELSE
             lv_currentpage := ag_currentpage;
         END IF;
-        
+
         --obtenemos el total de registros
         select count(*) into cTotalReg
         from
@@ -7319,7 +7336,7 @@ ls_msg    := '
             and (e.fec_ult_modi <= to_date(fec_act_fin, 'dd/mm/yyyy') + 1 or fec_act_fin is null)
             and (e.dis_coddist = v_dep_codigo_vb||''||v_pro_codigo_vb||''||v_dis_codigo_vb  or  v_dep_codigo_vb||''||v_pro_codigo_vb||''||v_dis_codigo_vb is null)
         order by e.codconsucode;
-        
+
         showpaginacion( lv_currentpage, cTotalReg,
                         'v_actividad='
                         || v_actividad
@@ -7345,7 +7362,7 @@ ls_msg    := '
                         || v_dis_codigo_vb,
                         '&scriptdo=doResultEnt',
                         15); 
-    
+
         usp_print('
         <table class="tableform" cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
             <tr>
@@ -7364,7 +7381,7 @@ ls_msg    := '
                 <th align="center" class="th1">Tipo de Entidad</th>
                 <th align="center" class="th1">Subtipo de Entidad</th>
             </tr>');
-         
+
         ln_cont := 0; 
         v_sw := 1; 
         for xrow in c_reporte(cTotalPag, lv_currentpage) loop
@@ -7391,15 +7408,15 @@ ls_msg    := '
                 <td align="left"   '||cColor||'>'||xrow.activi_cod||' - '||xrow.activi_des||'&nbsp;</td>
                 <td align="left"   '||cColor||'>'||xrow.instan_cod||' - '||xrow.instan_des||'&nbsp;</td>
             </tr>');
-    
+
             v_sw := v_sw * (-1);  
         end loop;
-        
+
         if ln_cont = 0 then
             usp_print('
             <tr><td align="center" colspan="9"><b><i>No se encontraron resultados.</i></b></td></tr>');
         end if;
-        
+
         usp_print('
         </table>');
     END;
